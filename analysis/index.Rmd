@@ -61,7 +61,7 @@ where $X_c$ is the indicator for different cell types, and $\epsilon_{gk}\sim N(
 
 ## Analysis and Methods comparison
 
-[group12_13](group12_13.Rmd)  
-[group2_19](group2_19.Rmd)
+[group12_13](group12_13.html)  
+[group2_19](group2_19.html)
 
 # Simulation
