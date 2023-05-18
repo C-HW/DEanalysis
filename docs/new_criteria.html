@@ -12,7 +12,7 @@
 <meta name="author" content="Chih-Hsuan Wu" />
 
 
-<title>Data and Clusters</title>
+<title>New criteria to determine differentially expressed genes</title>
 
 <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -358,7 +358,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data and Clusters</h1>
+<h1 class="title toc-ignore">New criteria to determine differentially expressed genes</h1>
 <h4 class="author">Chih-Hsuan Wu</h4>
 
 </div>
@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-05-17
+<strong>Last updated:</strong> 2023-05-16
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
@@ -543,322 +543,34 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/data_clusters.Rmd</code>) and HTML (<code>docs/data_clusters.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/75869536c17b66292074ac0e2e25deaf985d149e/docs/data_clusters.html" target="_blank">7586953</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-<td>
-add data_clusters
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="data-introduction" class="section level1">
-<h1>Data introduction</h1>
-<p>In this project, we consider a scRNA-seq dataset containing human NK1, NK2 and NK3 T cells. There are a total of 4553 cells contributed by 5 donors, and 29382 genes sequenced. The raw counts are UMI counts generated from 10X protocols.</p>
-<p>There are three different datasets used as inputs in this project.</p>
-<ul>
-<li>Raw data: The raw UMI counts generated from 10X protocols<br />
-</li>
-<li>Seurat normalized data: The normalized counts from each input sample via ‘Seurat::NormalizeData(x, normalization.method = “LogNormalize”, scale.factor = 10000)’<br />
-</li>
-<li>Integrated data: The integration data without batch effects (only containing 2000 genes)</li>
-</ul>
+<p>If there is a statistically significant difference or change in read counts or expression levels between two experimental conditions, a gene is considered as differentially expressed. In current gene DE analysis, the criteria is based on statistical significance <span class="math inline">\(-\log_{10}\text{(p-value)}\)</span> and magnitude of change <span class="math inline">\(\log_{2}\text{(fold change)}\)</span>. A volcano plot is commonly used to visualize the result.</p>
+<div id="current-criteria" class="section level1">
+<h1>Current criteria</h1>
+<p>Here’s the volcano plot for the DE analysis on group2 and group19. The thresholds for adjusted p-values and fold changes are <span class="math inline">\(0.05\)</span> and <span class="math inline">\(1.5\)</span>, respectively. There are <span class="math inline">\(608\)</span> genes identified as hits based on the criteria.</p>
+<p><img src="figure/new_criteria.Rmd/unnamed-chunk-2-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gene-expression-summary" class="section level1">
-<h1>Gene expression summary</h1>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-3-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-3-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
+<div id="fold-change-in-scrna-data" class="section level1">
+<h1>Fold Change in scRNA data</h1>
+<p>In scRNA data, lots of mean counts are extremely close to zero. In this case, the fold change can be less meaningful to characterize the difference of read counts. For example, the gene means can be <span class="math inline">\(2^{-3}\)</span> and <span class="math inline">\(1.5*2^{-3}\)</span> in two groups. Even though it passes the threshold for fold changes<span class="math inline">\((1.5)\)</span>, the absolute difference is only <span class="math inline">\(0.0625\)</span>. it doesn’t provide the same strength of evidence in absolute difference compared to genes with larger means.</p>
 </div>
-</div>
-<p>There’s one highly expressed gene <em>MALAT1</em> in raw data. After normalization, the range of the counts changes a lot. (The integrated data doesn’t contain <em>MALAT1</em>) <img src="figure/data_clusters.Rmd/unnamed-chunk-4-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="hippo-cluster-result" class="section level1">
-<h1>Hippo cluster result</h1>
-<p>We applied HIPPO (Heterogeneity-Inspired Pre-Processing tOol) on the raw counts to get 20 clusters. Especially, cluster 2, 8, 12, 13, 17, 19 will be used to demonstrate our poisson glmm DE methods.</p>
-<div id="umap" class="section level2">
-<h2>UMAP</h2>
-<div id="hippo-procedure" class="section level3">
-<h3>Hippo procedure</h3>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
-Past versions of unnamed-chunk-9-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-9-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-9-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="interested-groups" class="section level3">
-<h3>Interested groups</h3>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="zero-proportion-plot" class="section level2">
-<h2>Zero proportion plot</h2>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
-Past versions of unnamed-chunk-11-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-11-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-11-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="donor-distribution" class="section level2">
-<h2>Donor distribution</h2>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
-Past versions of unnamed-chunk-12-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-12-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="donor-effect-variation" class="section level1">
-<h1>Donor effect variation</h1>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-14-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div id="take-mean-and-absolut-difference-into-account" class="section level1">
+<h1>Take mean and absolut difference into account</h1>
+<p>From the scatter plot below, current criteria would select genes with small means. And these genes usually have smaller values in log2 mean difference <span class="math inline">\((\log_2|\text{mean1-mean2}|)\)</span>.</p>
+<p><img src="figure/new_criteria.Rmd/unnamed-chunk-3-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Let’s make some heatmaps to see the read counts of DE genes with different range of mean.</p>
+<p><img src="figure/new_criteria.Rmd/unnamed-chunk-5-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>To rule out the genes with smaller means, we can add a filter on the previous criteria. If the gene mean doesn’t pass the threshold, then it can’t be counted as a DE gene. From the heatmaps shown above, we set the default threshold at <span class="math inline">\(-2.25\)</span> for the average log2mean in two different groups <span class="math inline">\((\frac{\log_2\text{mean1}+\log_2\text{mean2}}{2})\)</span>.</p>
+<p>The heatmaps also tell us we might miss out some genes that have smaller genes but large absolute difference. To save the genes, we allow the genes with log2 mean difference greater than <span class="math inline">\(-1\)</span> to pass the filter as well.</p>
+<p>Here’s the volcano plot and scatter plot based on the new criteria</p>
+<p><img src="figure/new_criteria.Rmd/unnamed-chunk-6-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="figure/new_criteria.Rmd/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -883,39 +595,39 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0
- [3] Biobase_2.58.0              GenomicRanges_1.50.2       
- [5] GenomeInfoDb_1.34.9         IRanges_2.32.0             
- [7] S4Vectors_0.36.2            BiocGenerics_0.44.0        
- [9] MatrixGenerics_1.10.0       matrixStats_0.63.0         
-[11] ggpubr_0.6.0                dplyr_1.1.2                
-[13] ggplot2_3.4.2              
+ [1] gridExtra_2.3               pheatmap_1.0.12            
+ [3] SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0
+ [5] Biobase_2.58.0              GenomicRanges_1.50.2       
+ [7] GenomeInfoDb_1.34.9         IRanges_2.32.0             
+ [9] S4Vectors_0.36.2            BiocGenerics_0.44.0        
+[11] MatrixGenerics_1.10.0       matrixStats_0.63.0         
+[13] ggpubr_0.6.0                dplyr_1.1.2                
+[15] ggplot2_3.4.2              
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.5             edgeR_3.40.2           tidyr_1.3.0           
- [4] jsonlite_1.8.4         carData_3.0-5          bslib_0.4.2           
- [7] highr_0.10             GenomeInfoDbData_1.2.9 yaml_2.3.7            
-[10] pillar_1.9.0           backports_1.4.1        lattice_0.21-8        
-[13] glue_1.6.2             limma_3.54.2           digest_0.6.31         
-[16] promises_1.2.0.1       ggsignif_0.6.4         XVector_0.38.0        
-[19] colorspace_2.1-0       cowplot_1.1.1          htmltools_0.5.5       
-[22] httpuv_1.6.9           Matrix_1.5-4           pkgconfig_2.0.3       
-[25] broom_1.0.4            zlibbioc_1.44.0        purrr_1.0.1           
-[28] scales_1.2.1           whisker_0.4.1          later_1.3.0           
-[31] git2r_0.32.0           tibble_3.2.1           generics_0.1.3        
-[34] farver_2.1.1           car_3.1-2              cachem_1.0.8          
-[37] withr_2.5.0            cli_3.6.1              magrittr_2.0.3        
-[40] evaluate_0.20          fs_1.6.2               fansi_1.0.4           
-[43] rstatix_0.7.2          tools_4.2.2            lifecycle_1.0.3       
-[46] stringr_1.5.0          munsell_0.5.0          locfit_1.5-9.7        
-[49] DelayedArray_0.24.0    compiler_4.2.2         jquerylib_0.1.4       
-[52] rlang_1.1.1            grid_4.2.2             RCurl_1.98-1.12       
-[55] rstudioapi_0.14        bitops_1.0-7           labeling_0.4.2        
-[58] rmarkdown_2.21         gtable_0.3.3           abind_1.4-5           
-[61] R6_2.5.1               knitr_1.42             fastmap_1.1.1         
-[64] utf8_1.2.3             workflowr_1.7.0        rprojroot_2.0.3       
-[67] stringi_1.7.12         Rcpp_1.0.10            vctrs_0.6.2           
-[70] tidyselect_1.2.0       xfun_0.39             </code></pre>
+ [1] Rcpp_1.0.10            lattice_0.21-8         tidyr_1.3.0           
+ [4] rprojroot_2.0.3        digest_0.6.31          utf8_1.2.3            
+ [7] R6_2.5.1               backports_1.4.1        evaluate_0.20         
+[10] highr_0.10             pillar_1.9.0           zlibbioc_1.44.0       
+[13] rlang_1.1.1            rstudioapi_0.14        car_3.1-2             
+[16] jquerylib_0.1.4        Matrix_1.5-4           rmarkdown_2.21        
+[19] labeling_0.4.2         stringr_1.5.0          RCurl_1.98-1.12       
+[22] munsell_0.5.0          DelayedArray_0.24.0    broom_1.0.4           
+[25] compiler_4.2.2         httpuv_1.6.9           xfun_0.39             
+[28] pkgconfig_2.0.3        htmltools_0.5.5        tidyselect_1.2.0      
+[31] tibble_3.2.1           GenomeInfoDbData_1.2.9 workflowr_1.7.0       
+[34] fansi_1.0.4            withr_2.5.0            later_1.3.0           
+[37] bitops_1.0-7           grid_4.2.2             jsonlite_1.8.4        
+[40] gtable_0.3.3           lifecycle_1.0.3        git2r_0.32.0          
+[43] magrittr_2.0.3         scales_1.2.1           cli_3.6.1             
+[46] stringi_1.7.12         cachem_1.0.8           carData_3.0-5         
+[49] farver_2.1.1           XVector_0.38.0         ggsignif_0.6.4        
+[52] fs_1.6.2               promises_1.2.0.1       bslib_0.4.2           
+[55] generics_0.1.3         vctrs_0.6.2            RColorBrewer_1.1-3    
+[58] tools_4.2.2            glue_1.6.2             purrr_1.0.1           
+[61] abind_1.4-5            fastmap_1.1.1          yaml_2.3.7            
+[64] colorspace_2.1-0       rstatix_0.7.2          knitr_1.42            
+[67] sass_0.4.5            </code></pre>
 </div>
 </div>
 

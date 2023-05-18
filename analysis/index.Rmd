@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: "DE analysis on scRNA data with poisson GLMM"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -8,4 +8,22 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+# Introduction
+
+## Motivation
+
+## Current methods
+
+## Poisson GLMM
+
+model  
+[new criteria](new_criteria.html)  
+
+# Application 
+
+## Data summary
+[Data](data_clusters.html)
+
+## Analysis and Methods comparison
+
+# Simulation

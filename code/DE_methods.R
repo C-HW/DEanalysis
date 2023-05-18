@@ -232,8 +232,8 @@ MAST_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.05){
   return(df)
 }
 
-identifyhits = function(BH, log2FC, log2mean, log2meandiff = -Inf, 
-                        pvalucutoff = 0.05, log2FCcutoff = log2(1.5), 
+identifyhits = function(BH, log2FC, log2mean = NA, log2meandiff = -Inf, 
+                        pvalcutoff = 0.05, log2FCcutoff = log2(1.5), 
                         log2meancutoff = -2.25, log2meandiffcutoff = -1, newcriteria = F){
   if(newcriteria){
     hits = BH<pvalcutoff & abs(log2FC)>log2FCcutoff & (log2mean > log2meancutoff | log2meandiff > log2meandiffcutoff)
