@@ -12,11 +12,46 @@ editor_options:
 
 ## Motivation
 
-## Current methods
+Differential expression (DE) analysis in single-cell transcriptomics reveals cell-type-specific responses. Recent studies have raised concerns about current methods used to identify differentially expressed genes in this context.  
 
-## Poisson GLMM
+- scRNA sequencing provides the absolute abundances of RNA molecules in single cells, but normalization - a pre-processing step inherited from the bulk RNA-seq era - reduces this information and returns data as relative abundances, which may mask important differences among cell types  
 
-model  
+- The majority of single-cell DE analysis methods are susceptible to generating false discoveries. This is mainly due to the lack of accounting for variations between biological replicates, commonly referred to as "donor effects". 
+    - Batch effects are often estimated from leading principal components, representing a consensus from most genes.
+    - Pseudo-bulk analysis ignores within-sample heterogeneity by treating donor effects as a fixed effect and assuming that each cell from the same donor is equally affected. 
+
+- Clustering and DE analysis are different problems. The current commonly workflow works well in clustering, but cannot guarantee success in downstream analysis.  
+
+- Excessive zeros are usually considered as "drop-outs", while they are actually informative in cell-type heterogeneity. Ignoring zeros in single-cell gene expression data discards valuable information for any analysis.
+
+
+We provide a generalized linear mixed model framework (GLMM) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
+
+
+## GLMM for DE analysis 
+
+### Poisson GLMM
+For each count $X_{cgk}$ sampled from cell $c$, donor $k$, and gene $g$,
+
+$$
+\begin{aligned}
+    X_{cgk}|\lambda_{cgk} & \sim Poisson(\lambda_{cgk})\\
+    \log \lambda_{cgk} & = \mu_g + X_c{\beta_g} + \epsilon_{gk}\\
+\end{aligned}
+$$
+where $X_c$ is the indicator for different cell types, and $\epsilon_{gk}\sim N(0,\sigma_{g}^2)$ represents the random effects for donor $k$. Our goal is to test $H_0: \beta_g = 0$. Here $e^{\beta_g}$ represents the fold change of gene $g$ between two cell types.
+
+### Binomial GLMM
+
+$$
+\begin{aligned}
+    \mathbb{1}_{X_{cgk}=0}|p_{cgk} & \sim Bernoulli(p_{cgk})\\
+    \log \frac{p_{cgk}}{1-p_{cgk}} & = \mu_g + X_c\beta_{g} + \epsilon_{gk}\\
+\end{aligned}
+$$
+where $X_c$ is the indicator for different cell types, and $\epsilon_{gk}\sim N(0,\sigma_{g}^2)$ represents the random effects for donor $k$. Our goal is to test $H_0: \beta_g = 0$. 
+
+
 [new criteria](new_criteria.html)  
 
 # Application 

@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-05-16
+<strong>Last updated:</strong> 2023-05-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
@@ -499,16 +499,16 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreef3137642695f910c96d11d8c57e0d880826d853atargetblankf313764a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/C-HW/DEanalysis/tree/f3137642695f910c96d11d8c57e0d880826d853a" target="_blank">f313764</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree531e72435bb60301f6515e51e4482d8a999c68a3targetblank531e724a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/C-HW/DEanalysis/tree/531e72435bb60301f6515e51e4482d8a999c68a3" target="_blank">531e724</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreef3137642695f910c96d11d8c57e0d880826d853atargetblankf313764a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree531e72435bb60301f6515e51e4482d8a999c68a3targetblank531e724a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/C-HW/DEanalysis/tree/f3137642695f910c96d11d8c57e0d880826d853a" target="_blank">f313764</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/C-HW/DEanalysis/tree/531e72435bb60301f6515e51e4482d8a999c68a3" target="_blank">531e724</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -521,16 +521,13 @@ Untracked files:
     Untracked:  analysis/data_clusters.Rmd
     Untracked:  analysis/new_criteria.Rmd
     Untracked:  analysis/test.Rmd
+    Untracked:  analysis/testopen.Rmd
     Untracked:  code/functions_in_rmd.R
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
-
-Unstaged changes:
-    Modified:   analysis/index.Rmd
-    Modified:   code/DE_methods.R
 
 </code></pre>
 <p>
@@ -543,9 +540,52 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/new_criteria.Rmd</code>) and HTML (<code>docs/new_criteria.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/fc9f4b6a78f05402b94483374fba17363245b131/docs/new_criteria.html" target="_blank">fc9f4b6</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+<td>
+add new_criteria
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -555,6 +595,43 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <h1>Current criteria</h1>
 <p>Here’s the volcano plot for the DE analysis on group2 and group19. The thresholds for adjusted p-values and fold changes are <span class="math inline">\(0.05\)</span> and <span class="math inline">\(1.5\)</span>, respectively. There are <span class="math inline">\(608\)</span> genes identified as hits based on the criteria.</p>
 <p><img src="figure/new_criteria.Rmd/unnamed-chunk-2-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/531e72435bb60301f6515e51e4482d8a999c68a3/docs/figure/new_criteria.Rmd/unnamed-chunk-2-1.png" target="_blank">531e724</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="fold-change-in-scrna-data" class="section level1">
 <h1>Fold Change in scRNA data</h1>
@@ -564,13 +641,161 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <h1>Take mean and absolut difference into account</h1>
 <p>From the scatter plot below, current criteria would select genes with small means. And these genes usually have smaller values in log2 mean difference <span class="math inline">\((\log_2|\text{mean1-mean2}|)\)</span>.</p>
 <p><img src="figure/new_criteria.Rmd/unnamed-chunk-3-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/531e72435bb60301f6515e51e4482d8a999c68a3/docs/figure/new_criteria.Rmd/unnamed-chunk-3-1.png" target="_blank">531e724</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Let’s make some heatmaps to see the read counts of DE genes with different range of mean.</p>
 <p><img src="figure/new_criteria.Rmd/unnamed-chunk-5-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/531e72435bb60301f6515e51e4482d8a999c68a3/docs/figure/new_criteria.Rmd/unnamed-chunk-5-1.png" target="_blank">531e724</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>To rule out the genes with smaller means, we can add a filter on the previous criteria. If the gene mean doesn’t pass the threshold, then it can’t be counted as a DE gene. From the heatmaps shown above, we set the default threshold at <span class="math inline">\(-2.25\)</span> for the average log2mean in two different groups <span class="math inline">\((\frac{\log_2\text{mean1}+\log_2\text{mean2}}{2})\)</span>.</p>
 <p>The heatmaps also tell us we might miss out some genes that have smaller genes but large absolute difference. To save the genes, we allow the genes with log2 mean difference greater than <span class="math inline">\(-1\)</span> to pass the filter as well.</p>
-<p>Here’s the volcano plot and scatter plot based on the new criteria</p>
+<p>Here’s the volcano plot and scatter plot based on the new criteria.</p>
 <p><img src="figure/new_criteria.Rmd/unnamed-chunk-6-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/531e72435bb60301f6515e51e4482d8a999c68a3/docs/figure/new_criteria.Rmd/unnamed-chunk-6-1.png" target="_blank">531e724</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/new_criteria.Rmd/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/531e72435bb60301f6515e51e4482d8a999c68a3/docs/figure/new_criteria.Rmd/unnamed-chunk-7-1.png" target="_blank">531e724</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -610,24 +835,24 @@ loaded via a namespace (and not attached):
  [7] R6_2.5.1               backports_1.4.1        evaluate_0.20         
 [10] highr_0.10             pillar_1.9.0           zlibbioc_1.44.0       
 [13] rlang_1.1.1            rstudioapi_0.14        car_3.1-2             
-[16] jquerylib_0.1.4        Matrix_1.5-4           rmarkdown_2.21        
-[19] labeling_0.4.2         stringr_1.5.0          RCurl_1.98-1.12       
-[22] munsell_0.5.0          DelayedArray_0.24.0    broom_1.0.4           
-[25] compiler_4.2.2         httpuv_1.6.9           xfun_0.39             
-[28] pkgconfig_2.0.3        htmltools_0.5.5        tidyselect_1.2.0      
-[31] tibble_3.2.1           GenomeInfoDbData_1.2.9 workflowr_1.7.0       
-[34] fansi_1.0.4            withr_2.5.0            later_1.3.0           
-[37] bitops_1.0-7           grid_4.2.2             jsonlite_1.8.4        
-[40] gtable_0.3.3           lifecycle_1.0.3        git2r_0.32.0          
-[43] magrittr_2.0.3         scales_1.2.1           cli_3.6.1             
-[46] stringi_1.7.12         cachem_1.0.8           carData_3.0-5         
-[49] farver_2.1.1           XVector_0.38.0         ggsignif_0.6.4        
-[52] fs_1.6.2               promises_1.2.0.1       bslib_0.4.2           
-[55] generics_0.1.3         vctrs_0.6.2            RColorBrewer_1.1-3    
-[58] tools_4.2.2            glue_1.6.2             purrr_1.0.1           
-[61] abind_1.4-5            fastmap_1.1.1          yaml_2.3.7            
-[64] colorspace_2.1-0       rstatix_0.7.2          knitr_1.42            
-[67] sass_0.4.5            </code></pre>
+[16] whisker_0.4.1          jquerylib_0.1.4        Matrix_1.5-4          
+[19] rmarkdown_2.21         labeling_0.4.2         stringr_1.5.0         
+[22] RCurl_1.98-1.12        munsell_0.5.0          DelayedArray_0.24.0   
+[25] broom_1.0.4            compiler_4.2.2         httpuv_1.6.9          
+[28] xfun_0.39              pkgconfig_2.0.3        htmltools_0.5.5       
+[31] tidyselect_1.2.0       tibble_3.2.1           GenomeInfoDbData_1.2.9
+[34] workflowr_1.7.0        fansi_1.0.4            withr_2.5.0           
+[37] later_1.3.0            bitops_1.0-7           grid_4.2.2            
+[40] jsonlite_1.8.4         gtable_0.3.3           lifecycle_1.0.3       
+[43] git2r_0.32.0           magrittr_2.0.3         scales_1.2.1          
+[46] cli_3.6.1              stringi_1.7.12         cachem_1.0.8          
+[49] carData_3.0-5          farver_2.1.1           XVector_0.38.0        
+[52] ggsignif_0.6.4         fs_1.6.2               promises_1.2.0.1      
+[55] bslib_0.4.2            generics_0.1.3         vctrs_0.6.2           
+[58] RColorBrewer_1.1-3     tools_4.2.2            glue_1.6.2            
+[61] purrr_1.0.1            abind_1.4-5            fastmap_1.1.1         
+[64] yaml_2.3.7             colorspace_2.1-0       rstatix_0.7.2         
+[67] knitr_1.42             sass_0.4.5            </code></pre>
 </div>
 </div>
 
