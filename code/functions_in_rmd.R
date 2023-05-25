@@ -32,7 +32,7 @@ FC_mean_plot = function(xvar, xlimits, xLabel){
       ggtitle(titlelist[i]) + theme_minimal() + xlim(xlimits) + ylim(c(-4,4)) + 
       xlab(xLabel) + ylab("log2 Fold Change") + theme(legend.position = "bottom")
   }
-  return(ggarrange(plotlist = p,common.legend = TRUE, legend = "right", ncol = 3, nrow = 4))
+  return(ggarrange(plotlist = p,common.legend = TRUE, legend = "right", ncol = 4, nrow = 2))
 }
 
 mean_meandiff_plot = function(){
