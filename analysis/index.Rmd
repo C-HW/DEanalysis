@@ -60,8 +60,8 @@ where $X_c$ is the indicator for different cell types, and $\epsilon_{gk}\sim N(
 [Data](data_clusters.html)
 
 ## Analysis and Methods comparison
-
+[Methods details](methods_details.Rmd)
 [group12_13](group12_13.html)  
-[group2_19](group2_19.html)
+[group2_19]
 
 # Simulation
