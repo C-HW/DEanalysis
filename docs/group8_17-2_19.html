@@ -12,7 +12,7 @@
 <meta name="author" content="Chih-Hsuan Wu" />
 
 
-<title>Data and Clusters</title>
+<title>group8_17&amp;2_19</title>
 
 <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -358,7 +358,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data and Clusters</h1>
+<h1 class="title toc-ignore">group8_17&amp;2_19</h1>
 <h4 class="author">Chih-Hsuan Wu</h4>
 
 </div>
@@ -519,10 +519,10 @@ Untracked files:
     Untracked:  analysis/.DS_Store
     Untracked:  analysis/.Rhistory
     Untracked:  analysis/data_clusters.Rmd
-    Untracked:  analysis/figure/
     Untracked:  analysis/group12_13.Rmd
     Untracked:  analysis/group2_19.Rmd
     Untracked:  analysis/group8_17&2_19.Rmd
+    Untracked:  analysis/group8_17-2_19.Rmd
     Untracked:  analysis/methods_details.Rmd
     Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/10X_inputdata.RData
@@ -545,366 +545,109 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/data_clusters.Rmd</code>) and HTML (<code>docs/data_clusters.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/data_clusters.html" target="_blank">13d726d</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-18
-</td>
-<td>
-add DE results on different groups
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/fc9f4b6a78f05402b94483374fba17363245b131/docs/data_clusters.html" target="_blank">fc9f4b6</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-18
-</td>
-<td>
-add new_criteria
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/75869536c17b66292074ac0e2e25deaf985d149e/docs/data_clusters.html" target="_blank">7586953</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-<td>
-add data_clusters
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="data-introduction" class="section level1">
-<h1>Data introduction</h1>
-<p>In this project, we consider a scRNA-seq dataset containing human NK1, NK2 and NK3 T cells. There are a total of 4553 cells contributed by 5 donors, and 29382 genes sequenced. The raw counts are UMI counts generated from 10X protocols.</p>
-<p>There are three different datasets used as inputs in this project.</p>
-<ul>
-<li>Raw data: The raw UMI counts generated from 10X protocols<br />
-</li>
-<li>Seurat normalized data: The normalized counts from each input sample via ‘Seurat::NormalizeData(x, normalization.method = “LogNormalize”, scale.factor = 10000)’<br />
-</li>
-<li>Integrated data: The normalized data removing batch effects (only containing 2000 genes)</li>
-</ul>
-</div>
-<div id="gene-expression-summary" class="section level1">
-<h1>Gene expression summary</h1>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-3-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-3-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
+<div id="data-summary" class="section level1">
+<h1>Data summary</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
-<p>There’s one highly expressed gene <em>MALAT1</em> in raw data. After normalization, the range of the counts changes a lot. (The integrated data doesn’t contain <em>MALAT1</em>) <img src="figure/data_clusters.Rmd/unnamed-chunk-4-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
+<div id="number-of-hits-from-each-method" class="section level1">
+<h1>Number of hits from each method</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="volcano-plot" class="section level1">
+<h1>Volcano plot</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="histogram-of-p-valuebh" class="section level1">
+<h1>Histogram of p-value/BH</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="violin-plot-of-log2mean-of-hits" class="section level1">
+<h1>Violin plot of log2mean of hits</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="violin-plot-of-gene-expression-frequency-of-hits" class="section level1">
+<h1>Violin plot of gene expression frequency of hits</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="heatmap-of-top-hits" class="section level1">
+<h1>Heatmap of top hits</h1>
+<div id="raw-data" class="section level2">
+<h2>Raw data</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="normalized-data" class="section level2">
+<h2>Normalized data</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+</div>
+<div id="integrated-data" class="section level2">
+<h2>Integrated data</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
 </div>
-<div id="hippo-cluster-result" class="section level1">
-<h1>Hippo cluster result</h1>
-<p>We applied HIPPO (Heterogeneity-Inspired Pre-Processing tOol) on the raw counts to get 20 clusters. Especially, cluster 2, 8, 12, 13, 17, 19 will be used to demonstrate our poisson glmm DE methods.</p>
-<div id="umap" class="section level2">
-<h2>UMAP</h2>
-<div id="hippo-procedure" class="section level3">
-<h3>Hippo procedure</h3>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
-Past versions of unnamed-chunk-9-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-9-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-9-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
+<div id="ma-plot" class="section level1">
+<h1>MA plot</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-15-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
+<div id="enrichment-analysis" class="section level1">
+<h1>Enrichment analysis</h1>
+<div id="go-object" class="section level2">
+<h2>GO object</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
-<div id="interested-groups" class="section level3">
-<h3>Interested groups</h3>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
+<div id="enrichkegg-object" class="section level2">
+<h2>enrichKEGG object</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-20-1.png" width="768" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-21-1.png" width="960" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
-<div id="zero-proportion-plot" class="section level2">
-<h2>Zero proportion plot</h2>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
-Past versions of unnamed-chunk-11-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-11-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-11-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="donor-distribution" class="section level2">
-<h2>Donor distribution</h2>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
-Past versions of unnamed-chunk-12-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-12-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">13d726d</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">f313764</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="donor-effect-variation" class="section level1">
-<h1>Donor effect variation</h1>
-<p><img src="figure/data_clusters.Rmd/unnamed-chunk-15-1.png" width="1344" style="display: block; margin: auto;" /><img src="figure/data_clusters.Rmd/unnamed-chunk-15-2.png" width="1344" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -929,39 +672,63 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] reshape_0.8.9               SingleCellExperiment_1.20.1
- [3] SummarizedExperiment_1.28.0 Biobase_2.58.0             
- [5] GenomicRanges_1.50.2        GenomeInfoDb_1.34.9        
- [7] IRanges_2.32.0              S4Vectors_0.36.2           
- [9] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      
-[11] matrixStats_0.63.0          ggpubr_0.6.0               
-[13] dplyr_1.1.2                 ggplot2_3.4.2              
+ [1] DESeq2_1.38.3               pathview_1.38.0            
+ [3] org.Hs.eg.db_3.16.0         AnnotationDbi_1.60.2       
+ [5] enrichplot_1.18.4           clusterProfiler_4.6.2      
+ [7] reshape_0.8.9               gridExtra_2.3              
+ [9] pheatmap_1.0.12             SingleCellExperiment_1.20.1
+[11] SummarizedExperiment_1.28.0 Biobase_2.58.0             
+[13] GenomicRanges_1.50.2        GenomeInfoDb_1.34.9        
+[15] IRanges_2.32.0              S4Vectors_0.36.2           
+[17] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      
+[19] matrixStats_0.63.0          ggpubr_0.6.0               
+[21] dplyr_1.1.2                 ggplot2_3.4.2              
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.5             edgeR_3.40.2           tidyr_1.3.0           
- [4] jsonlite_1.8.4         carData_3.0-5          bslib_0.4.2           
- [7] highr_0.10             GenomeInfoDbData_1.2.9 yaml_2.3.7            
-[10] pillar_1.9.0           backports_1.4.1        lattice_0.21-8        
-[13] glue_1.6.2             limma_3.54.2           digest_0.6.31         
-[16] promises_1.2.0.1       ggsignif_0.6.4         XVector_0.38.0        
-[19] colorspace_2.1-0       cowplot_1.1.1          htmltools_0.5.5       
-[22] httpuv_1.6.9           Matrix_1.5-4           plyr_1.8.8            
-[25] pkgconfig_2.0.3        broom_1.0.4            zlibbioc_1.44.0       
-[28] purrr_1.0.1            scales_1.2.1           whisker_0.4.1         
-[31] later_1.3.0            git2r_0.32.0           tibble_3.2.1          
-[34] farver_2.1.1           generics_0.1.3         car_3.1-2             
-[37] cachem_1.0.8           withr_2.5.0            cli_3.6.1             
-[40] magrittr_2.0.3         evaluate_0.20          fs_1.6.2              
-[43] fansi_1.0.4            rstatix_0.7.2          tools_4.2.2           
-[46] lifecycle_1.0.3        stringr_1.5.0          munsell_0.5.0         
-[49] locfit_1.5-9.7         DelayedArray_0.24.0    compiler_4.2.2        
-[52] jquerylib_0.1.4        rlang_1.1.1            grid_4.2.2            
-[55] RCurl_1.98-1.12        rstudioapi_0.14        labeling_0.4.2        
-[58] bitops_1.0-7           rmarkdown_2.21         gtable_0.3.3          
-[61] abind_1.4-5            R6_2.5.1               knitr_1.42            
-[64] fastmap_1.1.1          utf8_1.2.3             workflowr_1.7.0       
-[67] rprojroot_2.0.3        stringi_1.7.12         Rcpp_1.0.10           
-[70] vctrs_0.6.2            tidyselect_1.2.0       xfun_0.39             </code></pre>
+  [1] shadowtext_0.1.2       backports_1.4.1        fastmatch_1.1-3       
+  [4] workflowr_1.7.0        plyr_1.8.8             igraph_1.4.2          
+  [7] lazyeval_0.2.2         splines_4.2.2          BiocParallel_1.32.6   
+ [10] digest_0.6.31          yulab.utils_0.0.6      htmltools_0.5.5       
+ [13] GOSemSim_2.24.0        viridis_0.6.3          GO.db_3.16.0          
+ [16] fansi_1.0.4            magrittr_2.0.3         memoise_2.0.1         
+ [19] annotate_1.76.0        Biostrings_2.66.0      graphlayouts_1.0.0    
+ [22] colorspace_2.1-0       blob_1.2.4             ggrepel_0.9.3         
+ [25] xfun_0.39              crayon_1.5.2           RCurl_1.98-1.12       
+ [28] jsonlite_1.8.4         graph_1.76.0           scatterpie_0.1.9      
+ [31] ape_5.7-1              glue_1.6.2             polyclip_1.10-4       
+ [34] gtable_0.3.3           zlibbioc_1.44.0        XVector_0.38.0        
+ [37] DelayedArray_0.24.0    car_3.1-2              Rgraphviz_2.42.0      
+ [40] abind_1.4-5            scales_1.2.1           DOSE_3.24.2           
+ [43] DBI_1.1.3              rstatix_0.7.2          Rcpp_1.0.10           
+ [46] xtable_1.8-4           viridisLite_0.4.2      gridGraphics_0.5-1    
+ [49] tidytree_0.4.2         bit_4.0.5              httr_1.4.5            
+ [52] fgsea_1.24.0           RColorBrewer_1.1-3     XML_3.99-0.14         
+ [55] pkgconfig_2.0.3        farver_2.1.1           sass_0.4.5            
+ [58] locfit_1.5-9.7         utf8_1.2.3             labeling_0.4.2        
+ [61] ggplotify_0.1.0        tidyselect_1.2.0       rlang_1.1.1           
+ [64] reshape2_1.4.4         later_1.3.0            munsell_0.5.0         
+ [67] tools_4.2.2            cachem_1.0.8           downloader_0.4        
+ [70] cli_3.6.1              generics_0.1.3         RSQLite_2.3.1         
+ [73] gson_0.1.0             broom_1.0.4            evaluate_0.20         
+ [76] stringr_1.5.0          fastmap_1.1.1          yaml_2.3.7            
+ [79] ggtree_3.6.2           knitr_1.42             bit64_4.0.5           
+ [82] fs_1.6.2               tidygraph_1.2.3        purrr_1.0.1           
+ [85] KEGGREST_1.38.0        ggraph_2.1.0           nlme_3.1-162          
+ [88] KEGGgraph_1.58.3       aplot_0.1.10           compiler_4.2.2        
+ [91] rstudioapi_0.14        png_0.1-8              ggsignif_0.6.4        
+ [94] treeio_1.22.0          geneplotter_1.76.0     tibble_3.2.1          
+ [97] tweenr_2.0.2           bslib_0.4.2            stringi_1.7.12        
+[100] highr_0.10             lattice_0.21-8         Matrix_1.5-4          
+[103] vctrs_0.6.2            pillar_1.9.0           lifecycle_1.0.3       
+[106] jquerylib_0.1.4        data.table_1.14.8      cowplot_1.1.1         
+[109] bitops_1.0-7           httpuv_1.6.9           patchwork_1.1.2       
+[112] qvalue_2.30.0          R6_2.5.1               promises_1.2.0.1      
+[115] codetools_0.2-19       MASS_7.3-59            rprojroot_2.0.3       
+[118] withr_2.5.0            GenomeInfoDbData_1.2.9 parallel_4.2.2        
+[121] grid_4.2.2             ggfun_0.0.9            tidyr_1.3.0           
+[124] HDO.db_0.99.1          rmarkdown_2.21         carData_3.0-5         
+[127] ggnewscale_0.4.8       git2r_0.32.0           ggforce_0.4.1         </code></pre>
+</div>
 </div>
 </div>
 
