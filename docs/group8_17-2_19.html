@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-06-06
+<strong>Last updated:</strong> 2023-06-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
@@ -499,16 +499,16 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree3b1c8ca23e5cf81840f1c20f0171842c96960ceatargetblank3b1c8caa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/C-HW/DEanalysis/tree/3b1c8ca23e5cf81840f1c20f0171842c96960cea" target="_blank">3b1c8ca</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree87a6bb9c04eafec41948ee27ab24956ef9a5ddaftargetblank87a6bb9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/C-HW/DEanalysis/tree/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf" target="_blank">87a6bb9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree3b1c8ca23e5cf81840f1c20f0171842c96960ceatargetblank3b1c8caa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree87a6bb9c04eafec41948ee27ab24956ef9a5ddaftargetblank87a6bb9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/C-HW/DEanalysis/tree/3b1c8ca23e5cf81840f1c20f0171842c96960cea" target="_blank">3b1c8ca</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/C-HW/DEanalysis/tree/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf" target="_blank">87a6bb9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -516,6 +516,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 <pre><code>
 Untracked files:
     Untracked:  .DS_Store
+    Untracked:  .Rhistory
     Untracked:  analysis/.DS_Store
     Untracked:  analysis/.Rhistory
     Untracked:  analysis/data_clusters.Rmd
@@ -530,9 +531,10 @@ Untracked files:
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
+    Untracked:  data/10Xdata_annotate.rds
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   code/functions_in_rmd.R
 
 </code></pre>
 <p>
@@ -554,65 +556,303 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 </div>
 <div id="data-summary" class="section level1">
 <h1>Data summary</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
 <div id="number-of-hits-from-each-method" class="section level1">
 <h1>Number of hits from each method</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
-<div class="alert alert-warning">
-<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
-</div>
-</div>
-<div id="volcano-plot" class="section level1">
-<h1>Volcano plot</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" />
-<div class="alert alert-warning">
-<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
-</div>
-</div>
-<div id="histogram-of-p-valuebh" class="section level1">
-<h1>Histogram of p-value/BH</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" />
-<div class="alert alert-warning">
-<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
-</div>
-</div>
-<div id="violin-plot-of-log2mean-of-hits" class="section level1">
-<h1>Violin plot of log2mean of hits</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
-<div class="alert alert-warning">
-<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
-</div>
-</div>
-<div id="violin-plot-of-gene-expression-frequency-of-hits" class="section level1">
-<h1>Violin plot of gene expression frequency of hits</h1>
 <img src="figure/group8_17&2_19.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-11-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="volcano-plot" class="section level1">
+<h1>Volcano plot</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-12-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="histogram-of-p-valueadj.p-value" class="section level1">
+<h1>Histogram of p-value/adj.p-value</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-14-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="violin-plot-of-log2mean-of-hits" class="section level1">
+<h1>Violin plot of log2mean of hits</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-17-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="violin-plot-of-gene-expression-frequency-of-hits" class="section level1">
+<h1>Violin plot of gene expression frequency of hits</h1>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-20-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-20-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="heatmap-of-top-hits" class="section level1">
 <h1>Heatmap of top hits</h1>
-<div id="raw-data" class="section level2">
-<h2>Raw data</h2>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+<div id="hits-in-all-datasets" class="section level2">
+<h2>Hits in all datasets</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group8_17&2_19.Rmd/unnamed-chunk-21-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
-<div id="normalized-data" class="section level2">
-<h2>Normalized data</h2>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
+<div id="hits-not-in-integrated-data" class="section level2">
+<h2>Hits not in integrated data</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
-<div id="integrated-data" class="section level2">
-<h2>Integrated data</h2>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" />
+<div id="hits-from-other-methods" class="section level2">
+<h2>Hits from other methods</h2>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" />
+<div class="alert alert-warning">
+<strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
+</div>
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
@@ -620,7 +860,7 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 </div>
 <div id="ma-plot" class="section level1">
 <h1>MA plot</h1>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-15-1.png" width="768" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-28-1.png" width="768" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
@@ -629,22 +869,22 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <h1>Enrichment analysis</h1>
 <div id="go-object" class="section level2">
 <h2>GO object</h2>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-30-1.png" width="768" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-31-1.png" width="1344" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
 </div>
 <div id="enrichkegg-object" class="section level2">
 <h2>enrichKEGG object</h2>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-20-1.png" width="768" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-33-1.png" width="768" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
-<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-21-1.png" width="960" style="display: block; margin: auto;" />
+<img src="figure/group8_17&2_19.Rmd/unnamed-chunk-34-1.png" width="960" style="display: block; margin: auto;" />
 <div class="alert alert-warning">
 <strong>Warning!</strong> The custom <code>fig.path</code> you set was ignored by workflowr.
 </div>
@@ -714,20 +954,21 @@ loaded via a namespace (and not attached):
  [79] ggtree_3.6.2           knitr_1.42             bit64_4.0.5           
  [82] fs_1.6.2               tidygraph_1.2.3        purrr_1.0.1           
  [85] KEGGREST_1.38.0        ggraph_2.1.0           nlme_3.1-162          
- [88] KEGGgraph_1.58.3       aplot_0.1.10           compiler_4.2.2        
- [91] rstudioapi_0.14        png_0.1-8              ggsignif_0.6.4        
- [94] treeio_1.22.0          geneplotter_1.76.0     tibble_3.2.1          
- [97] tweenr_2.0.2           bslib_0.4.2            stringi_1.7.12        
-[100] highr_0.10             lattice_0.21-8         Matrix_1.5-4          
-[103] vctrs_0.6.2            pillar_1.9.0           lifecycle_1.0.3       
-[106] jquerylib_0.1.4        data.table_1.14.8      cowplot_1.1.1         
-[109] bitops_1.0-7           httpuv_1.6.9           patchwork_1.1.2       
-[112] qvalue_2.30.0          R6_2.5.1               promises_1.2.0.1      
-[115] codetools_0.2-19       MASS_7.3-59            rprojroot_2.0.3       
-[118] withr_2.5.0            GenomeInfoDbData_1.2.9 parallel_4.2.2        
-[121] grid_4.2.2             ggfun_0.0.9            tidyr_1.3.0           
-[124] HDO.db_0.99.1          rmarkdown_2.21         carData_3.0-5         
-[127] ggnewscale_0.4.8       git2r_0.32.0           ggforce_0.4.1         </code></pre>
+ [88] whisker_0.4.1          KEGGgraph_1.58.3       aplot_0.1.10          
+ [91] compiler_4.2.2         rstudioapi_0.14        png_0.1-8             
+ [94] ggsignif_0.6.4         treeio_1.22.0          geneplotter_1.76.0    
+ [97] tibble_3.2.1           tweenr_2.0.2           bslib_0.4.2           
+[100] stringi_1.7.12         highr_0.10             lattice_0.21-8        
+[103] Matrix_1.5-4           vctrs_0.6.2            pillar_1.9.0          
+[106] lifecycle_1.0.3        jquerylib_0.1.4        data.table_1.14.8     
+[109] cowplot_1.1.1          bitops_1.0-7           httpuv_1.6.9          
+[112] patchwork_1.1.2        qvalue_2.30.0          R6_2.5.1              
+[115] promises_1.2.0.1       codetools_0.2-19       MASS_7.3-59           
+[118] rprojroot_2.0.3        withr_2.5.0            GenomeInfoDbData_1.2.9
+[121] parallel_4.2.2         grid_4.2.2             ggfun_0.0.9           
+[124] tidyr_1.3.0            HDO.db_0.99.1          rmarkdown_2.21        
+[127] carData_3.0-5          ggnewscale_0.4.8       git2r_0.32.0          
+[130] ggforce_0.4.1         </code></pre>
 </div>
 </div>
 </div>

@@ -30,6 +30,7 @@ FC_mean_plot = function(xvar, xlimits, xLabel){
       geom_hline(yintercept=log2(1.5),linetype=2) +
       geom_hline(yintercept=-log2(1.5),linetype=2) +
       ggtitle(titlelist[i]) + theme_minimal() + xlim(xlimits) + ylim(c(-4,4)) + 
+      scale_color_manual(values = c("gray", "blue")) +
       xlab(xLabel) + ylab("log2 Fold Change") + theme(legend.position = "bottom")
   }
   return(ggarrange(plotlist = p,common.legend = TRUE, legend = "right", ncol = 4, nrow = 2))
@@ -47,7 +48,8 @@ mean_meandiff_plot = function(){
     }
     p[[i]] = ggplot(na.omit(data.frame(x = x, y = y, hits = dflist[[i]][[key]]$hits)), aes(x = x, y = y, colour = hits)) +
       geom_point(alpha = 0.5, size = 0.5) +
-      ggtitle(titlelist[i]) + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6)) + 
+      ggtitle(titlelist[i]) + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6))+ 
+      scale_color_manual(values = c("gray", "blue")) + 
       xlab("log2 mean") + ylab("log2 mean difference") + theme(legend.position = "bottom")
   }
   return(ggarrange(plotlist = p,common.legend = TRUE, legend = "right", ncol = 3, nrow = 4))
