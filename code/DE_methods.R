@@ -90,8 +90,10 @@ hippo_poisson_glm_DE = function(sce, cellgroups, repgroups = NA, freq_expressed 
 }
 
 
-hippo_poisson_glmm_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.05){
-  countdf = data.frame(cellgroups = as.factor(cellgroups), repgroups = as.factor(repgroups))
+hippo_poisson_glmm_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.05, offset = FALSE){
+  countdf = data.frame(cellgroups = as.factor(cellgroups), 
+                       repgroups = as.factor(repgroups), 
+                       ls = colSums(sce@assays@data$counts))
   pval = rep(NA,nrow(sce@assays@data$counts))
   mu = rep(NA,nrow(sce@assays@data$counts))
   beta_cellgroups = rep(NA,nrow(sce@assays@data$counts))
@@ -112,8 +114,13 @@ hippo_poisson_glmm_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.
         next
       }
     }
-    gm = tryCatch(summary(MASS::glmmPQL(count~cellgroups, random = ~1|repgroups, family = poisson, data = countdf, verbose = FALSE)),
-                error = function(e){NULL})
+    if (offset){
+      gm = tryCatch(summary(MASS::glmmPQL(count~offset(ls) + cellgroups, random = ~1|repgroups, family = poisson, data = countdf, verbose = FALSE)),
+                    error = function(e){NULL})
+    }else{
+      gm = tryCatch(summary(MASS::glmmPQL(count~cellgroups, random = ~1|repgroups, family = poisson, data = countdf, verbose = FALSE)),
+                    error = function(e){NULL})
+    }
     if (is.null(gm)){
       status[i] = "not converge"
       next

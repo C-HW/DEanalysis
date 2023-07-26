@@ -86,3 +86,75 @@ create_heatmap = function(){
   
   pheatmap(pseudobulk_mean[, rownames(annotation_df)], annotation_col = annotation_df, annotation_row = annotation_REvariation, cluster_rows=F, cluster_cols=F, show_colnames = F, color=colorRampPalette(c("navy", "white", "red"))(10), main = fig.name, breaks = seq(0,5, length.out = 10))
 }
+
+variation_analysis = function(){
+    
+  subset_ind = inputData@colData$hippo_cluster%in%c(group1,group2)
+  variation_raw = data.frame()
+  variation_lognorm = data.frame()
+  variation_cpm = data.frame()
+  variation_integrated = data.frame()
+  donor = inputData@colData$donor[subset_ind]
+  
+  for(gene in rownames(inputData_integrated)){
+    
+    y = log2(inputData@assays@data$counts[gene,subset_ind] + 1)
+    y_lognorm = log2(inputData_lognorm@assays@data$counts[gene,subset_ind] + 1)
+    y_cpm = log2(inputData_cpm@assays@data$counts[gene,subset_ind] + 1)
+    y_int = log2(pmax(inputData_integrated@assays@data$counts[gene,subset_ind],0) + 1)
+    
+    s_raw = summary(lm(y ~ donor + cellgroup))
+    s_lognorm = summary(lm(y_lognorm ~ donor + cellgroup))
+    s_cpm = summary(lm(y_cpm ~ donor + cellgroup))
+    s_int = summary(lm(y_int ~ donor + cellgroup))
+    
+    variation_raw = rbind(variation_raw, 
+                          data.frame(donor = var(model.matrix(s_raw)[,2:5]%*% coef(s_raw)[2:5]), 
+                                     celltype = var(model.matrix(s_raw)[,6] * coef(s_raw)[6]), 
+                                     res = var(s_raw$residuals)))
+    
+    variation_lognorm = rbind(variation_lognorm, 
+                              data.frame(donor = var(model.matrix(s_lognorm)[,2:5]%*% coef(s_lognorm)[2:5]), 
+                                         celltype = var(model.matrix(s_lognorm)[,6] * coef(s_lognorm)[6]), 
+                                         res = var(s_lognorm$residuals)))
+    
+    variation_cpm = rbind(variation_cpm, 
+                          data.frame(donor = var(model.matrix(s_cpm)[,2:5]%*% coef(s_cpm)[2:5]), 
+                                     celltype = var(model.matrix(s_cpm)[,6] * coef(s_cpm)[6]), 
+                                     res = var(s_cpm$residuals)))
+    
+    variation_integrated = rbind(variation_integrated, 
+                                 data.frame(donor = var(model.matrix(s_int)[,2:5]%*% coef(s_int)[2:5]), 
+                                            celltype = var(model.matrix(s_int)[,6] * coef(s_int)[6]), 
+                                            res = var(s_int$residuals)))
+  }
+  variation_raw = variation_raw/rowSums(variation_raw)
+  variation_lognorm = variation_lognorm/rowSums(variation_lognorm)
+  variation_cpm = variation_cpm/rowSums(variation_cpm)
+  variation_integrated = variation_integrated/rowSums(variation_integrated)
+  variation_raw$data = "raw"
+  variation_lognorm$data = "normalized"
+  variation_cpm$data = "cpm"
+  variation_integrated$data = "integrated"
+  
+  top500 = order(variation_raw$res)[1:500]
+  v_list = list(variation_raw[top500,], 
+                variation_lognorm[top500,],
+                variation_cpm[top500,],
+                variation_integrated[top500,])
+
+  for (i in 1:length(v_list)){
+    v_list[[i]]$quantile_donor = as.factor(as.numeric(cut_number(v_list[[i]]$donor,4))*100/4)
+    v_list[[i]]$quantile_celltype = as.factor(as.numeric(cut_number(v_list[[i]]$celltype,4))*100/4)
+    v_list[[i]]$quantile_res = as.factor(as.numeric(cut_number(v_list[[i]]$res,4))*100/4)
+  }
+  combined_df <<- bind_rows(v_list)
+  melt_combined <<- reshape2::melt(combined_df, id.vars = c("data", "quantile_res"), measure.vars = c("donor","celltype"), value.name = "variation", variable.name = "source")
+  wide_combined <<- reshape(data=cbind(index = c(rep(1:500,4), rep(501:1000,4)), melt_combined[,-2]), idvar = c("index", "source"),
+                          v.names = "variation",
+                          timevar = "data",
+                          direction="wide")
+  colnames(wide_combined)[3:6] <<- c("raw", "normalized", "cpm", "integrated")
+}
+
+
