@@ -388,7 +388,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-27
+<strong>Last updated:</strong> 2023-09-11
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -548,15 +548,15 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree0e93efd6fc53afde744a8296743c4829dd3854a3targetblank0e93efda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreed7d838cef72eaad50b0fc216b940c795f63c5f5ftargetblankd7d838ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/0e93efd6fc53afde744a8296743c4829dd3854a3" target="_blank">0e93efd</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/d7d838cef72eaad50b0fc216b940c795f63c5f5f" target="_blank">d7d838c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree0e93efd6fc53afde744a8296743c4829dd3854a3targetblank0e93efda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreed7d838cef72eaad50b0fc216b940c795f63c5f5ftargetblankd7d838ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -566,7 +566,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/0e93efd6fc53afde744a8296743c4829dd3854a3" target="_blank">0e93efd</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/d7d838cef72eaad50b0fc216b940c795f63c5f5f" target="_blank">d7d838c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -585,8 +585,12 @@ Untracked files:
     Untracked:  .Rhistory
     Untracked:  analysis/.DS_Store
     Untracked:  analysis/.Rhistory
+    Untracked:  analysis/Bcells.Rmd
+    Untracked:  analysis/CD14+ Monocytes.Rmd
+    Untracked:  analysis/analysis on Kang.Rmd
     Untracked:  analysis/data2.Rmd
     Untracked:  analysis/data_clusters.Rmd
+    Untracked:  analysis/figure/
     Untracked:  analysis/group12_13.Rmd
     Untracked:  analysis/group12_19.Rmd
     Untracked:  analysis/group2_19.Rmd
@@ -595,16 +599,21 @@ Untracked files:
     Untracked:  analysis/methods_details.Rmd
     Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/.Rhistory
+    Untracked:  data/10X_Kang_DEresult.RData
+    Untracked:  data/10X_Kang_data.Rdata
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
     Untracked:  data/10Xdata_annotate.rds
+    Untracked:  data/Bcells.Rmd
     Untracked:  data/data2sce.RData
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   code/DE_methods.R
+    Modified:   code/functions_in_rmd.R
 
 </code></pre>
 <p>
@@ -619,10 +628,56 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/data2.Rmd</code>) and HTML
+(<code>docs/data2.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/data2.html" target="_blank">949c760</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-27
+</td>
+<td>
+data2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -631,29 +686,100 @@ There are no past versions. Publish this analysis with
 <h1>Library size</h1>
 <div id="raw-data" class="section level2">
 <h2>Raw data</h2>
-<p><img src="figure/data2.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/data2.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">949c760</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="normlized-data" class="section level2">
 <h2>Normlized data</h2>
-<p><img src="figure/data2.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="variance-stabilized-data" class="section level2">
-<h2>Variance-stabilized data</h2>
-<p><img src="figure/data2.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/data2.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="umap" class="section level1">
 <h1>UMAP</h1>
-<p><img src="figure/data2.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/data2.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/data2.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">949c760</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/data2.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="zero-proportion" class="section level1">
 <h1>Zero proportion</h1>
-<p><img src="figure/data2.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
-<img src="figure/data2.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/data2.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+<img src="figure/data2.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="donor-distribution" class="section level1">
 <h1>Donor distribution</h1>
-<p><img src="figure/data2.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/data2.Rmd/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/data2.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/data2.Rmd/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -727,65 +853,66 @@ loaded via a namespace (and not attached):
  [63] polyclip_1.10-4           graph_1.76.0             
  [65] Matrix_1.5-4.1            aplot_0.1.10             
  [67] carData_3.0-5             boot_1.3-28.1            
- [69] beeswarm_0.4.0            GlobalOptions_0.1.2      
- [71] png_0.1-8                 viridisLite_0.4.2        
- [73] rjson_0.2.21              bitops_1.0-7             
- [75] gson_0.1.0                KernSmooth_2.23-22       
- [77] Biostrings_2.66.0         blob_1.2.4               
- [79] DelayedMatrixStats_1.20.0 workflowr_1.7.0          
- [81] shape_1.4.6               stringr_1.5.0            
- [83] qvalue_2.30.0             parallelly_1.36.0        
- [85] remaCor_0.0.16            rstatix_0.7.2            
- [87] gridGraphics_0.5-1        ggsignif_0.6.4           
- [89] beachmat_2.14.2           scales_1.2.1             
- [91] memoise_2.0.1             magrittr_2.0.3           
- [93] plyr_1.8.8                gplots_3.1.3             
- [95] zlibbioc_1.44.0           compiler_4.2.2           
- [97] scatterpie_0.2.1          RColorBrewer_1.1-3       
- [99] clue_0.3-64               KEGGgraph_1.58.3         
-[101] lme4_1.1-34               DESeq2_1.38.3            
-[103] cli_3.6.1                 XVector_0.38.0           
-[105] lmerTest_3.1-3            listenv_0.9.0            
-[107] patchwork_1.1.2           TMB_1.9.5                
-[109] MASS_7.3-60               mgcv_1.9-0               
-[111] tidyselect_1.2.0          stringi_1.7.12           
-[113] highr_0.10                yaml_2.3.7               
-[115] GOSemSim_2.24.0           BiocSingular_1.14.0      
-[117] locfit_1.5-9.8            ggrepel_0.9.3            
-[119] grid_4.2.2                sass_0.4.7               
-[121] fastmatch_1.1-3           tools_4.2.2              
-[123] future.apply_1.11.0       parallel_4.2.2           
-[125] circlize_0.4.15           rstudioapi_0.15.0        
-[127] foreach_1.5.2             git2r_0.32.0             
-[129] EnvStats_2.8.0            farver_2.1.1             
-[131] ggraph_2.1.0              digest_0.6.33            
-[133] Rcpp_1.0.11               car_3.1-2                
-[135] broom_1.0.5               later_1.3.1              
-[137] RcppAnnoy_0.0.21          httr_1.4.6               
-[139] ComplexHeatmap_2.14.0     Rdpack_2.4               
-[141] colorspace_2.1-0          XML_3.99-0.14            
-[143] fs_1.6.3                  splines_4.2.2            
-[145] uwot_0.1.16               yulab.utils_0.0.6        
-[147] tidytree_0.4.4            graphlayouts_1.0.0       
-[149] ggplotify_0.1.1           xtable_1.8-4             
-[151] jsonlite_1.8.7            nloptr_2.0.3             
-[153] ggtree_3.6.2              tidygraph_1.2.3          
-[155] ggfun_0.1.1               R6_2.5.1                 
-[157] pillar_1.9.0              htmltools_0.5.5          
-[159] glue_1.6.2                fastmap_1.1.1            
-[161] minqa_1.2.5               BiocParallel_1.32.6      
-[163] BiocNeighbors_1.16.0      codetools_0.2-19         
-[165] fgsea_1.24.0              mvtnorm_1.2-2            
-[167] utf8_1.2.3                lattice_0.21-8           
-[169] bslib_0.5.0               tibble_3.2.1             
-[171] pbkrtest_0.5.2            numDeriv_2016.8-1.1      
-[173] ggbeeswarm_0.7.2          gtools_3.9.4             
-[175] GO.db_3.16.0              limma_3.54.2             
-[177] glmmTMB_1.1.8             rmarkdown_2.23           
-[179] munsell_0.5.0             GetoptLong_1.0.5         
-[181] GenomeInfoDbData_1.2.9    iterators_1.0.14         
-[183] variancePartition_1.28.9  reshape2_1.4.4           
-[185] gtable_0.3.3              rbibutils_2.2.13         </code></pre>
+ [69] beeswarm_0.4.0            whisker_0.4.1            
+ [71] GlobalOptions_0.1.2       png_0.1-8                
+ [73] viridisLite_0.4.2         rjson_0.2.21             
+ [75] bitops_1.0-7              gson_0.1.0               
+ [77] KernSmooth_2.23-22        Biostrings_2.66.0        
+ [79] blob_1.2.4                DelayedMatrixStats_1.20.0
+ [81] workflowr_1.7.0           shape_1.4.6              
+ [83] stringr_1.5.0             qvalue_2.30.0            
+ [85] parallelly_1.36.0         remaCor_0.0.16           
+ [87] rstatix_0.7.2             gridGraphics_0.5-1       
+ [89] ggsignif_0.6.4            beachmat_2.14.2          
+ [91] scales_1.2.1              memoise_2.0.1            
+ [93] magrittr_2.0.3            plyr_1.8.8               
+ [95] gplots_3.1.3              zlibbioc_1.44.0          
+ [97] compiler_4.2.2            scatterpie_0.2.1         
+ [99] RColorBrewer_1.1-3        clue_0.3-64              
+[101] KEGGgraph_1.58.3          lme4_1.1-34              
+[103] DESeq2_1.38.3             cli_3.6.1                
+[105] XVector_0.38.0            lmerTest_3.1-3           
+[107] listenv_0.9.0             patchwork_1.1.2          
+[109] TMB_1.9.5                 MASS_7.3-60              
+[111] mgcv_1.9-0                tidyselect_1.2.0         
+[113] stringi_1.7.12            highr_0.10               
+[115] yaml_2.3.7                GOSemSim_2.24.0          
+[117] BiocSingular_1.14.0       locfit_1.5-9.8           
+[119] ggrepel_0.9.3             grid_4.2.2               
+[121] sass_0.4.7                fastmatch_1.1-3          
+[123] tools_4.2.2               future.apply_1.11.0      
+[125] parallel_4.2.2            circlize_0.4.15          
+[127] rstudioapi_0.15.0         foreach_1.5.2            
+[129] git2r_0.32.0              EnvStats_2.8.0           
+[131] farver_2.1.1              ggraph_2.1.0             
+[133] digest_0.6.33             Rcpp_1.0.11              
+[135] car_3.1-2                 broom_1.0.5              
+[137] later_1.3.1               RcppAnnoy_0.0.21         
+[139] httr_1.4.6                ComplexHeatmap_2.14.0    
+[141] Rdpack_2.4                colorspace_2.1-0         
+[143] XML_3.99-0.14             fs_1.6.3                 
+[145] splines_4.2.2             uwot_0.1.16              
+[147] yulab.utils_0.0.6         tidytree_0.4.4           
+[149] graphlayouts_1.0.0        ggplotify_0.1.1          
+[151] xtable_1.8-4              jsonlite_1.8.7           
+[153] nloptr_2.0.3              ggtree_3.6.2             
+[155] tidygraph_1.2.3           ggfun_0.1.1              
+[157] R6_2.5.1                  pillar_1.9.0             
+[159] htmltools_0.5.5           glue_1.6.2               
+[161] fastmap_1.1.1             minqa_1.2.5              
+[163] BiocParallel_1.32.6       BiocNeighbors_1.16.0     
+[165] codetools_0.2-19          fgsea_1.24.0             
+[167] mvtnorm_1.2-2             utf8_1.2.3               
+[169] lattice_0.21-8            bslib_0.5.0              
+[171] tibble_3.2.1              pbkrtest_0.5.2           
+[173] numDeriv_2016.8-1.1       ggbeeswarm_0.7.2         
+[175] gtools_3.9.4              GO.db_3.16.0             
+[177] limma_3.54.2              glmmTMB_1.1.8            
+[179] rmarkdown_2.23            munsell_0.5.0            
+[181] GetoptLong_1.0.5          GenomeInfoDbData_1.2.9   
+[183] iterators_1.0.14          variancePartition_1.28.9 
+[185] reshape2_1.4.4            gtable_0.3.3             
+[187] rbibutils_2.2.13         </code></pre>
 </div>
 </div>
 
