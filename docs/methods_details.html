@@ -14,7 +14,7 @@
 
 <title>Methods details</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -366,7 +366,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -375,7 +377,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -384,17 +388,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-06-06
+<strong>Last updated:</strong> 2023-11-13
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>DEanalysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>DEanalysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -403,55 +417,100 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree3b1c8ca23e5cf81840f1c20f0171842c96960ceatargetblank3b1c8caa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/C-HW/DEanalysis/tree/3b1c8ca23e5cf81840f1c20f0171842c96960cea" target="_blank">3b1c8ca</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree85fc2fed835fe58cb92639089d012fa09c239d46targetblank85fc2fea">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/C-HW/DEanalysis/tree/85fc2fed835fe58cb92639089d012fa09c239d46" target="_blank">85fc2fe</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree3b1c8ca23e5cf81840f1c20f0171842c96960ceatargetblank3b1c8caa" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree85fc2fed835fe58cb92639089d012fa09c239d46targetblank85fc2fea"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/C-HW/DEanalysis/tree/3b1c8ca23e5cf81840f1c20f0171842c96960cea" target="_blank">3b1c8ca</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/C-HW/DEanalysis/tree/85fc2fed835fe58cb92639089d012fa09c239d46" target="_blank">85fc2fe</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Untracked files:
     Untracked:  .DS_Store
+    Untracked:  .Rhistory
     Untracked:  analysis/.DS_Store
     Untracked:  analysis/.Rhistory
+    Untracked:  analysis/Bcells.Rmd
+    Untracked:  analysis/CD14+ Monocytes.Rmd
+    Untracked:  analysis/analysis on Kang.Rmd
+    Untracked:  analysis/data2.Rmd
     Untracked:  analysis/data_clusters.Rmd
+    Untracked:  analysis/figure/
     Untracked:  analysis/group12_13.Rmd
+    Untracked:  analysis/group12_19.Rmd
     Untracked:  analysis/group2_19.Rmd
     Untracked:  analysis/group8_17&2_19.Rmd
+    Untracked:  analysis/group8_17.Rmd
     Untracked:  analysis/methods_details.Rmd
     Untracked:  analysis/new_criteria.Rmd
+    Untracked:  data/.Rhistory
+    Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
+    Untracked:  data/10Xdata_annotate.rds
+    Untracked:  data/Bcells.Rmd
+    Untracked:  data/Bcellsce.rds
+    Untracked:  data/data2sce.RData
+    Untracked:  data/vstcounts.Rdata
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   code/DE_methods.R
+    Modified:   code/functions_in_rmd.R
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -462,7 +521,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/methods_details.Rmd</code>) and HTML (<code>docs/methods_details.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/methods_details.Rmd</code>) and
+HTML (<code>docs/methods_details.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -491,6 +555,23 @@ Message
 html
 </td>
 <td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/methods_details.html" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+<td>
+add group8_17&amp;2_19
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
 <a href="https://rawcdn.githack.com/C-HW/DEanalysis/2107af314e94546d55eb2980a145072271b951af/docs/methods_details.html" target="_blank">2107af3</a>
 </td>
 <td>
@@ -510,42 +591,138 @@ add methods_details
 </div>
 </div>
 </div>
-<p>In this project, we compare a few methods performing the DE analysis results. Each of them might use different input data ,different statistical model and different FDR control on p-values.</p>
+<p>In this project, we compare a few methods performing the DE analysis
+results. Each of them might use different input data ,different
+statistical model and different FDR control on p-values.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="5%" />
+<col width="6%" />
+<col width="28%" />
+<col width="15%" />
+<col width="7%" />
+<col width="9%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">Poisson-glmm</th>
+<th align="center">Binomial-glmm</th>
+<th align="center">Pb-DESeq2</th>
+<th align="center">Pb-edgeR</th>
+<th align="center">MAST</th>
+<th align="center">Wilcox</th>
+<th align="center">MMvst</th>
+<th align="center">MMpoisson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Package</td>
+<td align="center">Our method</td>
+<td align="center">Our method</td>
+<td align="center">Muscat</td>
+<td align="center">Muscat</td>
+<td align="center">MAST</td>
+<td align="center">Seurat</td>
+<td align="center">Muscat</td>
+<td align="center">Muscat</td>
+</tr>
+<tr class="even">
+<td align="center">Input</td>
+<td align="center">UMI</td>
+<td align="center">zero proportion</td>
+<td align="center">UMI</td>
+<td align="center">CPM</td>
+<td align="center">CPM</td>
+<td align="center">Integrated/Log normalized</td>
+<td align="center">VST</td>
+<td align="center">UMI</td>
+</tr>
+<tr class="odd">
+<td align="center">Model base</td>
+<td align="center">Poisson glmm</td>
+<td align="center">Binomial glmm</td>
+<td align="center">Negative binomial model</td>
+<td align="center">Negative binomial model</td>
+<td align="center">Zero-inflated model</td>
+<td align="center">Rank-sum test</td>
+<td align="center">Linear mixed model</td>
+<td align="center">Poisson glmm</td>
+</tr>
+<tr class="even">
+<td align="center">Normalization</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">V</td>
+<td align="center">V</td>
+<td align="center">V</td>
+<td align="center">V</td>
+<td align="center">V</td>
+<td align="center">V</td>
+</tr>
+<tr class="odd">
+<td align="center">Normalization method</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">Median of ratio size factor, variance stabilizing
+transformation in model</td>
+<td align="center">In data, trimmed mean of M values (TMM) in model</td>
+<td align="center">In data</td>
+<td align="center">In data</td>
+<td align="center">In data</td>
+<td align="center">Library size factor as offset</td>
+</tr>
+</tbody>
+</table>
 <div id="poisson-glmm" class="section level1">
 <h1>Poisson GLMM</h1>
 <ul>
 <li>Input:
 <ul>
-<li>sce: A SingleCellExpreriment object containing raw counts generated by 10X protocol<br />
+<li>sce: A SingleCellExpreriment object containing raw counts generated
+by 10X protocol<br />
 </li>
 <li>cellgroups: A vector labeling the cell groups<br />
 </li>
 <li>repgroups: A vector labeling the replicates (donors)<br />
 </li>
-<li>freq_expressed: A threshold value of gene expression frequency (default = <span class="math inline">\(0.05\)</span>)</li>
+<li>freq_expressed: A threshold value of gene expression frequency
+(default = <span class="math inline">\(0.05\)</span>)</li>
 </ul></li>
 <li>Details:
 <ul>
-<li><p>Only genes that pass the threshold for gene expression frequency will be considered as inputs.</p></li>
-<li><p>For each gene, we run a poisson glmm method (glmmPQL) on the raw counts with cellgroups as fixed effect and repgroups as random effect <span class="math display">\[
+<li><p>Only genes that pass the threshold for gene expression frequency
+will be considered as inputs.</p></li>
+<li><p>For each gene, we run a poisson glmm method (glmmPQL) on the raw
+counts with cellgroups as fixed effect and repgroups as random effect
+<span class="math display">\[
 \begin{aligned}
 X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
 \log \lambda_{cgk} &amp; = \mu_g + X_c{\beta_g} + \epsilon_{gk}\\
 \end{aligned}
 \]</span></p></li>
-<li><p>If the algorithm doesn’t converge, the gene will be excluded.</p></li>
+<li><p>If the algorithm doesn’t converge, the gene will be
+excluded.</p></li>
 </ul></li>
 <li>Output:
 <ul>
 <li>mu: The base line log mean count for the first cell group</li>
 <li>beta_cellgroup: The coefficient of cellgroups</li>
-<li>log2FC: log2 fold change <span class="math inline">\(\log_2(e^{\beta_g})\)</span> of counts between the two groups. Positive values indicate that the gene is more expressed in the second group.</li>
+<li>log2FC: log2 fold change <span
+class="math inline">\(\log_2(e^{\beta_g})\)</span> of counts between the
+two groups. Positive values indicate that the gene is more expressed in
+the second group.</li>
 <li>pval: Unadjusted p-value</li>
 <li>BH: Adjusted p-value by Benjamini-Hochberg procedure</li>
 <li>REvariation:</li>
 <li>FEvariation:</li>
 <li>RESvariation:</li>
-<li>hits: Indicating whether the gene is a DEG based on the <a href="new_criteria.html">new criteria</a></li>
+<li>hits: Indicating whether the gene is a DEG based on the <a
+href="new_criteria.html">new criteria</a></li>
 </ul></li>
 </ul>
 </div>
@@ -554,69 +731,49 @@ X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
 <ul>
 <li>Input:
 <ul>
-<li>sce: A SingleCellExpreriment object containing raw counts generated by 10X protocol<br />
+<li>sce: A SingleCellExpreriment object containing raw counts generated
+by 10X protocol<br />
 </li>
 <li>cellgroups: A vector labeling the cell groups<br />
 </li>
 <li>repgroups: A vector labeling the replicates (donors)<br />
 </li>
-<li>freq_expressed: A threshold value of gene expression frequency (default = <span class="math inline">\(0.05\)</span>)</li>
+<li>freq_expressed: A threshold value of gene expression frequency
+(default = <span class="math inline">\(0.05\)</span>)</li>
 </ul></li>
 <li>Details:
 <ul>
-<li><p>Only genes that pass the threshold for gene expression frequency will be considered as inputs.</p></li>
-<li><p>We take the zero proportion of each gene as the response in the binomial model. (<span class="math inline">\(1\)</span> if the read count is zero; otherwise <span class="math inline">\(0\)</span>.)</p></li>
-<li><p>For each gene, we run a binomial glmm method (glmmPQL) on the zero proportion with cellgroups as fixed effect and repgroups as random effect <span class="math display">\[
+<li><p>Only genes that pass the threshold for gene expression frequency
+will be considered as inputs.</p></li>
+<li><p>We take the zero proportion of each gene as the response in the
+binomial model. (<span class="math inline">\(1\)</span> if the read
+count is zero; otherwise <span
+class="math inline">\(0\)</span>.)</p></li>
+<li><p>For each gene, we run a binomial glmm method (glmmPQL) on the
+zero proportion with cellgroups as fixed effect and repgroups as random
+effect <span class="math display">\[
 \begin{aligned}
 \mathbb{1}_{X_{cgk}=0}|p_{cgk} &amp; \sim Bernoulli(p_{cgk})\\
-\log \frac{p_{cgk}}{1-p_{cgk}} &amp; = \mu_g + X_c\beta_{g} + \epsilon_{gk}\\
+\log \frac{p_{cgk}}{1-p_{cgk}} &amp; = \mu_g + X_c\beta_{g} +
+\epsilon_{gk}\\
 \end{aligned}
 \]</span></p></li>
-<li><p>If the algorithm doesn’t converge, the gene will be excluded.</p></li>
+<li><p>If the algorithm doesn’t converge, the gene will be
+excluded.</p></li>
 </ul></li>
 <li>Output:
 <ul>
-<li>mu: The base line of logit zero proportion for the first cell group</li>
+<li>mu: The base line of logit zero proportion for the first cell
+group</li>
 <li>beta_cellgroup: The coefficient of cellgroups</li>
-<li>log2FC: In Binomial GLMM, <span class="math inline">\(\log_2(e^{\beta_g})\)</span> represents the log2 odds ratio change between group1 and group2. Positive values indicate that the gene is more expressed in the second group.</li>
+<li>log2FC: In Binomial GLMM, <span
+class="math inline">\(\log_2(e^{\beta_g})\)</span> represents the log2
+odds ratio change between group1 and group2. Positive values indicate
+that the gene is more expressed in the second group.</li>
 <li>pval: Unadjusted p-value</li>
 <li>BH: Adjusted p-value by Benjamini-Hochberg procedure</li>
-<li>hits: Indicating whether the gene is a DEG based on the <a href="new_criteria.html">new criteria</a></li>
-</ul></li>
-</ul>
-</div>
-<div id="poisson-glm-withwithout-donor-effect" class="section level1">
-<h1>Poisson GLM with/without donor effect</h1>
-<ul>
-<li>Input:
-<ul>
-<li>sce: A SingleCellExpreriment object containing raw counts generated by 10X protocol<br />
-</li>
-<li>cellgroups: A vector labeling the cell groups<br />
-</li>
-<li>repgroups: A vector labeling the replicates (donors) (NA if without donor effect)</li>
-<li>freq_expressed: A threshold value of gene expression frequency (default = <span class="math inline">\(0.05\)</span>)</li>
-</ul></li>
-<li>Details:
-<ul>
-<li><p>Only genes that pass the threshold for gene expression frequency will be considered as inputs.</p></li>
-<li><p>For each gene, we run a poisson glm method (stats::glm) on the raw counts with cellgroups as fixed effect (adding repgroups if with donor effect) <span class="math display">\[
-\begin{aligned}
-X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
-\log \lambda_{cgk} &amp; = \mu_g + X_c{\beta_g}\\
-\end{aligned}
-\]</span></p></li>
-<li><p>If the algorithm doesn’t converge, the gene will be excluded.</p></li>
-</ul></li>
-<li>Output:
-<ul>
-<li>mu: The base line log mean count for the first cell group</li>
-<li>beta_cellgroup: The coefficient of cellgroups</li>
-<li>log2FC: log2 fold change <span class="math inline">\(\log_2(e^{\beta_g})\)</span> of counts between the two groups. Positive values indicate that the gene is more expressed in the second group.</li>
-<li>pval: Unadjusted p-value</li>
-<li>BH: Adjusted p-value by Benjamini-Hochberg procedure</li>
-<li>Rsquared: 1 - deviance/null.deviance</li>
-<li>hits: Indicating whether the gene is a DEG based on the <a href="new_criteria.html">new criteria</a></li>
+<li>hits: Indicating whether the gene is a DEG based on the <a
+href="new_criteria.html">new criteria</a></li>
 </ul></li>
 </ul>
 </div>
@@ -625,26 +782,66 @@ X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
 <ul>
 <li>Input:
 <ul>
-<li>sce: A SingleCellExpreriment object containing raw counts generated by 10X protocol<br />
+<li>sce: A SingleCellExpreriment object containing raw counts generated
+by 10X protocol<br />
 </li>
-<li>cellgroups: A vector labeling the cell groups<br />
-</li>
-<li>repgroups: A vector labeling the replicates (donors) (NA if without donor effect)</li>
+<li>group_id: A feature labeling the cell groups or states</li>
+<li>sample_id: A feature labeling the replicates (donors)</li>
 </ul></li>
 <li>Details:
 <ul>
 <li>Aggregate the counts within same donor and same cell group.</li>
-<li>Run DEseq2 methods on the pseudobulk counts with cellgroups and repgroups as covaraites.</li>
-<li>DESeq2 performs an internal normalization and use the median of ratios as the size factor.</li>
-<li>DESeq2 fits negative binomial generalized linear models for each gene and uses the Wald test for significance testing.</li>
+<li>Run Muscat::pbDS(pb, method = “DESeq2”) on the pseudobulk
+counts</li>
+<li>DESeq2 performs an internal normalization and use the median of
+ratios as the size factor.</li>
+<li>DESeq2 fits negative binomial generalized linear models for each
+gene and uses the Wald test for significance testing.</li>
+<li><a
+href="https://bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html">Ref</a></li>
 </ul></li>
 <li>Output:
 <ul>
-<li>baseMean: The average of the normalized counts taken over all samples</li>
-<li>log2FC: log2 fold change of counts between the two groups. Positive values indicate that the gene is more expressed in the first group.</li>
+<li>log2FC: log2 fold change of counts between the two groups. Positive
+values indicate that the gene is more expressed in the first group.</li>
 <li>pval: Unadjusted p-value</li>
-<li>padj: Adjusted p-value by Benjamini-Hochberg procedure. If a row is filtered by automatic independent filtering, for having a low mean normalized count, then only the adjusted p value will be set to NA. See the <a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#differential-expression-analysis">details</a>.</li>
-<li>hits: Indicating whether the gene is a DEG. TRUE if the padj is smaller than 0.05 and absolute log2FC is greater than <span class="math inline">\(\log_2(1.5)\)</span>.</li>
+<li>BH: Adjusted p-value by Benjamini-Hochberg procedure.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if BH is smaller
+than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
+</ul></li>
+</ul>
+</div>
+<div id="pseudobulk-edger" class="section level1">
+<h1>Pseudobulk edgeR</h1>
+<ul>
+<li>Input:
+<ul>
+<li>sce: A SingleCellExpreriment object containing CPM counts</li>
+<li>cellgroups: A vector labeling the cell groups<br />
+</li>
+<li>repgroups: A vector labeling the replicates (donors) (NA if without
+donor effect)</li>
+</ul></li>
+<li>Details:
+<ul>
+<li>Aggregate the CPM counts within same donor and same cell group.</li>
+<li>Run Muscat::pbDS(pb, method = “edgeR”) on the pseudobulk counts</li>
+<li>EdgeR uses TMM method to compute normalization factors which are
+multiplied by the library size to yield the effective library size.</li>
+<li>EdgeR fits negative binomial generalized linear models.</li>
+<li><a
+href="https://bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html">Ref</a></li>
+</ul></li>
+<li>Output:
+<ul>
+<li>log2FC: log2 fold change of counts between the two groups. Positive
+values indicate that the gene is more expressed in the first group.</li>
+<li>pval: Unadjusted p-value</li>
+<li>BH: Adjusted p-value by Benjamini-Hochberg procedure.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if BH is smaller
+than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
 </ul></li>
 </ul>
 </div>
@@ -653,27 +850,36 @@ X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
 <ul>
 <li>Input:
 <ul>
-<li>sce: A SingleCellExpreriment object containing raw counts generated by 10X protocol<br />
-</li>
+<li>sce: A SingleCellExpreriment object containing raw counts generated
+by 10X protocol</li>
 <li>cellgroups: A vector labeling the cell groups<br />
 </li>
-<li>repgroups: A vector labeling the replicates (donors) (NA if without donor effect)</li>
-<li>freq_expressed: A threshold value of gene expression frequency (default = <span class="math inline">\(0.05\)</span>)</li>
+<li>repgroups: A vector labeling the replicates (donors) (NA if without
+donor effect)</li>
+<li>freq_expressed: A threshold value of gene expression frequency
+(default = <span class="math inline">\(0.05\)</span>)</li>
 </ul></li>
 <li>Details:
 <ul>
-<li>Only genes that pass the threshold for gene expression frequency will be considered as inputs.</li>
-<li>Transform the raw counts to log2 (cpm count + 1).</li>
+<li>Only genes that pass the threshold for gene expression frequency
+will be considered as inputs.</li>
+<li>Transform the raw counts to log2 (CPM + 1).</li>
 <li>Compute cdr(cellular detection rate).</li>
-<li>Run MAST methods on the log2 transformed counts with cellgroups, repgroups and cdr as covaraites.</li>
-<li>MAST fits zero inflated generalized linear models for each gene and use likelihood ratio test for significance testing.</li>
+<li>Run MAST methods on the log2 transformed counts with cellgroups,
+repgroups and cdr as covaraites.</li>
+<li>MAST fits zero inflated generalized linear models for each gene and
+use likelihood ratio test for significance testing. -<a
+href="https://rglab.github.io/MAST/articles/MAITAnalysis.html#differential-expression-using-a-hurdle-model">Ref</a></li>
 </ul></li>
 <li>Output:
 <ul>
-<li>log2FC: log2 fold change of counts between the two groups. Positive values indicate that the gene is more expressed in the first group.</li>
+<li>log2FC: log2 fold change of counts between the two groups. Positive
+values indicate that the gene is more expressed in the first group.</li>
 <li>pval: Unadjusted p-value</li>
-<li>padj: Adjusted p-value by Benjamini-Hochberg procedure.</li>
-<li>hits: Indicating whether the gene is a DEG. TRUE if the padj is smaller than 0.05 and absolute log2FC is greater than <span class="math inline">\(\log_2(1.5)\)</span>.</li>
+<li>BH: Adjusted p-value by Benjamini-Hochberg procedure.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if the padj is
+smaller than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
 </ul></li>
 </ul>
 </div>
@@ -682,25 +888,100 @@ X_{cgk}|\lambda_{cgk} &amp; \sim Poisson(\lambda_{cgk})\\
 <ul>
 <li>Input:
 <ul>
-<li>object: A Seurat object containing normalized/integrated counts obtained from Seurat package<br />
+<li>object: A Seurat object containing normalized/integrated counts
+obtained from Seurat package<br />
 </li>
 <li>ident.1: Indices of the first group<br />
 </li>
 <li>ident.2: Indices of the second group</li>
-<li>test.use: Denotes which test to use. (“wilcox”:Wilcoxon Rank Sum test)</li>
-<li>min.pct: Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. (Default is 0.1)</li>
-<li>logfc.threshold: Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. (Default is 0.25.)</li>
+<li>test.use: Denotes which test to use. (“wilcox”:Wilcoxon Rank Sum
+test)</li>
+<li>min.pct: Only test genes that are detected in a minimum fraction of
+min.pct cells in either of the two populations. (Default is 0.1)</li>
+<li>logfc.threshold: Limit testing to genes which show, on average, at
+least X-fold difference (log-scale) between the two groups of cells.
+(Default is 0.25.)</li>
 </ul></li>
 <li>Details:
 <ul>
-<li>Run Wilcox methods (Seurat::FindMarkers) on the normalized/integrated counts.</li>
+<li>Rand-sum test</li>
+<li>Run Wilcox methods (Seurat::FindMarkers) on the
+normalized/integrated counts.</li>
+<li><a
+href="https://satijalab.org/seurat/articles/de_vignette">Ref</a></li>
 </ul></li>
 <li>Output:
 <ul>
-<li>avg_log2FC: log2 fold change of mean counts between the two groups. Positive values indicate that the gene is more expressed in the first group. <span class="math inline">\(\log_2(mean_1+1)-\log_2(mean_2+1)\)</span></li>
+<li>avg_log2FC: log2 fold change of mean counts between the two groups.
+Positive values indicate that the gene is more expressed in the first
+group. <span
+class="math inline">\(\log_2(mean_1+1)-\log_2(mean_2+1)\)</span></li>
 <li>p_val: Unadjusted p-value</li>
-<li>p_adj: Adjusted p-value by Bonferroni correction.</li>
-<li>hits: Indicating whether the gene is a DEG. TRUE if the padj is smaller than 0.05 and absolute log2FC is greater than <span class="math inline">\(\log_2(1.5)\)</span>.</li>
+<li>p_val_adj: Adjusted p-value by Bonferroni correction.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if the p_val_adj is
+smaller than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
+</ul></li>
+</ul>
+</div>
+<div id="mmvst" class="section level1">
+<h1>MMvst</h1>
+<ul>
+<li>Input:
+<ul>
+<li>sce: A SingleCellExpreriment object containing VST counts provided
+by sctransform.</li>
+<li>group_id: A feature labeling the cell groups or states</li>
+<li>sample_id: A feature labeling the replicates (donors)</li>
+</ul></li>
+<li>Details:
+<ul>
+<li>Fitting linear mixed models (∼1+group_id+(1|sample_id)) on VST
+data.</li>
+<li><a
+href="https://bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html">Ref</a></li>
+</ul></li>
+<li>Output:
+<ul>
+<li>log2FC: log2 fold change of counts between the two groups. Positive
+values indicate that the gene is more expressed in the first group.</li>
+<li>pval: Unadjusted p-value</li>
+<li>BH: Adjusted p-value by Benjamini-Hochberg procedure.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if BH is smaller
+than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
+</ul></li>
+</ul>
+</div>
+<div id="mmpoisson" class="section level1">
+<h1>MMpoisson</h1>
+<ul>
+<li>Input:
+<ul>
+<li>sce: A SingleCellExpreriment object containing VST counts provided
+by sctransform.</li>
+<li>group_id: A feature labeling the cell groups or states</li>
+<li>sample_id: A feature labeling the replicates (donors)</li>
+</ul></li>
+<li>Details:
+<ul>
+<li>Fitting Poisson generalized linear mixed models
+(∼1+group_id+(1|sample_id)) on raw UMI counts.</li>
+<li>Library size factors are computed and used as the offset in the
+model.<br />
+</li>
+<li><a
+href="https://bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html">Ref</a></li>
+</ul></li>
+<li>Output:
+<ul>
+<li>log2FC: log2 fold change of counts between the two groups. Positive
+values indicate that the gene is more expressed in the first group.</li>
+<li>pval: Unadjusted p-value</li>
+<li>BH: Adjusted p-value by Benjamini-Hochberg procedure.</li>
+<li>hits: Indicating whether the gene is a DEG. TRUE if BH is smaller
+than 0.05 and absolute log2FC is greater than the predetermined
+threshold.</li>
 </ul></li>
 </ul>
 </div>
