@@ -389,11 +389,11 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-08-03
+<strong>Last updated:</strong> 2023-11-13
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
@@ -439,15 +439,99 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree5ee946038b6565ced58775dd29d83d7e79024e83targetblank5ee9460a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230508code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230508)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230508code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230508)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree59872e4a32e69f281ee862caae8d5cd188dd311btargetblank59872e4a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/5ee946038b6565ced58775dd29d83d7e79024e83" target="_blank">5ee9460</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/59872e4a32e69f281ee862caae8d5cd188dd311b" target="_blank">59872e4</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree5ee946038b6565ced58775dd29d83d7e79024e83targetblank5ee9460a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree59872e4a32e69f281ee862caae8d5cd188dd311btargetblank59872e4a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -457,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/5ee946038b6565ced58775dd29d83d7e79024e83" target="_blank">5ee9460</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/59872e4a32e69f281ee862caae8d5cd188dd311b" target="_blank">59872e4</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -491,7 +575,6 @@ Untracked files:
     Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/.Rhistory
     Untracked:  data/10X_Kang_DEresult.RData
-    Untracked:  data/10X_Kang_data.Rdata
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
@@ -499,10 +582,13 @@ Untracked files:
     Untracked:  data/10X_inputdata_lognorm.RData
     Untracked:  data/10Xdata_annotate.rds
     Untracked:  data/Bcells.Rmd
+    Untracked:  data/Bcellsce.rds
     Untracked:  data/data2sce.RData
+    Untracked:  data/vstcounts.Rdata
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
 </code></pre>
@@ -548,6 +634,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/fc4ab47aef45358f9742d154ee4e6b3963876617/docs/index.html" target="_blank">fc4ab47</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-03
+</td>
+<td>
+data2 results
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -678,7 +781,7 @@ html
 C-HW
 </td>
 <td>
-2023-05-24
+2023-05-25
 </td>
 <td>
 update index page
@@ -695,7 +798,7 @@ Rmd
 C-HW
 </td>
 <td>
-2023-05-24
+2023-05-25
 </td>
 <td>
 update 2_19
@@ -712,7 +815,7 @@ html
 C-HW
 </td>
 <td>
-2023-05-24
+2023-05-25
 </td>
 <td>
 update 2_19
@@ -899,7 +1002,7 @@ Rmd
 C-HW
 </td>
 <td>
-2023-05-08
+2023-05-09
 </td>
 <td>
 create workflowr
@@ -916,7 +1019,7 @@ html
 C-HW
 </td>
 <td>
-2023-05-08
+2023-05-09
 </td>
 <td>
 create workflowr
@@ -966,6 +1069,7 @@ analysis.</p></li>
 detect differentially expressed genes (DEGs) between two given cell
 types. The model takes donor-specific variations as random effects, and
 uses raw UMI counts to prevent biases in DE analysis.</p>
+<p><img src="figure/panel3.png" width="1682" style="display: block; margin: auto;" /></p>
 </div>
 <div id="glmm-for-de-analysis" class="section level2">
 <h2>GLMM for DE analysis</h2>
@@ -1003,18 +1107,48 @@ class="math inline">\(\epsilon_{gk}\sim N(0,\sigma_{g}^2)\)</span>
 represents the random effects for donor <span
 class="math inline">\(k\)</span>. Our goal is to test <span
 class="math inline">\(H_0: \beta_g = 0\)</span>.</p>
-<p><a href="new_criteria.html">new criteria</a><br />
-<a href="methods_details.html">Other Methods details</a></p>
 </div>
+</div>
+<div id="new-criteria-on-determining-degs" class="section level2">
+<h2>New criteria on determining DEGs</h2>
+<p>We proposed new criteria that based on the convention and also the
+gene mean and the difference in mean. If the log2 gene mean in two
+groups is lower than a certain value (-2.25 in case study 1) and the
+log2 mean difference is smaller than a threshold (-1 in case study 1),
+the genes would not be considered as a DEGs. These can also be used as a
+filter before any DE analysis to speed up the computation. Both of these
+criteria are adjustable, depending on the dataset’s performance and
+characteristics. An examination in heatmaps and mean difference against
+mean plot in advanced can be helpful to determine the thresholds when
+analyzing a new dataset. More details can be found <a
+href="new_criteria.html">here</a>.</p>
+</div>
+<div id="benchmarked-methods" class="section level2">
+<h2>Benchmarked methods</h2>
+<p>In this project, we compare a few methods performing the DE analysis
+results. Our comparison encompassed Poisson-glmm and Binomial-glmm from
+the new paradigm, as well as pseudo-bulk approaches including DESeq2 and
+edgeR. Additionally, we assessed the performance of single cell specific
+tools including MAST, Wilcox in Seurat, and linear mixed models in
+Muscat. More details can be found <a
+href="methods_details.html">here</a>.</p>
 </div>
 </div>
 <div id="applications" class="section level1">
 <h1>Applications</h1>
-<div id="analysis-on-data-1" class="section level2">
-<h2>Analysis on Data 1</h2>
+<div id="analysis-on-case-study-1" class="section level2">
+<h2>Analysis on case study 1</h2>
 <ul>
-<li><p>Source and Reference</p></li>
-<li><p>Cells</p></li>
+<li>About data</li>
+</ul>
+<p>In case study 1, a 10X scRNA-seq dataset of post-menopausal fallopian
+tubes, with 57,182 cells sourced from five donors, covering 29,382 genes
+is analyzed. The 20 clusters are obtained via HIPPO algorithm. There is
+no pre-filtering procedure applied on this dataset, except for built-in
+filtering steps in each method. We use sctransform to get the VST data,
+and the integration workflow provided by Seurat to obtain the integrated
+data.</p>
+<ul>
 <li><p>Analyses</p>
 <ul>
 <li><a href="data_clusters.html">Data summary</a><br />
@@ -1034,19 +1168,58 @@ class="math inline">\(H_0: \beta_g = 0\)</span>.</p>
 <div id="analysis-on-data-2" class="section level2">
 <h2>Analysis on Data 2</h2>
 <ul>
-<li><p>Source and Reference</p></li>
-<li><p>Cells</p></li>
+<li><p>About data In case study 2, the dataset contains 10X
+droplet-based scRNA-seq PBCM data from 8 Lupus patients obtained before
+and after 6h-treatment with IFN-<span
+class="math inline">\(\beta\)</span>. After removing undetected genes
+and lowly expressed genes (less than 10 cells expressing more than 1),
+the dataset consists of 29065 cells and 7661 genes. The integrated data
+is replaced by log2-transformed normalized expression values obtained
+via computeLibrarayFactors and logNormCounts functions in
+Muscat.</p></li>
 <li><p>Analyses</p>
 <ul>
 <li><a href="data2.html">Data summary</a></li>
-<li><a href="CD14+-Monocytes.html">CD14+-Monocytes</a></li>
+<li><a href="CD14+-Monocytes.html">CD14+ Monocytes</a></li>
 <li><a href="Bcells.html">B cells</a></li>
 </ul></li>
 </ul>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.11       rstudioapi_0.15.0 whisker_0.4.1     knitr_1.27       
+ [5] magrittr_2.0.3    workflowr_1.7.0   R6_2.5.1          rlang_1.1.1      
+ [9] fastmap_1.1.1     fansi_1.0.4       stringr_1.5.0     tools_4.2.2      
+[13] xfun_0.39         png_0.1-8         utf8_1.2.3        cli_3.6.1        
+[17] jquerylib_0.1.4   git2r_0.32.0      htmltools_0.5.5   rprojroot_2.0.3  
+[21] yaml_2.3.7        digest_0.6.33     tibble_3.2.1      lifecycle_1.0.3  
+[25] later_1.3.1       vctrs_0.6.3       sass_0.4.7        promises_1.2.0.1 
+[29] fs_1.6.3          glue_1.6.2        cachem_1.0.8      evaluate_0.21    
+[33] rmarkdown_2.23    stringi_1.7.12    pillar_1.9.0      compiler_4.2.2   
+[37] bslib_0.5.0       jsonlite_1.8.7    httpuv_1.6.11     pkgconfig_2.0.3  </code></pre>
 </div>
 </div>
-<div id="simulation" class="section level1">
-<h1>Simulation</h1>
 </div>
 
 
