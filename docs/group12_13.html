@@ -388,7 +388,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-08-10
+<strong>Last updated:</strong> 2023-11-29
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -548,15 +548,15 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreeac090b44667c48d65b222c06190b8654b40cfa61targetblankac090b4a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree86545ff7d888c62d447941f3c45770e6db207a30targetblank86545ffa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/ac090b44667c48d65b222c06190b8654b40cfa61" target="_blank">ac090b4</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/86545ff7d888c62d447941f3c45770e6db207a30" target="_blank">86545ff</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreeac090b44667c48d65b222c06190b8654b40cfa61targetblankac090b4a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree86545ff7d888c62d447941f3c45770e6db207a30targetblank86545ffa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -566,7 +566,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/ac090b44667c48d65b222c06190b8654b40cfa61" target="_blank">ac090b4</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/86545ff7d888c62d447941f3c45770e6db207a30" target="_blank">86545ff</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -587,6 +587,7 @@ Untracked files:
     Untracked:  analysis/.Rhistory
     Untracked:  analysis/Bcells.Rmd
     Untracked:  analysis/CD14+ Monocytes.Rmd
+    Untracked:  analysis/FD_analysis.Rmd
     Untracked:  analysis/analysis on Kang.Rmd
     Untracked:  analysis/data2.Rmd
     Untracked:  analysis/data_clusters.Rmd
@@ -600,7 +601,6 @@ Untracked files:
     Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/.Rhistory
     Untracked:  data/10X_Kang_DEresult.RData
-    Untracked:  data/10X_Kang_data.Rdata
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
@@ -608,10 +608,14 @@ Untracked files:
     Untracked:  data/10X_inputdata_lognorm.RData
     Untracked:  data/10Xdata_annotate.rds
     Untracked:  data/Bcells.Rmd
+    Untracked:  data/Bcellsce.rds
     Untracked:  data/data2sce.RData
+    Untracked:  data/permutation.RData
+    Untracked:  data/vstcounts.Rdata
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
 </code></pre>
@@ -663,13 +667,30 @@ Message
 html
 </td>
 <td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/group12_13.html" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+<td>
+update graph
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
 <a href="https://rawcdn.githack.com/C-HW/DEanalysis/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/group12_13.html" target="_blank">f314434</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-25
+2023-07-26
 </td>
 <td>
 add muscat methods
@@ -771,7 +792,7 @@ html
 C-HW
 </td>
 <td>
-2023-05-24
+2023-05-25
 </td>
 <td>
 update 2_19
@@ -845,6 +866,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-8-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-8-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
@@ -870,9 +902,10 @@ C-HW
 </div>
 </div>
 </div>
-<div id="number-of-hits-from-each-method" class="section level1">
-<h1>Number of hits from each method</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="mean-difference-in-raw-datanormalized-data"
+class="section level1">
+<h1>Mean difference in raw data/normalized data</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
 Past versions of unnamed-chunk-12-1.png
@@ -897,13 +930,24 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-12-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-12-1.png" target="_blank">f314434</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-25
+2023-07-26
 </td>
 </tr>
 <tr>
@@ -966,15 +1010,15 @@ C-HW
 </div>
 </div>
 </div>
-<div id="volcano-plot" class="section level1">
-<h1>Volcano plot</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div id="number-of-hits-from-each-method" class="section level1">
+<h1>Number of hits from each method</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
-Past versions of unnamed-chunk-13-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div id="fig-unnamed-chunk-16-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -993,18 +1037,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-13-1.png" target="_blank">f314434</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-16-1.png" target="_blank">f314434</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-25
+2023-07-26
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-13-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-16-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
@@ -1015,7 +1059,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-13-1.png" target="_blank">95be122</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/2107af314e94546d55eb2980a145072271b951af/docs/figure/group12_13.Rmd/unnamed-chunk-16-1.png" target="_blank">2107af3</a>
 </td>
 <td>
 C-HW
@@ -1026,18 +1070,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/2107af314e94546d55eb2980a145072271b951af/docs/figure/group12_13.Rmd/unnamed-chunk-13-1.png" target="_blank">2107af3</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/group12_13.Rmd/unnamed-chunk-13-1.png" target="_blank">13d726d</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/group12_13.Rmd/unnamed-chunk-16-1.png" target="_blank">13d726d</a>
 </td>
 <td>
 C-HW
@@ -1051,15 +1084,15 @@ C-HW
 </div>
 </div>
 </div>
-<div id="histogram-of-p-valueadj.p-value" class="section level1">
-<h1>Histogram of p-value/adj.p-value</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div id="volcano-plot" class="section level1">
+<h1>Volcano plot</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
-Past versions of unnamed-chunk-15-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div id="fig-unnamed-chunk-17-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1078,145 +1111,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-15-1.png" target="_blank">95be122</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/group12_13.Rmd/unnamed-chunk-15-1.png" target="_blank">13d726d</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="violin-plot-of-log2mean-of-hits" class="section level1">
-<h1>Violin plot of log2mean of hits</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
-Past versions of unnamed-chunk-18-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-18-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/group12_13.Rmd/unnamed-chunk-18-1.png" target="_blank">d8c99b1</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-06-16
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group12_13.Rmd/unnamed-chunk-18-1.png" target="_blank">366cd53</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-06-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-18-1.png" target="_blank">95be122</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/2107af314e94546d55eb2980a145072271b951af/docs/figure/group12_13.Rmd/unnamed-chunk-18-1.png" target="_blank">2107af3</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/group12_13.Rmd/unnamed-chunk-18-1.png" target="_blank">13d726d</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-05-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="violin-plot-of-gene-expression-frequency-of-hits"
-class="section level1">
-<h1>Violin plot of gene expression frequency of hits</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
-Past versions of unnamed-chunk-21-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-21-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">3121ffb</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-17-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
 C-HW
@@ -1227,13 +1122,13 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">95be122</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-17-1.png" target="_blank">95be122</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-05-24
+2023-05-25
 </td>
 </tr>
 </tbody>
@@ -1241,10 +1136,71 @@ C-HW
 </div>
 </div>
 </div>
-<div id="heatmap-of-top-hits" class="section level1">
-<h1>Heatmap of top hits</h1>
-<div id="hits-in-all-datasets" class="section level2">
-<h2>Hits in all datasets</h2>
+<div id="histogram-of-p-valueadj.p-value" class="section level1">
+<h1>Histogram of p-value/adj.p-value</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-19-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-19-1.png" target="_blank">f314434</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-19-1.png" target="_blank">7ee9782</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/group12_13.Rmd/unnamed-chunk-19-1.png" target="_blank">13d726d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="violin-plot-of-log2mean-of-degs" class="section level1">
+<h1>Violin plot of log2mean of DEGs</h1>
 <p><img src="figure/group12_13.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
@@ -1270,13 +1226,24 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">f314434</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-25
+2023-07-26
 </td>
 </tr>
 <tr>
@@ -1305,13 +1272,17 @@ C-HW
 </table>
 </div>
 </div>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="violin-plot-of-gene-expression-frequency-of-degs"
+class="section level1">
+<h1>Violin plot of gene expression frequency of DEGs</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
-Past versions of unnamed-chunk-24-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
+Past versions of unnamed-chunk-25-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-24-1" class="collapse">
+<div id="fig-unnamed-chunk-25-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1330,7 +1301,29 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-24-1.png" target="_blank">3121ffb</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">7ee9782</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/ccb68e234497bcf80b69f3012922815aca116a93/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">ccb68e2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
 C-HW
@@ -1343,13 +1336,55 @@ C-HW
 </table>
 </div>
 </div>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="hits-not-in-integrated-data" class="section level2">
-<h2>Hits not in integrated data</h2>
-<p>Since the integrated data only contains 2000 genes, some hits are not
-included in all dataset. Here we show those hits in raw data.
-<img src="figure/group12_13.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="heatmap-of-top-degs" class="section level1">
+<h1>Heatmap of top DEGs</h1>
+<div id="poisson-glmm-degs" class="section level2">
+<h2>Poisson-glmm DEGs</h2>
+<div id="umi-counts" class="section level3">
+<h3>UMI counts</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-1">
+Past versions of unnamed-chunk-26-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-26-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-26-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="vst-data" class="section level3">
+<h3>VST data</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-28-1">
 Past versions of unnamed-chunk-28-1.png
@@ -1372,6 +1407,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-28-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/ccb68e234497bcf80b69f3012922815aca116a93/docs/figure/group12_13.Rmd/unnamed-chunk-28-1.png" target="_blank">ccb68e2</a>
@@ -1399,16 +1445,15 @@ C-HW
 </div>
 </div>
 </div>
-</div>
-<div id="ma-plot" class="section level1">
-<h1>MA plot</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-29-1.png" width="768" style="display: block; margin: auto;" /></p>
+<div id="cpm-data" class="section level3">
+<h3>CPM data</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-29-1">
-Past versions of unnamed-chunk-29-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-30-1">
+Past versions of unnamed-chunk-30-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-29-1" class="collapse">
+<div id="fig-unnamed-chunk-30-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1427,7 +1472,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-29-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-30-1.png" target="_blank">f314434</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-30-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
@@ -1436,16 +1492,25 @@ C-HW
 2023-07-13
 </td>
 </tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-30-1.png" target="_blank">3121ffb</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-22
+</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div id="enrichment-analysis" class="section level1">
-<h1>Enrichment analysis</h1>
-<div id="go-object" class="section level2">
-<h2>GO object</h2>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-31-1.png" width="768" style="display: block; margin: auto;" /></p>
+<div id="integrated-data" class="section level3">
+<h3>Integrated data</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
 Past versions of unnamed-chunk-31-1.png
@@ -1470,6 +1535,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
@@ -1483,13 +1559,18 @@ C-HW
 </table>
 </div>
 </div>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-32-1.png" width="1344" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="ma-plot" class="section level1">
+<h1>MA plot</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-33-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-32-1">
-Past versions of unnamed-chunk-32-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-33-1">
+Past versions of unnamed-chunk-33-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-32-1" class="collapse">
+<div id="fig-unnamed-chunk-33-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1508,7 +1589,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-32-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/C-HW/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-33-1.png" target="_blank">f314434</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-07-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-33-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
@@ -1522,10 +1614,49 @@ C-HW
 </div>
 </div>
 </div>
-<div id="enrichkegg-object" class="section level2">
-<h2>enrichKEGG object</h2>
+<div id="enrichment-analysis" class="section level1">
+<h1>Enrichment analysis</h1>
+<div id="go-object" class="section level2">
+<h2>GO object</h2>
 <p><img src="figure/group12_13.Rmd/unnamed-chunk-35-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-36-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-35-1">
+Past versions of unnamed-chunk-35-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-35-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-35-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-36-1.png" width="1344" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-36-1">
 Past versions of unnamed-chunk-36-1.png
@@ -1550,6 +1681,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
@@ -1563,6 +1705,11 @@ C-HW
 </table>
 </div>
 </div>
+</div>
+<div id="enrichkegg-object" class="section level2">
+<h2>enrichKEGG object</h2>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-39-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-40-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1625,7 +1772,7 @@ loaded via a namespace (and not attached):
  [67] cli_3.6.1              generics_0.1.3         RSQLite_2.3.1         
  [70] gson_0.1.0             broom_1.0.5            evaluate_0.21         
  [73] stringr_1.5.0          fastmap_1.1.1          yaml_2.3.7            
- [76] ggtree_3.6.2           knitr_1.43             bit64_4.0.5           
+ [76] ggtree_3.6.2           knitr_1.27             bit64_4.0.5           
  [79] fs_1.6.3               tidygraph_1.2.3        purrr_1.0.1           
  [82] KEGGREST_1.38.0        ggraph_2.1.0           nlme_3.1-162          
  [85] whisker_0.4.1          KEGGgraph_1.58.3       aplot_0.1.10          
