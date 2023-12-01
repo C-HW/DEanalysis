@@ -2,8 +2,7 @@
 title: "DE analysis on scRNA data with poisson GLMM"
 site: workflowr::wflow_site
 output:
-  workflowr::wflow_html:
-    toc: false
+  workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---

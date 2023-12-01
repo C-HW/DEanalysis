@@ -1,0 +1,843 @@
+---
+title: "Data and Clusters"
+author: "Chih-Hsuan Wu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r, setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(SingleCellExperiment)
+library(reshape2)
+library(Seurat)
+```
+
+```{r}
+hippo_palette = c(
+  "#A0522D", "#6A00FF", "#A4C400", "#6D8764", "#F472D0",
+  "#76608A", "#A20025", "#00ABA9", "#F0A30A", "#008A00",
+  "#647687", "#1BA1E2", "#FA6800", "#825A2C", "#0050EF",
+  "#E3C800", "#E51400", "#D80073", "#60A917", "#AA00FF")
+donors_palette = c("#FDA4AF", "#FCD34D", "#BEF264", "#67E8F9", "#A5B4FC")
+remove_y = theme(
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank(),
+  axis.title.y = element_blank()
+)
+```
+
+# Data introduction
+
+For this project, we are analyzing an scRNA-seq dataset that comprises human immune cells. The dataset consists of a total of 57,182 cells contributed by 5 donors, and it includes sequencing data for 29,382 genes. The raw counts represent UMI counts generated using 10X protocols.
+
+In this project, we utilize four distinct datasets as inputs.
+
+- Raw data: This refers to the raw UMI counts generated from 10X protocols without any normalization or adjustments applied.
+
+- (Unused) Seurat normalized data: This data type represents the counts from each input sample after normalization using the 'Seurat::NormalizeData(x, normalization.method = "LogNormalize", scale.factor = 10000)' function. This normalization method helps to account for differences in library sizes between samples and scales the data by a factor of 10,000.
+
+- Integrated data: The integrated data refers to the normalized counts after removing batch effects. This dataset only contains information for 2000 genes. The purpose of removing batch effects is to minimize any systematic differences introduced by technical variations across different experimental batches.
+
+- CPM data: CPM stands for Counts Per Million. This data is obtained by dividing the counts by the sum of library counts and multiplying the result by a million. The CPM values provide a normalized representation of the expression levels, allowing for meaningful comparisons between samples while accounting for differences in library sizes.
+
+
+- VST data: VST data (variance stabilizing transformation) is computed via the sctransform package (Hafemeister and Satija 2019), which returns Pearson residuals from a regularized negative binomial regression model that can be interpreted as normalized expression values.
+
+# Library size
+
+Before focusing on specific cell types (NK/T), it is important to examine the original dataset, which consists of various cell types. The normalization and integration processes are performed on the entire dataset. It is worth noting that during the preprocessing stage, the specific cell types are typically unknown.
+
+The violin plot presented below illustrates the significant variation in library size among different cell types. This discrepancy can lead to erroneous underestimation or overestimation of gene counts during normalization procedures.
+
+```{r, include=FALSE}
+alldata = readRDS("./data/10Xdata_annotate.rds")
+AllCelltypePrep = subset(alldata, subset = expCond2 %in% c("D3","D4","D5","D6","D7"))
+rm(alldata)
+gc()
+
+AllCelltypePrep@active.ident = recode(AllCelltypePrep@active.ident,
+                                      "ST1" = "ST",
+                                      "ST2" = "ST",
+                                      "ST3" = "ST",
+                                      "ST4" = "ST",
+                                      "ST5" = "ST",
+                                      "P/V1" = "P/V",
+                                      "P/V2" = "P/V",
+                                      "P/V3" = "P/V",
+                                      "EN1" = "EN",
+                                      "EN2" = "EN",
+                                      "EN3" = "EN",
+                                      "EN4" = "EN",
+                                      "T/NK1" = "T/NK",
+                                      "T/NK2" = "T/NK",
+                                      "T/NK3" = "T/NK",
+                                      )
+load("./data/10X_inputdata_integrated.RData")
+integrated_genes = rownames(inputData_integrated)
+rm(inputData_integrated)
+gc()
+```
+
+## All genes
+```{r, fig.width=10}
+df = data.frame(libsize = colSums(AllCelltypePrep@assays$RNA@counts), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
+
+libsize_raw_all = ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=libsize, fill = Donor)) + 
+  geom_violin() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ggtitle("Raw UMI counts") +
+  ylim(c(0,2e4)) + 
+  scale_fill_manual(values = donors_palette) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+libsize_raw_all
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/library_size_before_allgenes.pdf", width = 12, height = 5)
+libsize_raw_all
+dev.off()
+```
+
+## Genes shown in all dataset
+```{r, fig.width=10}
+df = data.frame(libsize = colSums(AllCelltypePrep@assays$RNA@counts[integrated_genes,]), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
+
+libsize_raw_common = ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=libsize, fill = Donor)) + 
+  geom_violin() + 
+  theme_minimal() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ggtitle("Raw UMI counts") +
+  ylim(c(0,6e3)) + 
+  scale_fill_manual(values = donors_palette) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+libsize_raw_common
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/library_size_before.pdf", width = 12, height = 5)
+libsize_raw_common
+dev.off()
+```
+
+```{r, fig.width=9}
+df = data.frame(libsize = colSums(exp(AllCelltypePrep@assays$integrated@data)-1), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
+
+libsize_integrated = ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=libsize, fill = Donor)) +
+  geom_violin() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ggtitle("Inversed log(x+1) Integrated data") +
+  ylim(c(0,6e3)) + 
+  scale_fill_manual(values = donors_palette) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+libsize_integrated
+```
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/library_size_after.pdf", width = 12, height = 5)
+libsize_integrated
+dev.off()
+```
+
+
+# Gene expression frequency
+
+```{r, fig.width=9}
+df = data.frame(freq = colMeans(AllCelltypePrep@assays$RNA@counts>0), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_freq.pdf", width = 12, height = 5)
+ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=freq, fill = Donor)) + 
+  geom_violin() + 
+  ylab("Gene expression frequency") + 
+  xlab("") + 
+  ggtitle("Raw UMI counts") +
+  scale_fill_manual(values = donors_palette) + 
+  ylim(c(0,0.2)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+# dev.off()
+```
+
+```{r}
+rm(AllCelltypePrep)
+# raw data with hippo cluster labels
+load("./data/10X_inputdata.RData")
+# Seurat normalized data
+load("./data/10X_inputdata_lognorm.RData")
+# Integrated data without batch effect
+load("./data/10X_inputdata_integrated.RData")
+
+load("./data/10X_inputdata_cpm.RData")
+load("./data/vstcounts.RData")
+# library(sctransform)
+# vstcounts = vst(counts(inputData), verbosity = FALSE)$y
+# save(vstcounts, file = "vstcounts.Rdata")
+```
+# Gene expression distribution
+
+## All genes
+```{r, fig.height= 8, fig.width=8}
+rawcts.v = as.vector(inputData@assays@data$counts)
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_allgenes.pdf", width = 12, height = 12)
+par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
+hist(rawcts.v[rawcts.v<100], breaks = 20, xlab = "Counts", main = "Raw UMI counts", ylim = c(0,1.4e8))
+hist(vstcounts, breaks = 20, xlab = "Counts", main = "VST data", ylim = c(0,1.4e8))
+hist(inputData_cpm@assays@data$counts/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1.4e8))
+# hist(inputData_lognorm@assays@data$counts, breaks = 20, xlab = "counts", main = "Seurat normalized data", ylim = c(0,1.4e8))
+hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1.4e8))
+
+# dev.off()
+```
+
+## Genes shown in all dataset
+
+```{r, fig.height= 8, fig.width=8}
+rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_2000.pdf", width = 12, height = 12)
+par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
+hist(rawcts.v[rawcts.v<100], breaks = 20, xlab = "Counts", main = "Raw UMI counts", ylim = c(0,1e7))
+hist(vstcounts[rownames(vstcounts) %in% integrated_genes,], breaks = 20, xlab = "Counts", main = "VST data", ylim = c(0,1e7))
+hist(inputData_cpm@assays@data$counts[integrated_genes,]/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1e7))
+hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1e7))
+
+
+# dev.off()
+```
+
+If we zoom in on the positive counts, we may observe different distributions for each dataset.
+```{r, fig.height= 8, fig.width=8}
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_nonzero_2000.pdf", width = 3, height = 8)
+rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
+par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
+hist(rawcts.v[rawcts.v<=6 & rawcts.v>0.5], breaks = 20, xlab = "Counts", ylab = "", main = "Raw UMI counts", xlim = c(0,6), ylim = c(0,6e5))
+data = as.vector(vstcounts)
+hist(data[data>0.1 & data <=6], breaks = 22, xlab = "", main = "VST data", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
+data = as.vector(inputData_integrated@assays@data$counts)
+hist(data[data>0.1 & data <=6], breaks = 22, xlab = "", main = "Integrated data", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
+data = as.vector(inputData_cpm@assays@data$counts[integrated_genes,])
+hist(data[data>0.1 & data <=6000]/1000, breaks = 22, xlab = "", main = "CPM data/1000", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
+# dev.off()
+```
+
+
+## VST distribution
+```{r, fig.height= 3, fig.width=8}
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_vst_2000.pdf", width = 8, height = 3)
+par(mfrow = c(1,3), cex.axis = 0.9, cex.main = 0.9)
+data = as.vector(vstcounts[match(integrated_genes,rownames(vstcounts)),])
+hist(data[data>(-3) & data <6], breaks = 22, xlab = "Counts", main = "VST data", xlim = c(-3, 6))
+rawcts_vstgenes = inputData@assays@data$counts[rownames(vstcounts),]
+rawcts_vstgenes = as.vector(rawcts_vstgenes[match(integrated_genes,rownames(vstcounts)),])
+vstdata = as.vector(vstcounts[match(integrated_genes,rownames(vstcounts)),])
+hist(vstdata[rawcts_vstgenes==0 & vstdata>(-1.5)], breaks = 22, xlab = "Counts", main = "VST data (zeros in UMI)", ylim = c(0,3e6))
+hist(vstdata[rawcts_vstgenes>0 & vstdata<8], breaks = 22, xlab = "Counts", main = "VST data (nonzeros in UMI)", ylim = c(0,6e5))
+# dev.off()
+```
+
+## Integrated data distribution
+```{r, fig.height= 3, fig.width=8}
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_integrated.pdf", width = 8, height = 3)
+par(mfrow = c(1,3), cex.axis = 0.9, cex.main = 0.9)
+data = as.vector(assays(inputData_integrated)$counts)
+hist(data[data>(-3) & data <6], breaks = 22, xlab = "Counts", main = "Integrated data", xlim = c(-3, 6))
+rawcts_intgenes = as.vector(inputData@assays@data$counts[integrated_genes,])
+hist(data[rawcts_intgenes==0 & data>(-1.5) & data <1.5], breaks = 22, xlab = "Counts", main = "Integrated data (zeros in UMI)", ylim = c(0,4e6))
+hist(data[rawcts_intgenes>0 & data<8], breaks = 22, xlab = "Counts", main = "Integrated data (nonzeros in UMI)", ylim = c(0,6e5))
+# dev.off()
+```
+
+## Single gene
+
+We randomly choose one moderately expressed gene *RUNX3*. After normalization, the distribution of the counts changes a lot. 
+```{r, fig.width=8}
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/RUNX3.pdf", width = 8, height = 8)
+gene_name = rownames(inputData)[199]
+par(mfrow = c(2,2), cex.axis = 0.8, cex.main = 0.8)
+hist(log2(inputData@assays@data$counts[gene_name,] +1), xlab = "counts", main = paste0(gene_name," in raw UMI counts (log2(x+1))"), ylim = c(0,2100), breaks = 20, xlim = c(-2,4))
+# hist(inputData_lognorm@assays@data$counts[gene_name,], xlab = "counts", main = paste0(gene_name," in Seurat normalized data"), ylim = c(0,2100), breaks = 20)
+hist(vstcounts[gene_name,], xlab = "Counts", main = paste0(gene_name," in VST data"), ylim = c(0,2100), breaks = 50, xlim = c(-2,4))
+hist(log2(inputData_cpm@assays@data$counts[gene_name,]/1000+1), xlab = "Counts", main = paste0(gene_name," in CPM/1000 data (log2(x+1))"), ylim =c(0,2100), breaks = 10, xlim = c(-2,4))
+hist(inputData_integrated@assays@data$counts[gene_name,], xlab = "Counts", main = paste0(gene_name, " in Integrated data"), ylim = c(0,2100), breaks = 21, xlim = c(-2,4))
+
+# dev.off()
+```
+
+# Hippo cluster result
+
+We applied HIPPO (Heterogeneity-Inspired Pre-Processing tOol) on the raw counts to get 20 clusters. Especially, cluster 2, 8, 12, 13, 17, 19 will be used to demonstrate our poisson glmm DE methods.
+
+## UMAP
+```{r}
+set.seed(1)
+lastround = inputData@int_metadata$hippo$umap$K==20 
+umapcoor_df = inputData@int_metadata$hippo$umap[lastround,-3]
+groupcenter = aggregate(umapcoor_df[,1:2],list(umapcoor_df$label), FUN = mean)
+```
+
+```{r, echo=FALSE}
+pointsize = 1
+pointalpha = 0.5
+umap_all = ggplot2::ggplot(umapcoor_df,
+                    ggplot2::aes(x = .data$umap1,y = .data$umap2,
+                                 col = .data$label)) +
+  ggplot2::geom_point(size = pointsize,
+                      alpha = pointalpha) +
+  ggplot2::theme_bw() +
+  ggplot2::ylab("umap2") + ggplot2::xlab("umap1") +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0,hjust = 1),
+                 panel.grid = ggplot2::element_blank(),
+                 axis.line = ggplot2::element_line(colour = "black"),
+                 legend.title = ggplot2::element_blank(),
+                 axis.ticks = ggplot2::element_blank(),
+                 legend.position = "none", strip.placement = "inside") +
+  ggplot2::guides(colour =
+                    ggplot2::guide_legend(override.aes =
+                                            list(size = 5,alpha = 1))) +
+  scale_color_manual(values = hippo_palette) +
+  annotate("text", x = groupcenter$umap1, y = groupcenter$umap2, size = 7,
+       label = groupcenter$Group.1, color = "black" )
+```
+
+```{r}
+grouptoshow = c(2,8,12,13,17,19)
+umap_grouptoshow = ggplot2::ggplot(umapcoor_df[umapcoor_df$label%in%grouptoshow,],
+                    ggplot2::aes(x = .data$umap1,y = .data$umap2,
+                                 col = .data$label)) +
+  ggplot2::geom_point(size = pointsize,
+                      alpha = pointalpha) +
+  ggplot2::theme_bw() +
+  ggplot2::ylab("umap2") + ggplot2::xlab("umap1") +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0,hjust = 1),
+                 panel.grid = ggplot2::element_blank(),
+                 axis.line = ggplot2::element_line(colour = "black"),
+                 legend.title = ggplot2::element_blank(),
+                 axis.ticks = ggplot2::element_blank(),
+                 legend.position = "none", strip.placement = "inside") +
+  ggplot2::guides(colour =
+                    ggplot2::guide_legend(override.aes =
+                                            list(size = 5,alpha = 1))) +
+  scale_color_manual(values = hippo_palette[grouptoshow]) +
+  annotate("text", x = groupcenter[groupcenter$Group.1%in%grouptoshow,]$umap1, y = groupcenter[groupcenter$Group.1%in%grouptoshow,]$umap2, size = 3,
+       label = groupcenter$Group.1[groupcenter$Group.1%in%grouptoshow], color = "black" )
+```
+
+```{r}
+umap_eachgroup = ggplot2::ggplot(umapcoor_df,
+                    ggplot2::aes(x = .data$umap1,y = .data$umap2,
+                                 col = .data$label)) +
+  ggplot2::geom_point(size = pointsize,
+                      alpha = pointalpha) +
+  ggplot2::facet_wrap(~.data$label, ncol = 4) +
+  ggplot2::theme_bw() +
+  ggplot2::ylab("umap2") + ggplot2::xlab("umap1") +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 0,hjust = 1),
+                 panel.grid = ggplot2::element_blank(),
+                 axis.line = ggplot2::element_line(colour = "black"),
+                 legend.title = ggplot2::element_blank(),
+                 axis.ticks = ggplot2::element_blank(),
+                 legend.position = "none", strip.placement = "inside") +
+  scale_color_manual(values = hippo_palette) +
+  ggplot2::guides(colour =
+                    ggplot2::guide_legend(override.aes =
+                                            list(size = 5,alpha = 1)))
+```
+
+### Hippo procedure
+```{r, fig.width=12, fig.height=6}
+ggarrange(umap_all, umap_eachgroup)
+```
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/umap_all.pdf", width = 10, height = 10)
+umap_all
+dev.off()
+```
+
+
+### Interested groups
+```{r, fig.width=4, fig.height=4}
+umap_grouptoshow
+```
+
+## Zero proportion plot
+```{r, fig.height= 7, warning=FALSE}
+final_proportion_plot(inputData, 20, proportion_to_plot = 0)
+```
+
+## Donor distribution
+```{r}
+df = data.frame(cellgroup = colData(inputData)$hippo_cluster, Donor = colData(inputData)$donor, count = 1)
+df = aggregate(df$count, list(df$Donor, df$cellgroup), FUN = sum)
+colnames(df) = c("Donor", "cellgroup", "count")
+cumcount = rev(unlist(aggregate(df[nrow(df):1,]$count, list((df[nrow(df):1,]$cellgroup)), FUN = cumsum)$x))
+df = df[order(df$cellgroup, decreasing = T),]
+df$cumcount = cumcount
+
+ggplot(df, aes(x = cellgroup, y = count, fill = Donor)) + 
+  geom_bar(stat = "identity") + 
+  xlab("HIPPO cluster (Potential cell group)") + 
+  ylab("Number of cells") + 
+  scale_fill_manual(values = donors_palette) + 
+  geom_text(aes(label=count, y = cumcount), vjust = -0.2, size = 2) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())  
+
+```
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_distribution.pdf", width = 8, height = 6)
+ggplot(df, aes(x = cellgroup, y = count, fill = donor)) + 
+  geom_bar(stat = "identity") + 
+  xlab("cell group") + 
+  ylab("number of cells") + 
+  scale_fill_manual(values = donors_palette) + 
+  labs(fill = "donors") + 
+  geom_text(aes(label=count, y = cumcount), vjust = -0.2, size = 2) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())  
+dev.off()
+```
+
+# Donor/Celltype/Residual variation 
+
+To illustrate the differences in contribution of variation across different datasets, we employed linear regression models (lm(log2(counts + 1) ~ donor + celltype)) to analyze cells in different groups. The donor variation and celltype variation were determined by calculating the variances of their respective components. Additionally, the res variation was obtained by squaring the residual standard error. 
+
+The following plots exhibit the top 500 genes with the lowest residual variations, showcasing the contributions of these variations as percentages. The genes were organized into bins based on the quantiles of residual variations. The last plot displays the first quartile and compare the donor variation and celltype variation
+
+The integration of data did partially reduce the donor variations, although it did not eliminate them completely. However, it is worth noting that the normalization and batch effect removal processes employed also resulted in a reduction in celltype variation. This reduction in celltype variation may pose challenges for conducting further differential expression (DE) analysis.
+
+## Group 2, 19
+```{r}
+assign_subgroup(2,19)
+variation_analysis()
+```
+
+```{r, fig.width = 10, fig.height = 4}
+p_donor = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = donor*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Donor variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+  
+p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = celltype*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Celltype variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle(key) +
+  xlab("") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+ggarrange(p_donor, p_celltype + remove_y, p_donor_celltype + remove_y, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_celltype2_19.pdf", width = 4, height = 5)
+# p_donor_celltype
+# dev.off()
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 4, warning=FALSE}
+p_raw_vst = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = VST*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(VST data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+  
+p_raw_integrated = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p_vst_integrated = ggplot(wide_combined, aes(x = VST*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(VST data)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+ggarrange(p_raw_integrated, p_raw_vst, p_vst_integrated, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/scatter_variation2_19.pdf", width = 4, height = 4)
+# p_raw_integrated
+# dev.off()
+```
+
+## Group 18, 19
+```{r, echo=FALSE}
+assign_subgroup(18,19)
+variation_analysis()
+```
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 4, warning=FALSE}
+p_donor = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = donor*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Donor variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+  
+p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = celltype*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Celltype variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+
+p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle(key) +
+  xlab("") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+ggarrange(p_donor, p_celltype + remove_y, p_donor_celltype + remove_y, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_celltype18_19.pdf", width = 4, height = 5)
+# p_donor_celltype
+# dev.off()
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 4, warning=FALSE}
+p_raw_vst = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = VST*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(VST data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+  
+p_raw_integrated = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p_vst_integrated = ggplot(wide_combined, aes(x = VST*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(VST data)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+ggarrange(p_raw_integrated, p_raw_vst, p_vst_integrated, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/scatter_variation18_19.pdf", width = 4, height = 4)
+# p_raw_integrated
+# dev.off()
+```
+
+## Group 13, 19
+```{r, echo=FALSE}
+assign_subgroup(13,19)
+variation_analysis()
+```
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 4, warning=FALSE}
+p_donor = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = donor*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Donor variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = celltype*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Celltype variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+
+p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle(key) +
+  xlab("") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+ggarrange(p_donor, p_celltype + remove_y, p_donor_celltype + remove_y, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_celltype13_19.pdf", width = 4, height = 5)
+# p_donor_celltype
+# dev.off()
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 4, warning=FALSE}
+p_raw_vst = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = VST*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(VST data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+  
+p_raw_integrated = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p_vst_integrated = ggplot(wide_combined, aes(x = VST*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(VST data)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+ggarrange(p_raw_integrated, p_raw_vst, p_vst_integrated, nrow = 1, common.legend = TRUE, legend = "right")
+
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/scatter_variation13_19.pdf", width = 4, height = 4)
+# p_raw_integrated
+# dev.off()
+```
+
+## Group 12, 13
+```{r, echo=FALSE}
+assign_subgroup(12,13)
+variation_analysis()
+```
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 4, warning=FALSE}
+p_donor = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = donor*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Donor variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = celltype*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Celltype variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+
+p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle(key) +
+  xlab("") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+ggarrange(p_donor, p_celltype + remove_y, p_donor_celltype + remove_y, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_celltype12_13.pdf", width = 4, height = 5)
+# p_donor_celltype
+# dev.off()
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 4, warning=FALSE}
+p_raw_vst = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = VST*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(VST data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+  
+p_raw_integrated = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p_vst_integrated = ggplot(wide_combined, aes(x = VST*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(VST data)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+ggarrange(p_raw_integrated, p_raw_vst, p_vst_integrated, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/scatter_variation12_13.pdf", width = 4, height = 4)
+# p_raw_integrated
+# dev.off()
+```
+
+## Group 4, 9&15
+```{r, echo=FALSE}
+assign_subgroup(4,c(9,15))
+variation_analysis()
+```
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 4, warning=FALSE}
+p_donor = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = donor*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Donor variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,25,-25)), y = celltype*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle("Celltype variation") +
+  xlab("Quantile of residual variation") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+
+
+p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
+  geom_boxplot() + 
+  ggtitle(key) +
+  xlab("") + 
+  ylab("Variation proportion(%)") +
+  ylim(c(0,40)) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  labs(fill = "Data") 
+ggarrange(p_donor, p_celltype + remove_y, p_donor_celltype + remove_y, nrow = 1, common.legend = TRUE, legend = "right")
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/donor_celltype4_9_15.pdf", width = 4, height = 5)
+# p_donor_celltype
+# dev.off()
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 4, warning=FALSE}
+p_raw_vst = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = VST*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(VST data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+  
+p_raw_integrated = ggplot(wide_combined, aes(x = `Raw UMI`*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(Raw UMI)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p_vst_integrated = ggplot(wide_combined, aes(x = VST*100, y = Integrated*100, color = source)) +
+  geom_point(alpha = 0.5, aes(shape = source)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  scale_shape_manual(values = c(2,4)) +
+
+  xlab("Variation proportion(%)(VST data)") + 
+  ylab("Variation proportion(%)(Integrated data)") +
+  ylim(c(0,40)) +
+  xlim(c(0,40)) +
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+ggarrange(p_raw_integrated, p_raw_vst, p_vst_integrated, nrow = 1, common.legend = TRUE, legend = "right")
+
+# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/scatter_variation4_9_15.pdf", width = 12, height = 4)
+
+# dev.off()
+```

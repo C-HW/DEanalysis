@@ -1,0 +1,232 @@
+---
+title: "Data overview for case study 2"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+```{r, setup, echo = FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+load("./data/data2sce.RData")
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(SingleCellExperiment)
+library(pheatmap)
+library(gridExtra)
+library(reshape)
+library(clusterProfiler)
+library(enrichplot)
+library("org.Hs.eg.db")
+library(pathview)
+library(muscat)
+library(sctransform)
+library(scater)
+```
+```{r}
+group_palette = c("#00BCD4", "#E91E63")
+celltype_palette = setNames(c( "#6A00FF", "#F0A30A"), c("CD14+ Monocytes","B cells"))
+# , "#A4C400", "#6D8764", "#F472D0",
+  # "#76608A", "#A20025", "#00ABA9", "#A0522D", "#008A00",
+  # "#647687", "#1BA1E2", "#FA6800", "#825A2C", "#0050EF",
+  # "#E3C800", "#E51400", "#D80073", "#60A917", "#AA00FF")
+donors_palette = c("#f8766d", "#ce9700", "#7dae00", "#01be67", "#01bfc4", "#01a9ff", "#c77cff", "#ff61cc")
+```
+
+```{r, eval = FALSE}
+library(ExperimentHub)
+eh = ExperimentHub()
+query(eh, "Kang")
+sce = eh[["EH2259"]]
+```
+
+```{r, eval = FALSE}
+# remove undetected genes
+sce <- sce[rowSums(counts(sce) > 0) > 0, ]
+
+library(scater)
+qc <- perCellQCMetrics(sce)
+
+# remove cells with few or many detected genes
+ol <- isOutlier(metric = qc$detected, nmads = 2, log = TRUE)
+sce <- sce[, !ol]
+
+# remove lowly expressed genes
+sce <- sce[rowSums(counts(sce) > 1) >= 10, ]
+sce <- computeLibraryFactors(sce)
+sce <- logNormCounts(sce)
+assays(sce)$vstresiduals <- vst(counts(sce), verbosity = FALSE)$y
+
+sce$id <- paste0(sce$stim, sce$ind)
+(sce <- prepSCE(sce, 
+    kid = "cell", # subpopulation assignments
+    gid = "stim",  # group IDs (ctrl/stim)
+    sid = "id",   # sample IDs (ctrl/stim.1234)
+    drop = TRUE))  # drop all other colData columns
+
+# pb <- aggregateData(sce,
+#     assay = "counts", fun = "sum",
+#     by = c("cluster_id", "sample_id"))
+```
+
+# Library size
+
+## Raw data
+```{r}
+df = data.frame(libsize = colSums(sce@assays@data$counts), celltype = sce$cluster_id, Group = sce$group_id)
+levels(df$Group) = c("Ctrl", "Stim")
+
+libsize_raw = ggplot(na.omit(df), aes(x = factor(celltype,levels = levels(sce$cluster_id)), y=libsize, fill = Group)) + 
+  scale_fill_manual(values = group_palette) +
+  geom_violin() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ylim(c(0,5000)) + 
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15)))
+libsize_raw
+```
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/raw_library.pdf", width = 6, height = 4)
+libsize_raw
+dev.off()
+```
+
+## Normlized data
+```{r}
+df = data.frame(libsize = colSums(sce@assays@data$logcounts), celltype = sce$cluster_id, Group = sce$group_id)
+levels(df$Group) = c("Ctrl", "Stim")
+libsize_logcounts = ggplot(na.omit(df), aes(x = factor(celltype,levels = levels(sce$cluster_id)), y=libsize, fill= Group)) + 
+  scale_fill_manual(values = group_palette) +
+  geom_violin() + 
+  theme_minimal() + 
+  ylab("Library size") + 
+  xlab("") + 
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15)))
+libsize_logcounts
+```
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/logcounts_library.pdf", width = 6, height = 4)
+libsize_logcounts
+dev.off()
+```
+
+# UMAP
+```{r}
+# compute UMAP using 1st 20 PCs
+sce <- runUMAP(sce, pca = 20)
+cs_by_k <- split(colnames(sce), sce$cluster_id)
+cs100 <- unlist(sapply(cs_by_k, function(u) 
+  sample(u, min(length(u), 100))))
+
+df = data.frame(UMAP1 = sce@int_colData@listData$reducedDims$UMAP[cs100,1],
+           UMAP2 = sce@int_colData@listData$reducedDims$UMAP[cs100,2],
+           Group = sce$group_id[match(cs100, colnames(sce))],
+           Cluster = sce$cluster_id[match(cs100, colnames(sce))])
+levels(df$Group) = c("Ctrl", "Stim")
+```
+```{r}
+umap_group = ggplot(df, aes(x = UMAP1, y = UMAP2, col = Group)) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  scale_color_manual(values = group_palette) + 
+  theme_bw() + theme(panel.grid = element_blank()) 
+umap_group
+
+umap_donor = ggplot(df, aes(x = UMAP1, y = UMAP2, col = Cluster)) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  scale_color_manual(values = donors_palette) + 
+  labs(color = "Cell type") +
+  theme_bw() + theme(panel.grid = element_blank()) 
+umap_donor
+```
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/umap_group.pdf", width = 6, height = 4)
+umap_group
+dev.off()
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/umap_donor.pdf", width = 6, height = 4)
+umap_donor
+dev.off()
+```
+# Zero proportion
+
+```{r}
+df = data.frame(genemean = double(0), zero_prop = double(0), celltype = character(0))
+for (celltype in levels(sce$cluster_id)){
+  ind = sce$cluster_id%in%celltype
+  df = rbind(df,data.frame(genemean = rowMeans(sce@assays@data$counts[, ind]),
+                       zero_prop = rowMeans(sce@assays@data$counts[, ind]==0),
+                       celltype = celltype))
+}
+ggplot(df, aes(x = genemean, y = zero_prop)) + 
+  geom_point(size = 0.5, alpha = 0.5) + 
+  ylab("Zero proportion") +
+  xlab("Gene mean")+
+  stat_function(fun = function(x) exp(-x), colour = "black") +
+  facet_wrap(~ celltype) +
+  xlim(0,10) +
+  theme_bw() + theme(panel.grid = element_blank())
+```
+```{r}
+df = data.frame(genemean = double(0), zero_prop = double(0), celltype_group = character(0))
+for (celltype in levels(sce$cluster_id)){
+  for(group in levels(sce$group_id)){
+    ind = sce$cluster_id%in%celltype & sce$group_id %in%group
+    df = rbind(df,data.frame(genemean = rowMeans(sce@assays@data$counts[, ind]),
+                       zero_prop = rowMeans(sce@assays@data$counts[, ind]==0),
+                       celltype_group = paste0(c(celltype, group), collapse = "_")))
+  }
+}
+ggplot(df, aes(x = genemean, y = zero_prop)) + 
+  geom_point(size = 0.5, alpha = 0.5) + 
+  ylab("Zero proportion") +
+  xlab("Gene mean")+
+  stat_function(fun = function(x) exp(-x), colour = "black") +
+  facet_wrap(~ celltype_group) +
+  xlim(0,10) +
+  theme_bw() + theme(panel.grid = element_blank())
+```
+
+# Donor distribution
+```{r}
+df = as.data.frame(table(sce$cluster_id, sce$sample_id))
+colnames(df) = c("celltype", "sample", "count")
+df$donor = paste0("D",sapply(as.character(df$sample), function(x)substr(x, 5, nchar(x))))
+df$group = sapply(as.character(df$sample), function(x)substr(x, 1, 4))
+
+donor_hist = ggplot(df, aes(x = celltype, y = count, fill = donor)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Donor distribution",
+       x = "",
+       y = "Count",
+       fill = "Donor") +
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15)))
+group_hist = ggplot(df, aes(x = celltype, y = count, fill = group)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Group distribution",
+       x = "",
+       y = "Count",
+       fill = "Group") +
+  scale_fill_manual(labels = c("Ctrl", "Stim"), values = group_palette) +
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15)))
+
+donor_hist
+group_hist
+```
+
+```{r, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/donor_hist.pdf", width = 6, height = 4)
+donor_hist
+dev.off()
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/group_hist.pdf", width = 6, height = 4)
+group_hist
+dev.off()
+```
+
+

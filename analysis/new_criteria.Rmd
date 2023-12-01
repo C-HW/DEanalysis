@@ -1,0 +1,125 @@
+---
+title: "New criteria to determine differentially expressed genes"
+author: "Chih-Hsuan Wu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+load("./data/10X_inputdata.RData")
+load("./data/10X_inputdata_lognorm.RData")
+load("./data/10X_inputdata_integrated.RData")
+load("./data/10X_inputdata_DEresult.RData")
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(SingleCellExperiment)
+library(pheatmap)
+library(gridExtra)
+```
+
+If there is a statistically significant difference or change in read counts or expression levels between two experimental conditions, a gene is considered as differentially expressed. In current gene DE analysis, the criteria is based on statistical significance $-\log_{10}\text{(p-value)}$ and magnitude of change $\log_{2}\text{(fold change)}$. A volcano plot is commonly used to visualize the result.
+
+
+# Current criteria
+Here's the volcano plot for the DE analysis on group2 and group19. The thresholds for adjusted p-values and fold changes are $0.05$ and $1.5$, respectively. There are $608$ genes identified as hits based on the criteria. 
+
+```{r, echo = FALSE, warning=FALSE, fig.width=4, fig.height=4}
+assign_subgroup(2,19)
+pois_glmm_df[[key]]$hits = identifyhits(pois_glmm_df[[key]]$BH, pois_glmm_df[[key]]$log2FC)
+pvalcutoff = 0.05
+v = 1.5
+log2FCcutoff = log2(v)
+ggplot(na.omit(data.frame(pois_glmm_df[[key]])), aes(x = log2FC, y = -log10(BH), colour = hits)) +
+      geom_point(alpha = 0.5, size = 0.5) +
+      labs(color = "hits") +
+      geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
+      geom_vline(xintercept=log2FCcutoff,linetype=2) + 
+      geom_vline(xintercept=-log2FCcutoff,linetype=2) +
+      ggtitle("poisson glmm") + theme_minimal() + xlim(c(-3,3)) + ylim(c(0,40)) + xlab("log2 Fold Change") + ylab("-log10(adj.pval)") + theme(legend.position = "bottom") 
+```
+
+
+# Fold Change in scRNA data
+
+In scRNA data, lots of mean counts are extremely close to zero. In this case, the fold change can be less meaningful to characterize the difference of read counts. For example, the gene means can be $2^{-3}$ and $1.5*2^{-3}$ in two groups. Even though it passes the threshold for fold changes$(1.5)$, the absolute difference is only $0.0625$. it doesn't provide the same strength of evidence in absolute difference compared to genes with larger means. 
+
+# Take mean and absolut difference into account
+
+From the scatter plot below, current criteria would select genes with small means. And these genes usually have smaller values in log2 mean difference $(\log_2|\text{mean1-mean2}|)$.
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.width=4, fig.height=4}
+ggplot(na.omit(data.frame(x = subgroupsce@metadata$log2mean, y = subgroupsce@metadata$log2meandiff, hits = pois_glmm_df[[key]]$hits)), aes(x = x, y = y, colour = hits)) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  # geom_vline(xintercept=-2.25,linetype=2) +
+  # geom_hline(yintercept = -1, linetype = 2) +
+  ggtitle("pois_glmm") + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6)) + 
+  xlab("log2 mean") + ylab("log2 mean difference") + theme(legend.position = "bottom")
+```
+
+Let's make some heatmaps to see the read counts of DE genes with different range of mean. 
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+p = list()
+threshold = c(-Inf, seq(-2.75, -0.25, 0.5))
+n_hits = rep(NA, length(threshold)-1)
+original_hits = which(pois_glmm_df[[key]]$hits)
+n_hits = c(length(original_hits), n_hits)
+for (i in 2:length(threshold)){
+  pois_glmm_df[[key]]$newhits = identifyhits(pois_glmm_df[[key]]$BH, pois_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, log2meancutoff = threshold[i], newcriteria = T)
+  n_hits[i] = sum(pois_glmm_df[[key]]$newhits, na.rm = T)
+  removedhits = setdiff(original_hits,which(pois_glmm_df[[key]]$newhits))
+  original_hits = which(pois_glmm_df[[key]]$newhits)
+  mat = subgroupsce@assays@data$counts[sample(removedhits,min(100, length(removedhits))), ]
+  #col annotation
+  annotation_df = data.frame(donor = subgroupsce@colData$donor, group = factor(colData(subgroupsce)$hippo_cluster, levels = c(group1, group2)))
+  rownames(annotation_df) = colnames(mat)
+  annotation_df = annotation_df[with(annotation_df, order(group, donor)), ] 
+  # cell level
+  p[[i-1]] = pheatmap(mat[,rownames(annotation_df)], 
+                      annotation_col = annotation_df, 
+                      cluster_rows=F, cluster_cols=F,
+                      show_colnames = F, show_rownames = F,
+                      color=colorRampPalette(c("navy", "white", "red"))(10), 
+                      main = paste0("removed hits of log2mean between (",
+                                    threshold[i-1],",",threshold[i],")"),
+                      breaks = seq(0,5, length.out = 10))$gtable
+}
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.width=14, fig.height=14}
+grid.arrange(grobs = p, ncol=2)
+```
+
+To rule out the genes with smaller means, we can add a filter on the previous criteria. If the gene mean doesn't pass the threshold, then it can't be counted as a DE gene. From the heatmaps shown above, we set the default threshold at $-2.25$ for the average log2mean in two different groups $(\frac{\log_2\text{mean1}+\log_2\text{mean2}}{2})$.
+
+The heatmaps also tell us we might miss out some genes that have smaller genes but large absolute difference. To save the genes, we allow the genes with log2 mean difference greater than $-1$ to pass the filter as well.
+
+Here's the volcano plot and scatter plot based on the new criteria.
+
+```{r, echo = FALSE, warning=FALSE, fig.width=4, fig.height=4}
+assign_subgroup(2,19)
+pois_glmm_df[[key]]$hits = identifyhits(pois_glmm_df[[key]]$BH, pois_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T)
+pvalcutoff = 0.05
+v = 1.5
+log2FCcutoff = log2(v)
+ggplot(na.omit(data.frame(pois_glmm_df[[key]])), aes(x = log2FC, y = -log10(BH), colour = hits)) +
+      geom_point(alpha = 0.5, size = 0.5) +
+      labs(color = "hits") +
+      geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
+      geom_vline(xintercept=log2FCcutoff,linetype=2) + 
+      geom_vline(xintercept=-log2FCcutoff,linetype=2) +
+      ggtitle("poisson glmm") + theme_minimal() + xlim(c(-3,3)) + ylim(c(0,40)) + xlab("log2 Fold Change") + ylab("-log10(adj.pval)") + theme(legend.position = "bottom") 
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.width=4, fig.height=4}
+ggplot(na.omit(data.frame(x = subgroupsce@metadata$log2mean, y = subgroupsce@metadata$log2meandiff, hits = pois_glmm_df[[key]]$hits)), aes(x = x, y = y, colour = hits)) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  geom_vline(xintercept=-2.25,linetype=2) +
+  geom_hline(yintercept = -1, linetype = 2) +
+  ggtitle("pois_glmm") + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6)) + 
+  xlab("log2 mean") + ylab("log2 mean difference") + theme(legend.position = "bottom")
+```

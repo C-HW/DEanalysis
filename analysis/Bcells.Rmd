@@ -1,0 +1,685 @@
+---
+title: "B cells"
+author: "Chih-Hsuan Wu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+load("./data/data2sce.Rdata")
+load("./data/10X_Kang_DEresult.RData")
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(SingleCellExperiment)
+library(pheatmap)
+library(gridExtra)
+library(reshape)
+library(clusterProfiler)
+library(enrichplot)
+library("org.Hs.eg.db")
+library(pathview)
+assign_celltype("B cells")
+subgroupsce$ind = paste0("D",subgroupsce$ind)
+Kang_pois_glmm_df[[key]]$log2FC = -Kang_pois_glmm_df[[key]]$log2FC
+Kang_MAST_df[[key]]$log2FC = -Kang_MAST_df[[key]]$log2FC
+Kang_Wilcox_Seurat_df[[key]]$genes = gsub("-", "_", rownames(Kang_Wilcox_Seurat_df[[key]]))
+for(i in 1:length(Kang_Wilcox_Seurat_df[[key]]$genes)){
+  if(Kang_Wilcox_Seurat_df[[key]]$genes[i] %in%rownames(subgroupsce)){}else{
+    Kang_Wilcox_Seurat_df[[key]]$genes[i] = gsub("_ENSG", "-ENSG", Kang_Wilcox_Seurat_df[[key]]$genes[i])
+  }
+}
+```
+
+```{r}
+group_palette = c("#00BCD4", "#E91E63")
+celltype_palette = setNames(c( "#6A00FF", "#F0A30A"), c("CD14+ Monocytes","B cells"))
+# , "#A4C400", "#6D8764", "#F472D0",
+  # "#76608A", "#A20025", "#00ABA9", "#A0522D", "#008A00",
+  # "#647687", "#1BA1E2", "#FA6800", "#825A2C", "#0050EF",
+  # "#E3C800", "#E51400", "#D80073", "#60A917", "#AA00FF")
+donors_palette = c("#f8766d", "#ce9700", "#7dae00", "#01be67", "#01bfc4", "#01a9ff", "#c77cff", "#ff61cc")
+annotation_colors = list(Group = setNames(group_palette, c("Ctrl", "Stim")), Donor = setNames(donors_palette, sort(unique(subgroupsce$ind))))
+```
+
+# Data summary
+
+```{r}
+df = data.frame(cellgroup = subgroupsce$group_id, donor = subgroupsce$ind, count = 1)
+df = aggregate(df$count, list(df$donor, df$cellgroup), FUN = sum)
+colnames(df) = c("Donor", "Group", "Count")
+df = df[nrow(df):1,]
+df$cumcount= c(t(aggregate(df$Count, list(rev(df$Group)), FUN = cumsum)[,-1]))
+p_donor = ggplot(df, aes(x = Group, y = Count, fill = Donor)) + 
+  geom_bar(stat = "identity") + 
+  xlab("Group") + 
+  ylab("Number of cells") + 
+  scale_fill_manual(values = donors_palette) +
+  # labs(fill = "donors", labels=c("D7", "D6", "D5", "D4", "D3")) + 
+  geom_text(aes(label=Count, y = cumcount), vjust = -0.2, size = 2) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+```
+
+```{r, eval = FALSE}
+composition = data.frame(
+  zeromean = sum(glm_df[[key]]$status=="zero mean"),
+  lowlyexpressed = sum(glm_df[[key]]$status=="lowly expressed"), 
+  valid = sum(glm_df[[key]]$status=="done"))
+composition = melt(composition)
+
+p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) + 
+  geom_bar(stat = "identity") + 
+  xlab("") + 
+  ylab("number of genes") + 
+  scale_fill_discrete(name = "", labels=c("zero mean", "freq < 5%", "freq > 5%")) +
+  geom_text(aes(label=value), position = position_stack(vjust = 0.5), size = 3) + 
+  theme_bw() + theme(panel.grid = element_blank()) + 
+  ggtitle(paste("gene composition of ", key))
+```
+
+```{r}
+# gene count per cell by group
+count_cell_df = data.frame(totalcount = apply(subgroupsce@assays@data$counts, 2, sum), Group = subgroupsce$group_id, Donor = subgroupsce$ind)
+
+p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Group)) +
+  geom_histogram(aes(y=..density..), fill= "white", alpha=0.5, position="identity") +
+  geom_density(alpha = 0.2) +
+  xlab("Library size") + 
+  ylab("Density") +
+  theme_bw() + 
+  theme(panel.grid = element_blank()) +
+  scale_colour_manual(labels = c("Ctrl", "Stim"), values = group_palette) +
+  xlim(c(0,5000))
+```
+```{r}
+# gene count per cell by donor
+p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
+  geom_histogram(aes(y=..density..),fill="white", alpha=0.5, position="identity") + 
+  geom_density(alpha = 0.2) + 
+  xlab("Library size") +
+  ylab("Density") +
+  theme_bw() + theme(panel.grid = element_blank()) + 
+  scale_color_manual(values = donors_palette) + 
+  xlim(c(0,5000))
+```
+```{r}
+# zero proportion per gene
+zeroprop_df = rbind(data.frame(zero_prop = rowMeans(subgroupsce@assays@data$counts[, subgroupsce$group_id%in%group1]== 0), genemean = rowMeans(subgroupsce@assays@data$counts[, subgroupsce$group_id%in%group1]), Group = factor(group1)),
+                data.frame(zero_prop = rowMeans(subgroupsce@assays@data$counts[, subgroupsce$group_id%in%group2]== 0), genemean = rowMeans(subgroupsce@assays@data$counts[, subgroupsce$group_id%in%group2]), Group = factor(group2)),
+                data.frame(zero_prop = rowMeans(subgroupsce@assays@data$counts== 0), genemean = rowMeans(subgroupsce@assays@data$counts), Group = factor("All B cells"))
+                )
+zeroprop_df = zeroprop_df[which(zeroprop_df$genemean>0),]
+levels(zeroprop_df$Group) = c("Ctrl", "Stim", "All B cells")
+p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop)) + 
+  geom_point(aes(shape = Group, color = Group), alpha=0.5, size = 1.2) + 
+  xlab("Gene mean") + 
+  ylab("Zero proportion") +
+  scale_color_manual(values = c(group_palette,"darkmagenta")) + 
+  scale_shape_manual(values = c(16,16,3)) +
+  xlim(c(0,10)) + 
+  stat_function(fun = function(x) exp(-x), colour = "black") +
+  theme_bw() + theme(panel.grid = element_blank())
+
+```
+
+```{r, fig.width=8}
+ggarrange(p_donor, p_zeroprop, p_countbygroup, p_countbydonor, nrow = 2, ncol = 2)
+```
+
+```{r eval=FALSE, fig.width=8}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/data_summary.pdf", width = 14, height = 3)
+ggarrange(p_donor, p_countbygroup,p_zeroprop, nrow = 1, ncol = 3)
+dev.off()
+```
+
+# Number of hits from each method
+```{r}
+dflist = list(Kang_pois_glmm_df, 
+              Kang_binom_glmm_df, 
+              Kang_DESeq2.muscat,
+              Kang_edgeR.cpm,
+              Kang_MAST_df, 
+              Kang_Wilcox_Seurat_df,
+              # Kang_MMdream,
+              Kang_MMvst,
+              Kang_MMpoisson)
+titlelist = c("Pois-glmm_UMI", 
+              "Binom-glmm_UMI",
+              "pb-DESeq2_UMI", 
+              "pb-edgeR_cpm",
+              "MAST_CPM",
+              "Wilcox_int",
+              # "MMdream",
+              "MMvst_VST",
+              "MMpoisson_UMI")
+
+
+number_input_hits = data.frame(DEGs = integer(0), Input = integer(0))
+pois_glmm_inputgene = Kang_pois_glmm_df[[key]]$genes[!is.na(Kang_pois_glmm_df[[key]]$hits)]
+for (df in dflist){
+  number_input_hits = rbind(number_input_hits, 
+                            c(sum(!is.na(df[[key]]$hits)), 
+                              sum(df[[key]]$hits, na.rm = T))) 
+}
+colnames(number_input_hits) = c("Inputs", "DEGs")
+number_input_hits$method = titlelist
+
+number_input_hits = melt(number_input_hits, id = "method")
+colnames(number_input_hits)[2:3] = c("Gene", "Number_of_genes")
+```
+
+```{r, fig.width= 6, eval = FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/input_hits.pdf", width = 8, height = 8)
+
+ggplot(data=number_input_hits, aes(x=factor(method, 
+                                            levels = rev(titlelist)), y=number_of_genes, fill = factor(gene, levels = rev(unique(gene))))) +
+  geom_bar(stat="identity", position=position_dodge()) + 
+  geom_text(aes(label=number_of_genes), hjust=-0.2, position=position_dodge(0.9), size = 2) +
+  theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text.y = element_text(angle = 30)) +
+  scale_fill_manual(values = c("#BCAAA4", "#5D4037"), breaks = levels(number_input_hits$gene)) +
+  labs(fill = "gene", labels = c("inputs", "hits")) +
+  xlab("methods") +
+  ylab("number of genes") +
+  ggtitle(paste("DEGs summary of ", key)) +coord_flip()
+
+
+dev.off()
+```
+
+```{r}
+ggplot(data=number_input_hits, aes(x=factor(method, 
+                                            levels = titlelist), y=Number_of_genes, fill = Gene)) +
+  geom_bar(stat="identity", position=position_dodge()) + 
+  geom_text(aes(label=Number_of_genes), vjust=-0.2, position=position_dodge(0.9), size = 2) +
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
+  scale_fill_manual(values = c("#BCAAA4", "#5D4037")) +
+  xlab("") +
+  ylab("Number of genes") +
+  ggtitle(paste("DEGs summary of ", key))
+```
+
+To compare the results fairly, the genes displayed in all of the plots below are restricted to the inputs of pois_glmm. That is, the genes not containing in the inputs of pois_glmm are excluded.
+
+```{r}
+for (i in 1:length(dflist)){
+  dflist[[i]][[key]] = dflist[[i]][[key]][dflist[[i]][[key]]$genes%in%pois_glmm_inputgene,]
+}
+for (df in dflist){
+  df[[key]] = df[[key]][df[[key]]$genes%in%pois_glmm_inputgene,]
+}
+```
+```{r}
+number_input_hits = data.frame(DEGs = integer(0), input = integer(0))
+pois_glmm_inputgene = Kang_pois_glmm_df[[key]]$genes[!is.na(Kang_pois_glmm_df[[key]]$hits)]
+for (df in dflist){
+  number_input_hits = rbind(number_input_hits, 
+                            c(sum(!is.na(df[[key]]$hits)), 
+                              sum(df[[key]]$hits, na.rm = T)))
+}
+colnames(number_input_hits) = c("Inputs", "DEGs")
+number_input_hits$method = titlelist
+
+number_input_hits = melt(number_input_hits, id = "method")
+colnames(number_input_hits)[2:3] = c("Gene", "Number_of_genes")
+```
+
+```{r}
+ggplot(data=number_input_hits, aes(x=factor(method, 
+                                            levels = titlelist), y=Number_of_genes, fill = Gene)) +
+  geom_bar(stat="identity", position=position_dodge()) + 
+  geom_text(aes(label=Number_of_genes), vjust=-0.2, position=position_dodge(0.9), size = 2) +
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
+  scale_fill_manual(values = c("#BCAAA4", "#5D4037")) +
+  xlab("") +
+  ylab("Number of genes") +
+  ggtitle(paste("DEGs summary of ", key))
+```
+
+# Volcano plot
+```{r, fig.width = 10, fig.height=6}
+pvalcutoff = 0.05
+v = 2
+log2FCcutoff = log2(v)
+
+p = list()
+for (i in 1:length(dflist)){
+  if(is.null(dflist[[i]][[key]]$genes)){
+    labgene = rownames(dflist[[i]][[key]])
+  }else{
+    labgene = dflist[[i]][[key]]$genes
+  }
+  if(i %in% 6){
+    xvar = 'avg_log2FC'
+    yvar = 'p_val_adj'
+  }else{
+    xvar = 'log2FC'
+    yvar = 'BH'
+  }
+  if (nrow(dflist[[i]][[key]])==0){next}
+  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]][[key]])), aes_string(x = xvar, y = sprintf("-log10(%s)", yvar), colour = "hits")) +
+    geom_point(alpha = 0.5, size = 0.5) +
+    labs(color = "hits") +
+    geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
+    geom_vline(xintercept=log2FCcutoff,linetype=2) + 
+    geom_vline(xintercept=-log2FCcutoff,linetype=2) +
+    ggtitle(titlelist[i]) + 
+    theme_bw() + 
+    theme(panel.grid = element_blank()) + 
+    scale_color_manual(values = c("gray", "blue")) +
+    xlim(c(-3,3)) + 
+    ylim(c(0,50)) + 
+    labs(color = "DEGs") +
+    xlab("Log2 Fold Change") + 
+    ylab("-Log10 (adj.pval)")
+}
+
+figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
+
+# Annotate the figure by adding a common labels
+annotate_figure(figure,
+                top = paste("Volcano plot",key),
+                bottom = text_grob(paste( "log2FCcutoff", paste0("log2(",v,")"),"; adj.pval cutoff", pvalcutoff)
+                                   , x = 0.99, just = "right")
+)
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/volcano.pdf", width = 14, height = 3)
+annotate_figure(figure,
+                top = paste("Volcano plot",key),
+                bottom = text_grob(paste( "log2FCcutoff", paste0("log2(",v,")"),"; adj.pval cutoff", pvalcutoff)
+                                   , x = 0.99, just = "right")
+)
+dev.off()
+```
+
+
+# Histogram of p-value/adj.p-value
+```{r, fig.width = 10, fig.height=6}
+p = list()
+for (i in 1:length(dflist)){
+  if (nrow(dflist[[i]][[key]])==0){next}
+  if(is.null(dflist[[i]][[key]]$genes)){
+    df = data.frame(genes = rownames(dflist[[i]][[key]]))
+  }else{
+    df = data.frame(genes = dflist[[i]][[key]]$genes)
+  }
+  if(i %in% 6){
+    df = cbind(df, dflist[[i]][[key]][,c("p_val", "p_val_adj")])
+  }else{
+    df = cbind(df, dflist[[i]][[key]][,c("pval", "BH")])
+  }
+  
+  p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
+geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + ylim(c(0,1100)) + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
+}
+figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
+
+# tiff(paste0("result/",key,"/hist_pvalue.tiff"), width=900, height=900, res=120)
+annotate_figure(figure, top = as.character(key))
+# dev.off()
+# rm(dflist)
+```
+
+# Violin plot of log2mean of DEGs
+```{r, fig.width=7}
+p = list()
+df = data.frame()
+clusterlist = list(group1, group2)
+clustername = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"))
+for (i in 1:length(dflist)){
+  if (nrow(dflist[[i]][[key]])==0){next}
+  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
+  if(is.null(dflist[[i]][[key]]$genes)){
+    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
+  }else{
+    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+  }
+  if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
+  for (j in 1:2){
+    cellind = subgroupsce$group_id %in% clusterlist[[j]]
+    df = rbind(df, data.frame(Log2mean = log2(fun(subgroupsce@assays@data$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
+  }
+}
+levels(df$Group) = clustername
+```
+
+```{r, fig.width=4, fig.height=7, eval=FALSE}
+ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=Log2mean, fill = factor(Group, levels = rev(levels(Group))))) +
+  geom_violin() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  ylim(c(-3,4)) + 
+  xlab("") + 
+  scale_fill_manual(values = group_palette, breaks = levels(df$Group)) +
+  coord_flip()
+# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+
+# dev.off()
+# rm(dflist)
+# gc()
+```
+
+```{r, fig.width=7}
+ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = Group)) +
+  geom_violin() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  ylim(c(-3,4)) + 
+  xlab("") + 
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
+  scale_fill_manual(labels = c("Ctrl", "Stim"),values = group_palette)
+# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+
+# dev.off()
+# rm(dflist)
+# gc()
+```
+
+# Violin plot of gene expression frequency of DEGs
+````{r, fig.width = 7}
+p = list()
+df = data.frame()
+clusterlist = list(key, levels(sce$cluster_id))
+clustername = c(key, "All clusters")
+for (i in 1:length(dflist)){
+  if (nrow(dflist[[i]][[key]])==0){next}
+  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
+  if(is.null(dflist[[i]][[key]]$genes)){
+    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
+  }else{
+    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+  }
+  if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
+  for (j in 1:2){
+    cellind = sce$cluster_id %in% clusterlist[[j]]
+    df = rbind(df, data.frame(freq = fun(sce@assays@data$counts[hits_gene,cellind]>0), cluster = clustername[j], method = titlelist[i]))
+  }
+}
+levels(df$cluster) = clustername
+```
+
+````{r, fig.width = 4, fig.height = 7, eval =FALSE}
+ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=freq, fill = factor(cluster, levels =  rev(levels(cluster))))) + 
+  geom_violin() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  ylab("gene expression frequency") + 
+  ylim(c(0,1)) + 
+  xlab("") + 
+  scale_fill_manual(values = c("gray", hippo_palette[c(group1, group2)]), breaks = levels(df$cluster)) +
+  labs(fill = "cluster") +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
+  coord_flip()
+# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+
+# dev.off()
+# rm(dflist)
+# gc()
+```
+
+````{r, fig.width = 7}
+ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(cluster, levels =  levels(cluster)))) + 
+  geom_violin() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  ylab("Gene expression frequency") + 
+  ylim(c(0,1)) + 
+  xlab("") + 
+  scale_fill_manual(values = setNames(c(celltype_palette[key], "gray"), c(key, "All clusters"))) +
+  labs(fill = "Cluster") +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) 
+```
+
+# Heatmap of top DEGs
+
+## Poisson-glmm DEGs
+```{r}
+sort_log2FC = sort(abs(Kang_pois_glmm_df[[key]]$log2FC[Kang_pois_glmm_df[[key]]$hits]), index.return = T, decreasing = T)
+hitgenes = Kang_pois_glmm_df[[key]]$genes[which(Kang_pois_glmm_df[[key]]$hits)][sort_log2FC$ix]
+mat = subgroupsce@assays@data$counts[hitgenes,]
+#row annotation
+annotation_log2FC = data.frame(abs_log2FC = abs(Kang_pois_glmm_df[[key]]$log2FC[match(hitgenes,Kang_pois_glmm_df[[key]]$genes)]))
+rownames(annotation_log2FC) = rownames(mat)
+#col annotation
+annotation_df = data.frame(Donor = subgroupsce$ind, Group = subgroupsce$group_id)
+levels(annotation_df$Group) = c("Ctrl", "Stim")
+rownames(annotation_df) = colnames(mat)
+annotation_df = annotation_df[with(annotation_df, order(Group, Donor)), ]
+# cell level
+pheatmap(mat[,rownames(annotation_df)],
+         main = paste0("Poisson-glmm DEGs\nin UMI counts (", nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+
+```
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/heatmap_raw.pdf", width = 5, height = 5)
+pheatmap(mat[,rownames(annotation_df)],
+         main = paste0("Poisson-glmm DEGs\nin UMI counts (", nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+dev.off()
+```
+
+## Additional DEGs from other methods
+
+### pb-DESeq2
+```{r}
+sort_log2FC = sort(abs(Kang_DESeq2.muscat[[key]]$log2FC[Kang_DESeq2.muscat[[key]]$hits]), index.return = T, decreasing = T)
+hitgenes_deseq2 = Kang_DESeq2.muscat[[key]]$genes[which(Kang_DESeq2.muscat[[key]]$hits)][sort_log2FC$ix]
+hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes][1:600])
+mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+
+# cell level
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("pb-DESeq2 DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+```
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/heatmap_deseq2.pdf", width = 5, height = 5)
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("pb-DESeq2 DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+dev.off()
+```
+
+```{r}
+sort_log2FC = sort(abs(dflist[[8]][[key]]$log2FC[dflist[[8]][[key]]$hits]), index.return = T, decreasing = T)
+hitgenes_MMpoisson = dflist[[8]][[key]]$genes[which(dflist[[8]][[key]]$hits)][sort_log2FC$ix]
+hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes][1:600])
+mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+
+
+# cell level
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("MMpoisson DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+
+```
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/heatmap_MMpoisson.pdf", width = 5, height = 5)
+pheatmap(mat[,rownames(annotation_df)], 
+         main = "MM poisson (raw data)",
+         annotation_col = annotation_df, 
+         annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+dev.off()
+```
+
+
+```{r}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/mean_diff_plot.pdf", width = 12, height = 12)
+mean_meandiff_plot()
+dev.off()
+```
+
+
+# MA plot 
+```{r fig.width = 8, fig.height=5}
+# tiff(paste0("result/",key,"/FC_mean_diff/MAplot.tiff"), width=900, height=900, res=120)
+fig_FC_mean = FC_mean_plot(subgroupsce@metadata$log2mean, c(-6,6), "Log2 mean")
+annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
+# dev.off()
+
+# tiff(paste0("result/",key,"/FC_mean_diff/FC_meandiff.tiff"), width=900, height=900, res=120)
+# fig_FC_meandiff = FC_mean_plot(subgroupsce@metadata$log2meandiff, c(-15,6), "log2 mean diff")
+# annotate_figure(fig_FC_meandiff, top = paste("log2FC vs. log2 mean diff ",key))
+# dev.off()
+
+# tiff(paste0("result/",key,"/FC_mean_diff/mean_meandiff.tiff"), width=900, height=900, res=120)
+# fig_mean_diff = mean_meandiff_plot()
+# annotate_figure(fig_mean_diff, top = paste("log2 mean vs. log2 mean diff ",key))
+# dev.off()
+# rm(dflist)
+# gc()
+```
+
+# Enrichment analysis
+
+## GO object (all)
+```{r, fig.width = 6, fig.height=8}
+original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+genes = Kang_pois_glmm_df[[key]]$genes[which(Kang_pois_glmm_df[[key]]$hits)]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/dotplot.pdf", width = 6, height = 5)
+dotplot(go_enrich)
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/cnetplot.pdf", width = 12, height = 6)
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+dev.off()
+```
+
+## GO object (positive)
+```{r, fig.width = 6, fig.height=8}
+original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+positive_genes = which(Kang_pois_glmm_df[[key]]$hits) & Kang_pois_glmm_df[[key]]$log2FC > 0
+genes = Kang_pois_glmm_df[[key]]$genes[positive_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/positive_dotplot.pdf", width = 6, height = 5)
+dotplot(go_enrich)
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/positive_cnetplot.pdf", width = 12, height = 6)
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+dev.off()
+```
+## GO object (negative)
+```{r, fig.width = 6, fig.height=8}
+original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+negative_genes = which(Kang_pois_glmm_df[[key]]$hits) & Kang_pois_glmm_df[[key]]$log2FC < 0
+genes = Kang_pois_glmm_df[[key]]$genes[negative_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+```{r eval=FALSE}
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/negative_dotplot.pdf", width = 6, height = 5)
+dotplot(go_enrich)
+pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/negative_cnetplot.pdf", width = 12, height = 6)
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+dev.off()
+```
