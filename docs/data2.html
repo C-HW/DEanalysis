@@ -12,7 +12,7 @@
 <meta name="author" content="Chih-Hsuan Wu" />
 
 
-<title>Data overview</title>
+<title>Data overview for case study 2</title>
 
 <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -358,7 +358,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data overview</h1>
+<h1 class="title toc-ignore">Data overview for case study 2</h1>
 <h4 class="author">Chih-Hsuan Wu</h4>
 
 </div>
@@ -367,7 +367,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -378,8 +378,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -388,13 +388,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-11-30
+<strong>Last updated:</strong> 2023-12-01
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 2
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEanalysis/</code> <span
@@ -417,21 +417,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -507,56 +504,30 @@ run.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
-<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-Using absolute paths to the files within your workflowr project makes it
-difficult for you and others to run your code on a different machine.
-Change the absolute path(s) below to the suggested relative path(s) to
-make your code more reproducible.
-</p>
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th style="text-align:left;">
-absolute
-</th>
-<th style="text-align:left;">
-relative
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-~/Google Drive/My Drive/spatial/10X/DEanalysis
-</td>
-<td style="text-align:left;">
-.
-</td>
-</tr>
-</tbody>
-</table>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree9daafa50ed16dbc150a5f207a0151d29ae5c25cctargetblank9daafa5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree59bf3274985fb0d2d4cba2fa9acca891258e1942targetblank59bf327a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/9daafa50ed16dbc150a5f207a0151d29ae5c25cc" target="_blank">9daafa5</a>
+<a href="https://github.com/c-hw/DEanalysis/tree/59bf3274985fb0d2d4cba2fa9acca891258e1942" target="_blank">59bf327</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree9daafa50ed16dbc150a5f207a0151d29ae5c25cctargetblank9daafa5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree59bf3274985fb0d2d4cba2fa9acca891258e1942targetblank59bf327a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -566,7 +537,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/9daafa50ed16dbc150a5f207a0151d29ae5c25cc" target="_blank">9daafa5</a>.
+<a href="https://github.com/c-hw/DEanalysis/tree/59bf3274985fb0d2d4cba2fa9acca891258e1942" target="_blank">59bf327</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -583,23 +554,6 @@ were generated:
 Untracked files:
     Untracked:  .DS_Store
     Untracked:  .Rhistory
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/.Rapp.history
-    Untracked:  analysis/.Rhistory
-    Untracked:  analysis/Bcells.Rmd
-    Untracked:  analysis/CD14+ Monocytes.Rmd
-    Untracked:  analysis/FD_analysis.Rmd
-    Untracked:  analysis/analysis on Kang.Rmd
-    Untracked:  analysis/data2.Rmd
-    Untracked:  analysis/data_clusters.Rmd
-    Untracked:  analysis/figure/
-    Untracked:  analysis/group12_13.Rmd
-    Untracked:  analysis/group12_19.Rmd
-    Untracked:  analysis/group2_19.Rmd
-    Untracked:  analysis/group8_17-2_19.Rmd
-    Untracked:  analysis/group8_17.Rmd
-    Untracked:  analysis/methods_details.Rmd
-    Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/.Rhistory
     Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
@@ -615,7 +569,6 @@ Untracked files:
     Untracked:  data/vstcounts.Rdata
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
     Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
@@ -664,10 +617,44 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/38036979db676956659d028827462d615c9f4cf1/analysis/data2.Rmd" target="_blank">3803697</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-01
+</td>
+<td>
+upload rmd
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/85fc2fed835fe58cb92639089d012fa09c239d46/docs/data2.html" target="_blank">85fc2fe</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/data2.html" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+<td>
+update B cells and data2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/85fc2fed835fe58cb92639089d012fa09c239d46/docs/data2.html" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -684,7 +671,7 @@ update
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/data2.html" target="_blank">949c760</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/data2.html" target="_blank">949c760</a>
 </td>
 <td>
 C-HW
@@ -732,7 +719,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -743,7 +741,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">949c760</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-5-1.png" target="_blank">949c760</a>
 </td>
 <td>
 C-HW
@@ -784,7 +782,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-7-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-7-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-7-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -826,7 +835,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -837,7 +857,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">949c760</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/949c7601790e106ec05a03550fcd0a9c9d5f9d1e/docs/figure/data2.Rmd/unnamed-chunk-10-1.png" target="_blank">949c760</a>
 </td>
 <td>
 C-HW
@@ -875,7 +895,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-10-2.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-10-2.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-10-2.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -916,7 +947,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-12-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-12-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-12-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -954,7 +996,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-13-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-13-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-13-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -995,7 +1048,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-14-1.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-14-1.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-14-1.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -1033,7 +1097,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-14-2.png" target="_blank">85fc2fe</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/eeb5d79df9d42c0f2da67d83243a6880f3fb8170/docs/figure/data2.Rmd/unnamed-chunk-14-2.png" target="_blank">eeb5d79</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/85fc2fed835fe58cb92639089d012fa09c239d46/docs/figure/data2.Rmd/unnamed-chunk-14-2.png" target="_blank">85fc2fe</a>
 </td>
 <td>
 C-HW
@@ -1086,7 +1161,7 @@ other attached packages:
 
 loaded via a namespace (and not attached):
   [1] tidyr_1.3.0               bit64_4.0.5              
-  [3] knitr_1.27                irlba_2.3.5.1            
+  [3] knitr_1.29                irlba_2.3.5.1            
   [5] DelayedArray_0.24.0       data.table_1.14.8        
   [7] KEGGREST_1.38.0           RCurl_1.98-1.12          
   [9] doParallel_1.0.17         generics_0.1.3           
@@ -1094,16 +1169,16 @@ loaded via a namespace (and not attached):
  [13] cowplot_1.1.1             RSQLite_2.3.1            
  [15] shadowtext_0.1.2          future_1.33.0            
  [17] bit_4.0.5                 httpuv_1.6.11            
- [19] viridis_0.6.3             xfun_0.39                
+ [19] viridis_0.6.3             xfun_0.41                
  [21] hms_1.1.3                 jquerylib_0.1.4          
- [23] evaluate_0.21             promises_1.2.0.1         
+ [23] evaluate_0.23             promises_1.2.0.1         
  [25] fansi_1.0.4               progress_1.2.2           
  [27] caTools_1.18.2            Rgraphviz_2.42.0         
  [29] igraph_1.5.0              DBI_1.1.3                
  [31] geneplotter_1.76.0        purrr_1.0.1              
  [33] backports_1.4.1           annotate_1.76.0          
  [35] aod_1.3.2                 sparseMatrixStats_1.10.0 
- [37] vctrs_0.6.3               abind_1.4-5              
+ [37] vctrs_0.6.4               abind_1.4-5              
  [39] cachem_1.0.8              withr_2.5.0              
  [41] ggforce_0.4.1             HDO.db_0.99.1            
  [43] treeio_1.22.0             prettyunits_1.1.1        
@@ -1113,8 +1188,8 @@ loaded via a namespace (and not attached):
  [51] edgeR_3.40.2              pkgconfig_2.0.3          
  [53] tweenr_2.0.2              nlme_3.1-162             
  [55] vipor_0.4.5               blme_1.0-5               
- [57] rlang_1.1.1               globals_0.16.2           
- [59] lifecycle_1.0.3           downloader_0.4           
+ [57] rlang_1.1.2               globals_0.16.2           
+ [59] lifecycle_1.0.4           downloader_0.4           
  [61] rsvd_1.0.5                rprojroot_2.0.3          
  [63] polyclip_1.10-4           graph_1.76.0             
  [65] Matrix_1.5-4.1            aplot_0.1.10             
@@ -1126,7 +1201,7 @@ loaded via a namespace (and not attached):
  [77] KernSmooth_2.23-22        Biostrings_2.66.0        
  [79] blob_1.2.4                DelayedMatrixStats_1.20.0
  [81] workflowr_1.7.0           shape_1.4.6              
- [83] stringr_1.5.0             qvalue_2.30.0            
+ [83] stringr_1.5.1             qvalue_2.30.0            
  [85] parallelly_1.36.0         remaCor_0.0.16           
  [87] rstatix_0.7.2             gridGraphics_0.5-1       
  [89] ggsignif_0.6.4            beachmat_2.14.2          
@@ -1141,44 +1216,43 @@ loaded via a namespace (and not attached):
 [107] listenv_0.9.0             patchwork_1.1.2          
 [109] TMB_1.9.5                 MASS_7.3-60              
 [111] mgcv_1.9-0                tidyselect_1.2.0         
-[113] stringi_1.7.12            highr_0.10               
-[115] yaml_2.3.7                GOSemSim_2.24.0          
-[117] BiocSingular_1.14.0       locfit_1.5-9.8           
-[119] ggrepel_0.9.3             grid_4.2.2               
-[121] sass_0.4.7                fastmatch_1.1-3          
-[123] tools_4.2.2               future.apply_1.11.0      
-[125] parallel_4.2.2            circlize_0.4.15          
-[127] rstudioapi_0.15.0         foreach_1.5.2            
-[129] git2r_0.32.0              EnvStats_2.8.0           
-[131] farver_2.1.1              ggraph_2.1.0             
-[133] digest_0.6.33             Rcpp_1.0.11              
-[135] car_3.1-2                 broom_1.0.5              
-[137] later_1.3.1               RcppAnnoy_0.0.21         
-[139] httr_1.4.6                ComplexHeatmap_2.14.0    
-[141] Rdpack_2.4                colorspace_2.1-0         
-[143] XML_3.99-0.14             fs_1.6.3                 
-[145] splines_4.2.2             uwot_0.1.16              
-[147] yulab.utils_0.0.6         tidytree_0.4.4           
-[149] graphlayouts_1.0.0        ggplotify_0.1.1          
-[151] xtable_1.8-4              jsonlite_1.8.7           
-[153] nloptr_2.0.3              ggtree_3.6.2             
-[155] tidygraph_1.2.3           ggfun_0.1.1              
-[157] R6_2.5.1                  pillar_1.9.0             
-[159] htmltools_0.5.5           glue_1.6.2               
-[161] fastmap_1.1.1             minqa_1.2.5              
-[163] BiocParallel_1.32.6       BiocNeighbors_1.16.0     
-[165] codetools_0.2-19          fgsea_1.24.0             
-[167] mvtnorm_1.2-2             utf8_1.2.3               
-[169] lattice_0.21-8            bslib_0.5.0              
-[171] tibble_3.2.1              pbkrtest_0.5.2           
-[173] numDeriv_2016.8-1.1       ggbeeswarm_0.7.2         
-[175] gtools_3.9.4              GO.db_3.16.0             
-[177] limma_3.54.2              glmmTMB_1.1.8            
-[179] rmarkdown_2.23            munsell_0.5.0            
-[181] GetoptLong_1.0.5          GenomeInfoDbData_1.2.9   
-[183] iterators_1.0.14          variancePartition_1.28.9 
-[185] reshape2_1.4.4            gtable_0.3.3             
-[187] rbibutils_2.2.13         </code></pre>
+[113] stringi_1.8.2             yaml_2.3.7               
+[115] GOSemSim_2.24.0           BiocSingular_1.14.0      
+[117] locfit_1.5-9.8            ggrepel_0.9.3            
+[119] grid_4.2.2                sass_0.4.7               
+[121] fastmatch_1.1-3           tools_4.2.2              
+[123] future.apply_1.11.0       parallel_4.2.2           
+[125] circlize_0.4.15           rstudioapi_0.15.0        
+[127] foreach_1.5.2             git2r_0.32.0             
+[129] EnvStats_2.8.0            farver_2.1.1             
+[131] ggraph_2.1.0              digest_0.6.33            
+[133] Rcpp_1.0.11               car_3.1-2                
+[135] broom_1.0.5               later_1.3.1              
+[137] RcppAnnoy_0.0.21          httr_1.4.6               
+[139] ComplexHeatmap_2.14.0     Rdpack_2.4               
+[141] colorspace_2.1-0          XML_3.99-0.14            
+[143] fs_1.6.3                  splines_4.2.2            
+[145] uwot_0.1.16               yulab.utils_0.0.6        
+[147] tidytree_0.4.4            graphlayouts_1.0.0       
+[149] ggplotify_0.1.1           xtable_1.8-4             
+[151] jsonlite_1.8.7            nloptr_2.0.3             
+[153] ggtree_3.6.2              tidygraph_1.2.3          
+[155] ggfun_0.1.1               R6_2.5.1                 
+[157] pillar_1.9.0              htmltools_0.5.5          
+[159] glue_1.6.2                fastmap_1.1.1            
+[161] minqa_1.2.5               BiocParallel_1.32.6      
+[163] BiocNeighbors_1.16.0      codetools_0.2-19         
+[165] fgsea_1.24.0              mvtnorm_1.2-2            
+[167] utf8_1.2.3                lattice_0.21-8           
+[169] bslib_0.5.0               tibble_3.2.1             
+[171] pbkrtest_0.5.2            numDeriv_2016.8-1.1      
+[173] ggbeeswarm_0.7.2          gtools_3.9.4             
+[175] GO.db_3.16.0              limma_3.54.2             
+[177] glmmTMB_1.1.8             rmarkdown_2.23           
+[179] munsell_0.5.0             GetoptLong_1.0.5         
+[181] GenomeInfoDbData_1.2.9    iterators_1.0.14         
+[183] variancePartition_1.28.9  reshape2_1.4.4           
+[185] gtable_0.3.3              rbibutils_2.2.13         </code></pre>
 </div>
 </div>
 
