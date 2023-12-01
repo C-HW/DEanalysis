@@ -27,6 +27,7 @@ Differential expression (DE) analysis in single-cell transcriptomics reveals cel
 
 We provide a generalized linear mixed model framework (GLMM) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
 
+![](../docs/figure/panel3.png)
 
 ## GLMM for DE analysis 
 
@@ -51,18 +52,42 @@ $$
 $$
 where $X_c$ is the indicator for different cell types, and $\epsilon_{gk}\sim N(0,\sigma_{g}^2)$ represents the random effects for donor $k$. Our goal is to test $H_0: \beta_g = 0$. 
 
+## New criteria on determining DEGs
 
-[new criteria](new_criteria.html)  
+We proposed new criteria that based on the convention and also the gene mean and the difference in mean. If the log2 gene mean in two groups is lower than a certain value (-2.25 in case study 1) and the log2 mean difference is smaller than a threshold (-1 in case study 1), the genes would not be considered as a DEGs. These can also be used as a filter before any DE analysis to speed up the computation. Both of these criteria are adjustable, depending on the dataset’s performance and characteristics. An examination in heatmaps and mean difference against mean plot in advanced can be helpful to determine the thresholds when analyzing a new dataset. More details can be found [here](new_criteria.html).
 
-# Application 
+## Benchmarked methods
 
-## Data summary
-[Data](data_clusters.html)
+In this project, we compare a few methods performing the DE analysis results. Our comparison encompassed Poisson-glmm and Binomial-glmm from the new paradigm, as well as pseudo-bulk approaches including DESeq2 and edgeR. Additionally, we assessed the performance of single cell specific tools including MAST, Wilcox in Seurat, and linear mixed models in Muscat. More details can be found [here](methods_details.html).
 
-## Analysis and Methods comparison
-[Methods details](methods_details.html)  
-[group12_13](group12_13.html)  
-[group2_19](group2_19.html)  
-[group8_17&2_19](group8_17-2_19.html)
 
-# Simulation
+
+# Application
+
+## Case study 1
+ 
+* About data
+ 
+In case study 1, a 10X scRNA-seq dataset of post-menopausal fallopian tubes, with 57,182 cells sourced from five donors, covering 29,382 genes is analyzed. The 20 clusters are obtained via HIPPO algorithm. There is no pre-filtering procedure applied on this dataset, except for built-in filtering steps in each method. We use sctransform to get the VST data, and the integration workflow provided by Seurat to obtain the integrated data.
+
+* Analyses
+  + [Data summary](data_clusters.html)  
+  + [Group12_13](group12_13.html)  
+  + [Group2_19](group2_19.html)  
+  + [Group8_17&2_19](group8_17-2_19.html)
+  + [Group12_19](group12_19.html)
+  + [Group8_17](group8_17.html)
+
+## Case study 2
+
+* About data
+
+In case study 2, the dataset contains 10X droplet-based scRNA-seq PBCM data from 8 Lupus patients obtained before and after 6h-treatment with IFN-β. After removing undetected genes and lowly expressed genes (less than 10 cells expressing more than 1), the dataset consists of 29065 cells and 7661 genes. The integrated data is replaced by log2-transformed normalized expression values obtained via computeLibrarayFactors and logNormCounts functions in Muscat.
+
+
+* Analyses
+
+  + [Data summary](data2.html)
+  + [CD14+ Monocytes](CD14+-Monocytes.html)
+  + [B cells](Bcells.html)
+  + [P-values under null setting](FD_analysis.html)
