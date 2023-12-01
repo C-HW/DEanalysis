@@ -581,8 +581,10 @@ annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
 
 # Enrichment analysis
 
-## GO object (all)
-```{r, fig.width = 6, fig.height=8}
+## Poisson-glmm DEGs
+
+### All DEGs
+```{r}
 original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
 names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
@@ -600,7 +602,7 @@ go_enrich = enrichGO(gene = genes,
                       qvalueCutoff = 0.10)
 
 ```
-```{r, fig.width = 8, fig.height=6}
+```{r}
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
@@ -615,8 +617,8 @@ cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
 
-## GO object (positive)
-```{r, fig.width = 6, fig.height=8}
+### Positive DEGs
+```{r}
 original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
 names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
@@ -649,8 +651,8 @@ pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/positive_cnetplot.p
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
-## GO object (negative)
-```{r, fig.width = 6, fig.height=8}
+### Negative DEGs
+```{r}
 original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
 names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
@@ -682,4 +684,56 @@ dotplot(go_enrich)
 pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/negative_cnetplot.pdf", width = 12, height = 6)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
+```
+
+## pb-DESeq2 DEGs
+```{r}
+original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+genes = Kang_DESeq2.muscat[[key]]$genes[which(Kang_DESeq2.muscat[[key]]$hits)]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+## MMpoisson DEGs
+```{r}
+original_gene_list = Kang_MMpoisson[[key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+genes = Kang_MMpoisson[[key]]$genes[which(Kang_MMpoisson[[key]]$hits)]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
