@@ -552,13 +552,6 @@ dev.off()
 ```
 
 
-```{r}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/mean_diff_plot.pdf", width = 12, height = 12)
-mean_meandiff_plot()
-dev.off()
-```
-
-
 # MA plot 
 ```{r fig.width = 8, fig.height=5}
 # tiff(paste0("result/",key,"/FC_mean_diff/MAplot.tiff"), width=900, height=900, res=120)
