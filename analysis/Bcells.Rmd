@@ -142,7 +142,7 @@ ggarrange(p_donor, p_countbygroup,p_zeroprop, nrow = 1, ncol = 3)
 dev.off()
 ```
 
-# Number of hits from each method
+# Number of DEGs from each method
 ```{r}
 dflist = list(Kang_pois_glmm_df, 
               Kang_binom_glmm_df, 
@@ -153,8 +153,8 @@ dflist = list(Kang_pois_glmm_df,
               # Kang_MMdream,
               Kang_MMvst,
               Kang_MMpoisson)
-titlelist = c("Pois-glmm_UMI", 
-              "Binom-glmm_UMI",
+titlelist = c("Poisson-glmm_UMI", 
+              "Binomial-glmm_UMI",
               "pb-DESeq2_UMI", 
               "pb-edgeR_cpm",
               "MAST_CPM",

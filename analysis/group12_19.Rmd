@@ -183,7 +183,7 @@ p_ttest_raw_cpm = ggplot(data = abs(data.frame(raw_t = raw_mean_DE[intersect(row
 ggarrange(p_ttest_raw_cpm, p_ttest_raw_vst, p_ttest_raw_integrated, ncol = 3)
 ```
 
-# Number of hits from each method
+# Number of DEGs from each method
 ```{r}
 dflist = list(pois_glmm_df, 
               binom_glmm_df, 
@@ -194,8 +194,8 @@ dflist = list(pois_glmm_df,
               # MMdream,
               MMvst,
               MMpoisson)
-titlelist = c("Pois-glmm_UMI", 
-              "Binom-glmm_UMI",
+titlelist = c("Poisson-glmm_UMI", 
+              "Binomial-glmm_UMI",
               "pb-DESeq2_UMI", 
               "pb-edgeR_cpm",
               "MAST_CPM",
