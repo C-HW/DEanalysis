@@ -1,5 +1,5 @@
 ---
-title: "group12_13"
+title: "Group12_13"
 author: "Chih-Hsuan Wu"
 output: workflowr::wflow_html
 editor_options:
@@ -158,35 +158,35 @@ vst_mean_DE = simple_mean_DE(vstcounts[,subset_ind], cellgroup == 1, cellgroup =
 cpm_mean_DE = simple_mean_DE(log2(assays(inputData_cpm[,subset_ind])$counts+1), cellgroup == 1, cellgroup == 2)
 ```
 ```{r, fig.width=12, fig.height=4}
-p_ttest_raw_integrated = ggplot(data = data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"], int_t = integrated_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"]), aes(x = int_t, y = raw_t)) + 
+p_ttest_raw_integrated = ggplot(data = abs(data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"], int_t = integrated_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"])), aes(x = int_t, y = raw_t)) + 
   geom_point(size = 0.5, alpha = 0.3, color = "#7C81AD") +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  ylim(c(0,15)) +
-  xlab("t score of mean difference test (Integrated data)") + 
-  ylab("t score of mean difference test (Log2 Raw UMI)") + 
+  ylim(c(0,10)) +
+  xlab("|t score| of two-sample t-test (Integrated data)") + 
+  ylab("|t score| of two-sample t-test (Log2 Raw UMI)") + 
   theme_bw() + 
   theme(panel.grid = element_blank()) +
-  xlim(c(0,15))
+  xlim(c(0,10))
 
-p_ttest_raw_vst = ggplot(data = data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(vst_mean_DE)), "t"], vst_t = vst_mean_DE[intersect(rownames(raw_mean_DE), rownames(vst_mean_DE)), "t"]), aes(x = vst_t, y = raw_t)) + 
+p_ttest_raw_vst = ggplot(data = abs(data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(vst_mean_DE)), "t"], vst_t = vst_mean_DE[intersect(rownames(raw_mean_DE), rownames(vst_mean_DE)), "t"])), aes(x = vst_t, y = raw_t)) + 
   geom_point(size = 0.5, alpha = 0.3, color = "#7C81AD") +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  ylim(c(0,15)) +
-  xlab("t score of mean difference test (VST data)") + 
-  ylab("t score of mean difference test (Log2 Raw UMI)") + 
+  ylim(c(0,10)) +
+  xlab("|t score| of two-sample t-test (VST data)") + 
+  ylab("|t score| of two-sample t-test (Log2 Raw UMI)") + 
   theme_bw() + 
   theme(panel.grid = element_blank()) +
-  xlim(c(0,15))
+  xlim(c(0,10))
 
-p_ttest_raw_cpm = ggplot(data = data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(cpm_mean_DE)), "t"], cpm_t = cpm_mean_DE[intersect(rownames(raw_mean_DE), rownames(cpm_mean_DE)), "t"]), aes(x = cpm_t, y = raw_t)) + 
+p_ttest_raw_cpm = ggplot(data = abs(data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(cpm_mean_DE)), "t"], cpm_t = cpm_mean_DE[intersect(rownames(raw_mean_DE), rownames(cpm_mean_DE)), "t"])), aes(x = cpm_t, y = raw_t)) + 
   geom_point(size = 0.5, alpha = 0.3, color = "#7C81AD") +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  ylim(c(0,15)) +
-  xlab("t score of mean difference test (Log2 CPM data)") + 
-  ylab("t score of mean difference test (Log2 Raw UMI)") + 
+  ylim(c(0,10)) +
+  xlab("|t score| of two-sample t-test (Log2 CPM data)") + 
+  ylab("|t score| of two-sample t-test (Log2 Raw UMI)") + 
   theme_bw() + 
   theme(panel.grid = element_blank()) +
-  xlim(c(0,15))
+  xlim(c(0,10))
 
 ggarrange(p_ttest_raw_cpm, p_ttest_raw_vst, p_ttest_raw_integrated, ncol = 3)
 ```
