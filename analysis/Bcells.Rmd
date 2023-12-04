@@ -680,6 +680,8 @@ dev.off()
 ```
 
 ## pb-DESeq2 DEGs
+
+### All DEGs
 ```{r}
 original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
 names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
@@ -705,7 +707,63 @@ dotplot(go_enrich)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
+### Positive DEGs
+```{r}
+original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
+genes = Kang_DESeq2.muscat[[key]]$genes[positive_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+### Negative DEGs
+```{r}
+original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
+genes = Kang_DESeq2.muscat[[key]]$genes[negative_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
 ## MMpoisson DEGs
+
+### All DEGs
 ```{r}
 original_gene_list = Kang_MMpoisson[[key]]$log2FC
 names(original_gene_list) = Kang_MMpoisson[[key]]$genes
@@ -725,6 +783,60 @@ go_enrich = enrichGO(gene = genes,
 
 ```
 ```{r}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+### Positive DEGs
+```{r}
+original_gene_list = Kang_MMpoisson[[key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
+genes = Kang_MMpoisson[[key]]$genes[positive_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
+dotplot(go_enrich)
+```
+```{r, fig.width = 14, fig.height=7}
+cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+```
+
+### Negative DEGs
+```{r}
+original_gene_list = Kang_MMpoisson[[key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+gene_list = na.omit(original_gene_list)
+# sort the list in decreasing order (required for clusterProfiler)
+gene_list = sort(gene_list, decreasing = TRUE)
+negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
+genes = Kang_MMpoisson[[key]]$genes[negative_genes]
+# create GO object
+go_enrich = enrichGO(gene = genes,
+                      universe = names(gene_list),
+                      OrgDb = "org.Hs.eg.db", 
+                      keyType = 'SYMBOL',
+                      readable = T,
+                      ont = "BP",
+                      pvalueCutoff = 0.05, 
+                      qvalueCutoff = 0.10)
+
+```
+```{r, fig.width = 8, fig.height=6}
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
