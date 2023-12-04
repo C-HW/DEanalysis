@@ -368,7 +368,7 @@ settings</h1>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -379,8 +379,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -389,13 +389,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-11-29
+<strong>Last updated:</strong> 2023-12-03
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 2
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEanalysis/</code> <span
@@ -418,21 +418,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -508,56 +505,30 @@ run.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
-<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-Using absolute paths to the files within your workflowr project makes it
-difficult for you and others to run your code on a different machine.
-Change the absolute path(s) below to the suggested relative path(s) to
-make your code more reproducible.
-</p>
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th style="text-align:left;">
-absolute
-</th>
-<th style="text-align:left;">
-relative
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-~/Google Drive/My Drive/spatial/10X/DEanalysis
-</td>
-<td style="text-align:left;">
-.
-</td>
-</tr>
-</tbody>
-</table>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree91b404eb0d8577ed48a664cf4986028414793807targetblank91b404ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreef3b8c1a3d1bf55b5c12f8083ae18e9de542ae8b9targetblankf3b8c1aa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/91b404eb0d8577ed48a664cf4986028414793807" target="_blank">91b404e</a>
+<a href="https://github.com/c-hw/DEanalysis/tree/f3b8c1a3d1bf55b5c12f8083ae18e9de542ae8b9" target="_blank">f3b8c1a</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree91b404eb0d8577ed48a664cf4986028414793807targetblank91b404ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreef3b8c1a3d1bf55b5c12f8083ae18e9de542ae8b9targetblankf3b8c1aa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -567,7 +538,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/91b404eb0d8577ed48a664cf4986028414793807" target="_blank">91b404e</a>.
+<a href="https://github.com/c-hw/DEanalysis/tree/f3b8c1a3d1bf55b5c12f8083ae18e9de542ae8b9" target="_blank">f3b8c1a</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -584,23 +555,6 @@ were generated:
 Untracked files:
     Untracked:  .DS_Store
     Untracked:  .Rhistory
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/.Rapp.history
-    Untracked:  analysis/.Rhistory
-    Untracked:  analysis/Bcells.Rmd
-    Untracked:  analysis/CD14+ Monocytes.Rmd
-    Untracked:  analysis/FD_analysis.Rmd
-    Untracked:  analysis/analysis on Kang.Rmd
-    Untracked:  analysis/data2.Rmd
-    Untracked:  analysis/data_clusters.Rmd
-    Untracked:  analysis/figure/
-    Untracked:  analysis/group12_13.Rmd
-    Untracked:  analysis/group12_19.Rmd
-    Untracked:  analysis/group2_19.Rmd
-    Untracked:  analysis/group8_17-2_19.Rmd
-    Untracked:  analysis/group8_17.Rmd
-    Untracked:  analysis/methods_details.Rmd
-    Untracked:  analysis/new_criteria.Rmd
     Untracked:  data/.Rhistory
     Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
@@ -616,7 +570,6 @@ Untracked files:
     Untracked:  data/vstcounts.Rdata
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
     Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
@@ -633,10 +586,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/FD_analysis.Rmd</code>) and HTML
+(<code>docs/FD_analysis.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/f3b8c1a3d1bf55b5c12f8083ae18e9de542ae8b9/analysis/FD_analysis.Rmd" target="_blank">f3b8c1a</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-03
+</td>
+<td>
+wflow_publish("analysis/FD_analysis.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/FD_analysis.html" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+<td>
+update index, FD permuation, plots axes
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -659,7 +676,81 @@ conservative results. With either current criteria or our new criteria
 to determine DEGs, every method detects at most one false discovery each
 run.
 <img src="figure/FD_analysis.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/FD_analysis.Rmd/unnamed-chunk-5-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/FD_analysis.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/FD_analysis.Rmd/unnamed-chunk-7-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -698,7 +789,7 @@ other attached packages:
 
 loaded via a namespace (and not attached):
   [1] scattermore_1.2           bit64_4.0.5              
-  [3] knitr_1.27                irlba_2.3.5.1            
+  [3] knitr_1.29                irlba_2.3.5.1            
   [5] DelayedArray_0.24.0       data.table_1.14.8        
   [7] KEGGREST_1.38.0           RCurl_1.98-1.12          
   [9] doParallel_1.0.17         generics_0.1.3           
@@ -707,8 +798,8 @@ loaded via a namespace (and not attached):
  [15] RANN_2.6.1                future_1.33.0            
  [17] bit_4.0.5                 spatstat.data_3.0-1      
  [19] httpuv_1.6.11             viridis_0.6.3            
- [21] xfun_0.39                 hms_1.1.3                
- [23] jquerylib_0.1.4           evaluate_0.21            
+ [21] xfun_0.41                 hms_1.1.3                
+ [23] jquerylib_0.1.4           evaluate_0.23            
  [25] promises_1.2.0.1          fansi_1.0.4              
  [27] progress_1.2.2            caTools_1.18.2           
  [29] igraph_1.5.0              DBI_1.1.3                
@@ -717,7 +808,7 @@ loaded via a namespace (and not attached):
  [35] ellipsis_0.3.2            backports_1.4.1          
  [37] annotate_1.76.0           aod_1.3.2                
  [39] deldir_1.0-9              sparseMatrixStats_1.10.0 
- [41] vctrs_0.6.3               ROCR_1.0-11              
+ [41] vctrs_0.6.4               ROCR_1.0-11              
  [43] abind_1.4-5               cachem_1.0.8             
  [45] withr_2.5.0               progressr_0.13.0         
  [47] sctransform_0.3.5         prettyunits_1.1.1        
@@ -726,35 +817,35 @@ loaded via a namespace (and not attached):
  [53] spatstat.explore_3.2-1    labeling_0.4.2           
  [55] edgeR_3.40.2              pkgconfig_2.0.3          
  [57] nlme_3.1-162              vipor_0.4.5              
- [59] blme_1.0-5                rlang_1.1.1              
- [61] globals_0.16.2            lifecycle_1.0.3          
+ [59] blme_1.0-5                rlang_1.1.2              
+ [61] globals_0.16.2            lifecycle_1.0.4          
  [63] miniUI_0.1.1.1            rsvd_1.0.5               
  [65] rprojroot_2.0.3           polyclip_1.10-4          
  [67] lmtest_0.9-40             Matrix_1.5-4.1           
  [69] carData_3.0-5             boot_1.3-28.1            
  [71] zoo_1.8-12                beeswarm_0.4.0           
- [73] ggridges_0.5.4            GlobalOptions_0.1.2      
- [75] png_0.1-8                 viridisLite_0.4.2        
- [77] rjson_0.2.21              bitops_1.0-7             
- [79] KernSmooth_2.23-22        Biostrings_2.66.0        
- [81] blob_1.2.4                DelayedMatrixStats_1.20.0
- [83] workflowr_1.7.0           shape_1.4.6              
- [85] stringr_1.5.0             parallelly_1.36.0        
- [87] spatstat.random_3.1-5     remaCor_0.0.16           
- [89] rstatix_0.7.2             ggsignif_0.6.4           
- [91] beachmat_2.14.2           scales_1.2.1             
- [93] memoise_2.0.1             magrittr_2.0.3           
- [95] plyr_1.8.8                ica_1.0-3                
- [97] gplots_3.1.3              zlibbioc_1.44.0          
- [99] compiler_4.2.2            RColorBrewer_1.1-3       
-[101] clue_0.3-64               lme4_1.1-34              
-[103] DESeq2_1.38.3             fitdistrplus_1.1-11      
-[105] cli_3.6.1                 XVector_0.38.0           
-[107] lmerTest_3.1-3            listenv_0.9.0            
-[109] patchwork_1.1.2           pbapply_1.7-2            
-[111] TMB_1.9.5                 MASS_7.3-60              
-[113] mgcv_1.9-0                tidyselect_1.2.0         
-[115] stringi_1.7.12            highr_0.10               
+ [73] whisker_0.4.1             ggridges_0.5.4           
+ [75] GlobalOptions_0.1.2       png_0.1-8                
+ [77] viridisLite_0.4.2         rjson_0.2.21             
+ [79] bitops_1.0-7              KernSmooth_2.23-22       
+ [81] Biostrings_2.66.0         blob_1.2.4               
+ [83] DelayedMatrixStats_1.20.0 workflowr_1.7.0          
+ [85] shape_1.4.6               stringr_1.5.1            
+ [87] parallelly_1.36.0         spatstat.random_3.1-5    
+ [89] remaCor_0.0.16            rstatix_0.7.2            
+ [91] ggsignif_0.6.4            beachmat_2.14.2          
+ [93] scales_1.2.1              memoise_2.0.1            
+ [95] magrittr_2.0.3            plyr_1.8.8               
+ [97] ica_1.0-3                 gplots_3.1.3             
+ [99] zlibbioc_1.44.0           compiler_4.2.2           
+[101] RColorBrewer_1.1-3        clue_0.3-64              
+[103] lme4_1.1-34               DESeq2_1.38.3            
+[105] fitdistrplus_1.1-11       cli_3.6.1                
+[107] XVector_0.38.0            lmerTest_3.1-3           
+[109] listenv_0.9.0             patchwork_1.1.2          
+[111] pbapply_1.7-2             TMB_1.9.5                
+[113] MASS_7.3-60               mgcv_1.9-0               
+[115] tidyselect_1.2.0          stringi_1.8.2            
 [117] yaml_2.3.7                BiocSingular_1.14.0      
 [119] locfit_1.5-9.8            ggrepel_0.9.3            
 [121] grid_4.2.2                sass_0.4.7               
