@@ -1,0 +1,189 @@
+---
+title: "P-values and False discoveries under null settings"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+
+```{r, setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(SingleCellExperiment)
+library(pheatmap)
+library(gridExtra)
+library(reshape)
+library(Seurat)
+library(SeuratObject)
+library(muscat)
+library(MAST)
+library(tidyr)
+```
+
+```{r, eval = FALSE}
+load("./data/data2sce.Rdata")
+assign_celltype("B cells")
+subgroupsce$ind = paste0("D",subgroupsce$ind)
+# only use ctrl group
+subgroupsce = subgroupsce[,subgroupsce$group_id %in% "ctrl"]
+rm(sce)
+```
+To examine the p-value calibration in real data, we did a permutation on group-of-interest within a null dataset. The cells in the controlled group of B cells were randomly assigned to controlled or stimulated group. We then computed p-values of each gene with different methods. The gene set was restricted to the input genes of Poisson-glmm, and the threshold of Wilcox method was relaxed to prevent filtering out genes. The procedure was repeated 20 times. Each time the proportion of p-value smaller than 0.05 was computed, so as the false discovery DEGs. 
+
+```{r, eval = FALSE}
+# Run simulation on B cells in Kang dataset
+set.seed(20231129)
+sim_time = 20
+pval_result = setNames(data.frame(matrix(ncol = 8, nrow = sim_time)), c("Poisson-glmm", "Binomial-glmm", "pb-DESeq2", "pb-edgeR", "MAST", "Wilcox", "MMvst", "MMpoisson"))
+FD_result = setNames(data.frame(matrix(ncol = 8, nrow = sim_time)), c("Poisson-glmm", "Binomial-glmm", "pb-DESeq2", "pb-edgeR", "MAST", "Wilcox", "MMvst", "MMpoisson"))
+poisglmm_pval = c()
+binomglmm_pval = c()
+pb_DESeq2_pval = c()
+pb_edgeR_pval = c()
+MAST_pval = c()
+Wilcox_pval = c()
+MMvst_pval = c()
+MMpoisson_pval = c()
+labels = matrix(nrow = sim_time, ncol = length(subgroupsce$group_id))
+
+# generate permuted labels
+for(i in 1:sim_time){
+  labels[i,] = rep("stim",length(subgroupsce$group_id))
+  labels[i,sample(1:length(subgroupsce$group_id), length(subgroupsce$group_id)/2)] = "ctrl"
+}
+
+for(i in 1:sim_time){
+  # assign labels
+  subgroupsce$group_id = as.factor(labels[i,])
+  subgroupsce$sample_id = as.factor(paste0(subgroupsce$group_id, subgroupsce$ind))
+  subgroupsce@metadata$experiment_info$sample_id = unique(subgroupsce$sample_id)
+  subgroupsce@metadata$experiment_info$group_id = as.factor(substr(unique(subgroupsce$sample_id), 1,4))
+  # poisson_glmm
+  Kang_pois_glmm_df = hippo_poisson_glmm_DE(subgroupsce, subgroupsce$group_id, subgroupsce$ind)
+  Kang_pois_glmm_df$hits = identifyhits(Kang_pois_glmm_df$BH, Kang_pois_glmm_df$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T, log2FCcutoff = 1)
+  input_genes = Kang_pois_glmm_df$status=="done"
+  pval_result[i,"poisglmm"] = mean(Kang_pois_glmm_df$pval<0.05, na.rm = T)
+  FD_result[i,"poisglmm"] = mean(Kang_pois_glmm_df$hits==T, na.rm = T)
+  poisglmm_pval = c(poisglmm_pval, na.omit(Kang_pois_glmm_df$pval))
+  
+  # binom_glmm
+  Kang_binom_glmm_df = hippo_binomial_glmm_DE(subgroupsce[input_genes,], subgroupsce$group_id, subgroupsce$ind)
+  Kang_binom_glmm_df$hits = identifyhits(Kang_binom_glmm_df$BH, Kang_binom_glmm_df$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T, log2FCcutoff = 1)
+  pval_result[i,"binomglmm"] = mean(Kang_binom_glmm_df$pval<0.05, na.rm = T)
+  FD_result[i,"binomglmm"] = mean(Kang_binom_glmm_df$hits==T, na.rm = T)
+  binomglmm_pval = c(binomglmm_pval, na.omit(Kang_binom_glmm_df$pval))
+  
+  # MAST
+  Kang_MAST_df = MAST_DE(subgroupsce[input_genes,], subgroupsce$group_id, subgroupsce$ind)
+  Kang_MAST_df$hits = identifyhits(Kang_MAST_df$BH, Kang_MAST_df$log2FC, log2FCcutoff = 1)
+  pval_result[i,"MAST"] = mean(Kang_MAST_df$pval<0.05, na.rm = T)
+  FD_result[i,"MAST"] = mean(Kang_MAST_df$hits==T, na.rm = T)
+  MAST_pval = c(MAST_pval, na.omit(Kang_MAST_df$pval))
+  # Seurat
+  Seurat_subgroup_lognorm = CreateSeuratObject(subgroupsce@assays@data$logcounts[input_genes,], project = as.character(subgroupsce$group_id), assay = "RNA", meta.data = data.frame(colData(subgroupsce)))
+  
+  # Wilcox
+  Kang_Wilcox_Seurat_df = FindMarkers(Seurat_subgroup_lognorm, ident.1 = as.character(group1), ident.2 = as.character(group2), test.use = "wilcox", logfc.threshold = 0, min.pct = 0)
+  Kang_Wilcox_Seurat_df$hits = identifyhits(Kang_Wilcox_Seurat_df$p_val_adj, Kang_Wilcox_Seurat_df$avg_log2FC, log2FCcutoff = 1)
+  pval_result[i,"Wilcox"] = mean(Kang_Wilcox_Seurat_df$p_val<0.05, na.rm = T)
+  FD_result[i,"Wilcox"] = mean(Kang_Wilcox_Seurat_df$hits==T, na.rm = T)
+  Wilcox_pval = c(Wilcox_pval, na.omit(Kang_Wilcox_Seurat_df$p_val))
+  
+    # DESeq2.muscat
+  pb = aggregateData(subgroupsce[input_genes,],
+    assay = "counts", fun = "sum",
+    by = c("cluster_id", "sample_id"))
+  res = pbDS(pb, method = "DESeq2", verbose = F)
+  Kang_DESeq2.muscat = data.frame(res$table[[1]][[1]])[,c(1,4,7,8)]
+  Kang_DESeq2.muscat$logFC = log2(exp(Kang_DESeq2.muscat$logFC))
+  colnames(Kang_DESeq2.muscat) = c("genes", "log2FC", "pval", "BH")
+  Kang_DESeq2.muscat$hits = identifyhits(Kang_DESeq2.muscat$BH, Kang_DESeq2.muscat$log2FC, log2FCcutoff = 1)
+  pval_result[i,"pb_DESeq2"] = mean(Kang_DESeq2.muscat$pval<0.05, na.rm = T)
+  FD_result[i,"pb_DESeq2"] = mean(Kang_DESeq2.muscat$hits==T, na.rm = T)
+  pb_DESeq2_pval = c(pb_DESeq2_pval, na.omit(Kang_DESeq2.muscat$pval))
+  
+  # edgeR.sum.cpm
+  assays(subgroupsce)$cpm = edgeR::cpm(subgroupsce@assays@data$counts)
+  pb = aggregateData(subgroupsce[input_genes],
+    assay = "cpm", fun = "sum",
+    by = c("cluster_id", "sample_id"))
+  res = pbDS(pb, method = "edgeR", verbose = FALSE)
+  Kang_edgeR.cpm = data.frame(res$table[[1]][[1]])[,c(1,3,6,7)]
+  Kang_edgeR.cpm$logFC = log2(exp(Kang_edgeR.cpm$logFC))
+  colnames(Kang_edgeR.cpm)[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_edgeR.cpm$hits = identifyhits(Kang_edgeR.cpm$BH, Kang_edgeR.cpm$log2FC, log2FCcutoff = 1)
+  pval_result[i,"pb_edgeR"] = mean(Kang_edgeR.cpm$pval<0.05, na.rm = T)
+  FD_result[i,"pb_edgeR"] = mean(Kang_edgeR.cpm$hits==T, na.rm = T)
+  pb_edgeR_pval = c(pb_edgeR_pval, na.omit(Kang_edgeR.cpm$pval))
+
+  
+  # MM-vst
+  res = mmDS(subgroupsce[input_genes,], method = "vst", vst = "sctransform")
+  Kang_MMvst = data.frame(res[[1]])[,c(1,3,6,7)]
+  Kang_MMvst$logFC = log2(exp(Kang_MMvst$beta))
+  colnames(Kang_MMvst)[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_MMvst$hits = identifyhits(Kang_MMvst$BH, Kang_MMvst$log2FC, log2FCcutoff = 1)
+  pval_result[i,"MMvst"] = mean(Kang_MMvst$pval<0.05, na.rm = T)
+  FD_result[i,"MMvst"] = mean(Kang_MMvst$hits==T, na.rm = T)
+  MMvst_pval = c(MMvst_pval, na.omit(Kang_MMvst$pval))
+  
+  # MM-poisson
+  res = mmDS(subgroupsce[input_genes,], method = "poisson")
+  Kang_MMpoisson = data.frame(res[[1]])[,c(1,3,6,7)]
+  Kang_MMpoisson$beta = log2(exp(Kang_MMpoisson$beta))
+  colnames(Kang_MMpoisson)[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_MMpoisson$hits = identifyhits(Kang_MMpoisson$BH,
+                                            Kang_MMpoisson$log2FC, log2FCcutoff = 1)
+  pval_result[i,"MMpoisson"] = mean(Kang_MMpoisson$pval<0.05, na.rm = T)
+  FD_result[i,"MMpoisson"] = mean(Kang_MMpoisson$hits==T, na.rm = T)
+  MMpoisson_pval = c(MMpoisson_pval, na.omit(Kang_MMpoisson$pval))
+}
+```
+
+```{r, eval = FALSE}
+pval_list = list(poisglmm_pval, binomglmm_pval, pb_DESeq2_pval, pb_edgeR_pval, MAST_pval, Wilcox_pval, MMvst_pval, MMpoisson_pval)
+max_length = max(sapply(pval_list,length))
+pval_list = sapply(pval_list, function(x){
+    c(x, rep(NA, max_length - length(x)))
+})
+pval_df = setNames(as.data.frame(pval_list), c("Poisson-glmm", "Binomial-glmm", "pb-DESeq2", "pb-edgeR", "MAST", "Wilcox", "MMvst", "MMpoisson"))
+save(FD_result, pval_result, pval_df, file = "../data/permutation.RData")
+```
+
+From the violin plot below, our glmm methods and Wilcox method are well-calibrated. However, pseudo-bulk methods, MAST and mixed models from Muscat are too conservative. Their overall proportion is way less than 0.05. The histograms of all p-values in these 20 runs are flat for our glmm methods and Wilcox method, which satisfy the null setting. However, the p-values of the other methods are overestimated, resulting conservative results. With either current criteria or our new criteria to determine DEGs, every method detects at most one false discovery each run.
+```{r}
+load("./data/permutation.RData")
+pval_violin = ggplot(gather(pval_result), aes(value, key)) + 
+  geom_violin() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  xlab("p-value") + 
+  ylab("") +
+  xlim(c(0,0.08))+
+  geom_vline(xintercept  = 0.05, linetype = "dashed", color = "red") +
+  scale_y_discrete(limits = rev(unique(gather(pval_result)$key)))
+pval_violin
+```
+```{r, eval = FALSE}
+pdf("../../graph_panels/panel7/permutation_violin.pdf", width = 5, height = 3)
+pval_violin
+dev.off()
+```
+
+
+```{r}
+ggplot(gather(pval_df), aes(value)) +
+  geom_histogram() + 
+  facet_wrap(~factor(key, unique(gather(pval_df)$key)))+
+  theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  xlab("p-value")
+```
+
