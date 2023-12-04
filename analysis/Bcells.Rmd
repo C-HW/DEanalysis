@@ -617,7 +617,7 @@ names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_pois_glmm_df[[key]]$hits) & Kang_pois_glmm_df[[key]]$log2FC > 0
+positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
 genes = Kang_pois_glmm_df[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -638,9 +638,9 @@ cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/positive_dotplot.pdf", width = 6, height = 5)
+pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/positive_dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/positive_cnetplot.pdf", width = 12, height = 6)
+pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/positive_cnetplot.pdf", width = 12, height = 6)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
@@ -651,7 +651,7 @@ names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_pois_glmm_df[[key]]$hits) & Kang_pois_glmm_df[[key]]$log2FC < 0
+negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
 genes = Kang_pois_glmm_df[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -672,9 +672,9 @@ cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/negative_dotplot.pdf", width = 6, height = 5)
+pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/negative_dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/negative_cnetplot.pdf", width = 12, height = 6)
+pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/negative_cnetplot.pdf", width = 12, height = 6)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
