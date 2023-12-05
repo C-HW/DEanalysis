@@ -610,14 +610,14 @@ cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
 
-### Positive DEGs
+### Up-regulated DEGs
 ```{r}
 original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
 names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
+positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
 genes = Kang_pois_glmm_df[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -644,14 +644,14 @@ pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/pan
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
-### Negative DEGs
+### Down-regulated DEGs
 ```{r}
 original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
 names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
+negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
 genes = Kang_pois_glmm_df[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -707,14 +707,14 @@ dotplot(go_enrich)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
-### Positive DEGs
+### Up-regulated DEGs
 ```{r}
 original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
 names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
+positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
 genes = Kang_DESeq2.muscat[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -734,14 +734,14 @@ dotplot(go_enrich)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
-### Negative DEGs
+### Down-regulated DEGs
 ```{r}
 original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
 names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
+negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
 genes = Kang_DESeq2.muscat[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -789,14 +789,14 @@ dotplot(go_enrich)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
-### Positive DEGs
+### Up-regulated DEGs
 ```{r}
 original_gene_list = Kang_MMpoisson[[key]]$log2FC
 names(original_gene_list) = Kang_MMpoisson[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
+positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
 genes = Kang_MMpoisson[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -816,14 +816,14 @@ dotplot(go_enrich)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
-### Negative DEGs
+### Down-regulated DEGs
 ```{r}
 original_gene_list = Kang_MMpoisson[[key]]$log2FC
 names(original_gene_list) = Kang_MMpoisson[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
+negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
 genes = Kang_MMpoisson[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
