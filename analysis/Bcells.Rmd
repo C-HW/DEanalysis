@@ -29,8 +29,7 @@ library("org.Hs.eg.db")
 library(pathview)
 assign_celltype("B cells")
 subgroupsce$ind = paste0("D",subgroupsce$ind)
-Kang_pois_glmm_df[[key]]$log2FC = -Kang_pois_glmm_df[[key]]$log2FC
-Kang_MAST_df[[key]]$log2FC = -Kang_MAST_df[[key]]$log2FC
+Kang_Wilcox_Seurat_df[[key]]$avg_log2FC = -Kang_Wilcox_Seurat_df[[key]]$avg_log2FC
 Kang_Wilcox_Seurat_df[[key]]$genes = gsub("-", "_", rownames(Kang_Wilcox_Seurat_df[[key]]))
 for(i in 1:length(Kang_Wilcox_Seurat_df[[key]]$genes)){
   if(Kang_Wilcox_Seurat_df[[key]]$genes[i] %in%rownames(subgroupsce)){}else{
@@ -617,7 +616,7 @@ names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
+positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
 genes = Kang_pois_glmm_df[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -651,7 +650,7 @@ names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
+negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
 genes = Kang_pois_glmm_df[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -714,7 +713,7 @@ names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
+positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
 genes = Kang_DESeq2.muscat[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -741,7 +740,7 @@ names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
+negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
 genes = Kang_DESeq2.muscat[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -796,7 +795,7 @@ names(original_gene_list) = Kang_MMpoisson[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
+positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
 genes = Kang_MMpoisson[[key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
@@ -823,7 +822,7 @@ names(original_gene_list) = Kang_MMpoisson[[key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
+negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
 genes = Kang_MMpoisson[[key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,

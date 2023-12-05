@@ -31,9 +31,7 @@ library(enrichplot)
 library("org.Hs.eg.db")
 library(pathview)
 assign_subgroup(8,17)
-pois_glmm_df[[key]]$log2FC = -pois_glmm_df[[key]]$log2FC
-binom_glmm_df[[key]]$log2FC = -binom_glmm_df[[key]]$log2FC
-MAST_donor_df[[key]]$log2FC = -MAST_donor_df[[key]]$log2FC
+Wilcox_Seurat_df[[key]]$avg_log2FC = - Wilcox_Seurat_df[[key]]$avg_log2FC
 Wilcox_Seurat_df[[key]]$genes = rownames(Wilcox_Seurat_df[[key]])
 ```
 ```{r}
