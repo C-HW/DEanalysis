@@ -31,8 +31,7 @@ library(enrichplot)
 library("org.Hs.eg.db")
 library(pathview)
 assign_subgroup(8,17)
-Wilcox_Seurat_df[[key]]$avg_log2FC = - Wilcox_Seurat_df[[key]]$avg_log2FC
-Wilcox_Seurat_df[[key]]$genes = rownames(Wilcox_Seurat_df[[key]])
+Wilcox_Seurat_integrated_df[[key]]$avg_log2FC = - Wilcox_Seurat_integrated_df[[key]]$avg_log2FC
 ```
 ```{r}
 combined_palette = c("#E91E63", "#00BCD4")
