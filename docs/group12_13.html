@@ -388,7 +388,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-12-05
+<strong>Last updated:</strong> 2023-12-09
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -519,15 +519,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreee7f3de419b399693e10c1bf44e39d8023b110b11targetblanke7f3de4a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree582be299cda2f6b7c60bb86585f67d891bf40024targetblank582be29a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/c-hw/DEanalysis/tree/e7f3de419b399693e10c1bf44e39d8023b110b11" target="_blank">e7f3de4</a>
+<a href="https://github.com/c-hw/DEanalysis/tree/582be299cda2f6b7c60bb86585f67d891bf40024" target="_blank">582be29</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreee7f3de419b399693e10c1bf44e39d8023b110b11targetblanke7f3de4a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree582be299cda2f6b7c60bb86585f67d891bf40024targetblank582be29a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -537,7 +537,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/c-hw/DEanalysis/tree/e7f3de419b399693e10c1bf44e39d8023b110b11" target="_blank">e7f3de4</a>.
+<a href="https://github.com/c-hw/DEanalysis/tree/582be299cda2f6b7c60bb86585f67d891bf40024" target="_blank">582be29</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -551,10 +551,15 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    analysis/figure/
+
 Untracked files:
     Untracked:  .DS_Store
     Untracked:  .Rhistory
+    Untracked:  analysis/analysis on fallopian tubes.Rmd
     Untracked:  data/.Rhistory
+    Untracked:  data/10X_DEresult_update.RData
     Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
@@ -566,11 +571,15 @@ Untracked files:
     Untracked:  data/Bcellsce.rds
     Untracked:  data/data2sce.RData
     Untracked:  data/permutation.RData
+    Untracked:  data/permutation13.RData
+    Untracked:  data/permutation2.RData
     Untracked:  data/vstcounts.Rdata
     Untracked:  figure/
 
 Unstaged changes:
     Modified:   analysis/CD14+ Monocytes.Rmd
+    Modified:   analysis/analysis on Kang.Rmd
+    Deleted:    analysis/first-analysis.Rmd
     Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
@@ -618,6 +627,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/582be299cda2f6b7c60bb86585f67d891bf40024/analysis/group12_13.Rmd" target="_blank">582be29</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-09
+</td>
+<td>
+update new DE results
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/2a171597b9cd26026845d86a75f803016acd4c66/docs/group12_13.html" target="_blank">2a17159</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1480,15 +1523,16 @@ C-HW
 </div>
 </div>
 </div>
-<div id="violin-plot-of-log2mean-of-degs" class="section level1">
-<h1>Violin plot of log2mean of DEGs</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="p-value-comparison-across-different-methods"
+class="section level1">
+<h1>P-Value comparison across different methods</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-20-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
-Past versions of unnamed-chunk-22-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div id="fig-unnamed-chunk-20-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1507,18 +1551,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">42900f0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">6faf9c0</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91b404eb0d8577ed48a664cf4986028414793807/docs/figure/group12_13.Rmd/unnamed-chunk-20-1.png" target="_blank">91b404e</a>
 </td>
 <td>
 C-HW
@@ -1529,7 +1562,82 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">d7d838c</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-20-1.png" target="_blank">3121ffb</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-22
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/group12_13.Rmd/unnamed-chunk-20-1.png" target="_blank">366cd53</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-06-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-20-1.png" target="_blank">95be122</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-05-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="log2-fold-change-comparison-across-different-methods"
+class="section level1">
+<h1>Log2 fold change comparison across different methods</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-21-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">42900f0</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">d7d838c</a>
 </td>
 <td>
 C-HW
@@ -1540,29 +1648,81 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">f314434</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-26
+2023-06-22
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/95be1229d96483e02a29434ab22951bcf2db2c2b/docs/figure/group12_13.Rmd/unnamed-chunk-21-1.png" target="_blank">95be122</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-07-13
+2023-05-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="violin-plot-of-log2mean-of-degs" class="section level1">
+<h1>Violin plot of log2mean of DEGs</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
+Past versions of unnamed-chunk-24-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-24-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-24-1.png" target="_blank">42900f0</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-01
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-22-1.png" target="_blank">3121ffb</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-24-1.png" target="_blank">d7d838c</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-08-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-24-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
 C-HW
@@ -1579,13 +1739,13 @@ C-HW
 <div id="violin-plot-of-gene-expression-frequency-of-degs"
 class="section level1">
 <h1>Violin plot of gene expression frequency of DEGs</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
-Past versions of unnamed-chunk-25-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-27-1">
+Past versions of unnamed-chunk-27-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div id="fig-unnamed-chunk-27-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1604,18 +1764,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">42900f0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">6faf9c0</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91b404eb0d8577ed48a664cf4986028414793807/docs/figure/group12_13.Rmd/unnamed-chunk-27-1.png" target="_blank">91b404e</a>
 </td>
 <td>
 C-HW
@@ -1626,7 +1775,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-27-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
@@ -1637,18 +1786,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/ccb68e234497bcf80b69f3012922815aca116a93/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">ccb68e2</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-06-29
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-25-1.png" target="_blank">3121ffb</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-27-1.png" target="_blank">3121ffb</a>
 </td>
 <td>
 C-HW
@@ -1668,58 +1806,6 @@ C-HW
 <h2>Poisson-glmm DEGs</h2>
 <div id="umi-counts" class="section level3">
 <h3>UMI counts</h3>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-1">
-Past versions of unnamed-chunk-26-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-26-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-26-1.png" target="_blank">6faf9c0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-11-29
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-26-1.png" target="_blank">d7d838c</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-08-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="vst-data" class="section level3">
-<h3>VST data</h3>
 <p><img src="figure/group12_13.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-28-1">
@@ -1792,8 +1878,8 @@ C-HW
 </div>
 </div>
 </div>
-<div id="cpm-data" class="section level3">
-<h3>CPM data</h3>
+<div id="vst-data" class="section level3">
+<h3>VST data</h3>
 <p><img src="figure/group12_13.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-30-1">
@@ -1877,15 +1963,15 @@ C-HW
 </div>
 </div>
 </div>
-<div id="integrated-data" class="section level3">
-<h3>Integrated data</h3>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="cpm-data" class="section level3">
+<h3>CPM data</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
-Past versions of unnamed-chunk-31-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-32-1">
+Past versions of unnamed-chunk-32-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-31-1" class="collapse">
+<div id="fig-unnamed-chunk-32-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1904,29 +1990,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/e8b0519bf26212f499883ebf0b5fd46f8ffd28a3/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">e8b0519</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-32-1.png" target="_blank">42900f0</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-11-29
+2023-12-01
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">6faf9c0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-11-29
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">d7d838c</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-32-1.png" target="_blank">d7d838c</a>
 </td>
 <td>
 C-HW
@@ -1937,13 +2012,13 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/3121ffbce9b9ca99591862add1b93110e1389373/docs/figure/group12_13.Rmd/unnamed-chunk-31-1.png" target="_blank">3121ffb</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-32-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-06-22
+2023-07-13
 </td>
 </tr>
 </tbody>
@@ -1951,11 +2026,9 @@ C-HW
 </div>
 </div>
 </div>
-</div>
-</div>
-<div id="ma-plot" class="section level1">
-<h1>MA plot</h1>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-33-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div id="integrated-data" class="section level3">
+<h3>Integrated data</h3>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-33-1">
 Past versions of unnamed-chunk-33-1.png
@@ -2049,11 +2122,11 @@ C-HW
 </div>
 </div>
 </div>
-<div id="enrichment-analysis" class="section level1">
-<h1>Enrichment analysis</h1>
-<div id="go-object" class="section level2">
-<h2>GO object</h2>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-35-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ma-plot" class="section level1">
+<h1>MA plot</h1>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-35-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-35-1">
 Past versions of unnamed-chunk-35-1.png
@@ -2102,13 +2175,18 @@ C-HW
 </table>
 </div>
 </div>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-36-1.png" width="1344" style="display: block; margin: auto;" /></p>
+</div>
+<div id="enrichment-analysis" class="section level1">
+<h1>Enrichment analysis</h1>
+<div id="go-object" class="section level2">
+<h2>GO object</h2>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-37-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-36-1">
-Past versions of unnamed-chunk-36-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-37-1">
+Past versions of unnamed-chunk-37-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-36-1" class="collapse">
+<div id="fig-unnamed-chunk-37-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -2127,51 +2205,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/e32516fd8e8914c2da92e15047659c52cbf0ce33/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">e32516f</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/bc13544e3356203d7ce3680330a47b116a22969d/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">bc13544</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-04
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/42900f0531900029dac6d3fd62024062f695043c/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">42900f0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/031d9551d086f9d2a17e01e9a8619e217d0b1d16/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">031d955</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">59b08c2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91b404eb0d8577ed48a664cf4986028414793807/docs/figure/group12_13.Rmd/unnamed-chunk-37-1.png" target="_blank">91b404e</a>
 </td>
 <td>
 C-HW
@@ -2182,29 +2216,18 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">6faf9c0</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/f31443400187303785ff1a0a2c2b3dad96f8a632/docs/figure/group12_13.Rmd/unnamed-chunk-37-1.png" target="_blank">f314434</a>
 </td>
 <td>
 C-HW
 </td>
 <td>
-2023-11-29
+2023-07-26
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">d7d838c</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-08-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-36-1.png" target="_blank">7ee9782</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/7ee978227caebac5e5af6ba08782ccbdab1e6d0b/docs/figure/group12_13.Rmd/unnamed-chunk-37-1.png" target="_blank">7ee9782</a>
 </td>
 <td>
 C-HW
@@ -2217,96 +2240,12 @@ C-HW
 </table>
 </div>
 </div>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-38-1.png" width="1344" style="display: block; margin: auto;" /></p>
 </div>
 <div id="enrichkegg-object" class="section level2">
 <h2>enrichKEGG object</h2>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-39-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-39-1">
-Past versions of unnamed-chunk-39-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-39-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-39-1.png" target="_blank">6faf9c0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-11-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/group12_13.Rmd/unnamed-chunk-40-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-1">
-Past versions of unnamed-chunk-40-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-40-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/bc13544e3356203d7ce3680330a47b116a22969d/docs/figure/group12_13.Rmd/unnamed-chunk-40-1.png" target="_blank">bc13544</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-12-04
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/c-hw/DEanalysis/blob/6faf9c06129e617d05b5181a0a410a0150e93e4f/docs/figure/group12_13.Rmd/unnamed-chunk-40-1.png" target="_blank">6faf9c0</a>
-</td>
-<td>
-C-HW
-</td>
-<td>
-2023-11-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-41-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/group12_13.Rmd/unnamed-chunk-42-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
