@@ -14,10 +14,8 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 load("./data/10X_inputdata.RData")
-load("./data/10X_inputdata_lognorm.RData")
 load("./data/10X_inputdata_integrated.RData")
-load("./data/10X_inputdata_DEresult.RData")
-load("./data/10X_inputdata_cpm.RData")
+load("./data/10X_DEresult_update.RData")
 load("./data/vstcounts.RData")
 library(ggplot2)
 library(dplyr)
@@ -47,7 +45,7 @@ annotation_colors = list(Group = c(setNames(hippo_palette[c(group1, group2)], c(
 # Data summary
 
 ```{r}
-df = data.frame(Group = colData(subgroupsce)$hippo_cluster, Donor = colData(subgroupsce)$donor, Count = 1)
+df = data.frame(Group = subgroupsce$hippo_cluster, Donor = subgroupsce$donor, Count = 1)
 df = aggregate(df$Count, list(df$Donor, df$Group), FUN = sum)
 colnames(df) = c("Donor", "Group", "Count")
 df = df[nrow(df):1,]
@@ -65,9 +63,9 @@ p_donor = ggplot(df, aes(x = Group, y = Count, fill = Donor)) +
 
 ```{r}
 composition = data.frame(
-  zeromean = sum(glm_df[[key]]$status=="zero mean"),
-  lowlyexpressed = sum(glm_df[[key]]$status=="lowly expressed"), 
-  valid = sum(glm_df[[key]]$status=="done"))
+  zeromean = sum(pois_glmm_df[[key]]$status=="zero mean"),
+  lowlyexpressed = sum(pois_glmm_df[[key]]$status=="lowly expressed"), 
+  valid = sum(pois_glmm_df[[key]]$status=="done"))
 composition = melt(composition)
 
 p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) + 
@@ -83,11 +81,11 @@ p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) +
 ```{r}
 # gene count per cell by group
 
-count_cell_df = data.frame(totalcount = apply(subgroupsce@assays@data$counts, 2, sum), Group = sapply(cellgroup, FUN = function(x)ifelse(x == 1, paste(group1, collapse = "_"), paste(group2, collapse = "_"))), Donor = colData(subgroupsce)$donor)
+count_cell_df = data.frame(totalcount = apply(assays(subgroupsce)$counts, 2, sum), Group = sapply(cellgroup, FUN = function(x)ifelse(x == 1, paste(group1, collapse = "_"), paste(group2, collapse = "_"))), Donor = subgroupsce$donor)
 count_cell_df$Group = factor(count_cell_df$Group, levels = c(paste(group1, collapse = "_"), paste(group2, collapse = "_")))
 
 p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Group)) +
-  geom_histogram(aes(y=..density..), fill= "white", alpha=0.5, position="identity", bin = 40) +
+  geom_histogram(aes(y=..density..), fill= "white", alpha=0.5, position="identity") +
   geom_density(alpha = 0.2) +
   xlab("Library size") + 
   ylab("Density") +
@@ -110,9 +108,9 @@ p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
 ```
 ```{r}
 # zero proportion per gene
-zeroprop_df = rbind(data.frame(zero_prop = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% group1]== 0), genemean = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% group1]), Group = paste(group1, collapse = "_")),
-                data.frame(zero_prop = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% group2]== 0), genemean = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% group2]), Group = paste(group2, collapse = "_")),
-                data.frame(zero_prop = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% c(group1,group2)]== 0), genemean = rowMeans(inputData@assays@data$counts[, inputData$hippo_cluster %in% c(group1,group2)]), Group = key)
+zeroprop_df = rbind(data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group1]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group1]), Group = paste(group1, collapse = "_")),
+                data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group2]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group2]), Group = paste(group2, collapse = "_")),
+                data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% c(group1,group2)]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% c(group1,group2)]), Group = key)
                 )
 zeroprop_df = zeroprop_df[which(zeroprop_df$genemean>0),]
 zeroprop_df$Group = factor(zeroprop_df$Group, levels = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"), key))
@@ -140,11 +138,11 @@ dev.off()
 # Mean difference in raw data/normalized data
 
 ```{r}
-subset_ind = colData(inputData)$hippo_cluster%in% c(group1,group2)
+subset_ind = inputData$hippo_cluster%in% c(group1,group2)
 raw_mean_DE = simple_mean_DE(log2(assays(subgroupsce)$counts+1), cellgroup == 1, cellgroup == 2)
 integrated_mean_DE = simple_mean_DE(assays(subgroupsce_integrated)$counts, cellgroup == 1, cellgroup == 2)
 vst_mean_DE = simple_mean_DE(vstcounts[,subset_ind], cellgroup == 1, cellgroup == 2)
-cpm_mean_DE = simple_mean_DE(log2(assays(inputData_cpm[,subset_ind])$counts+1), cellgroup == 1, cellgroup == 2)
+cpm_mean_DE = simple_mean_DE(log2(assays(subgroupsce)$cpm+1), cellgroup == 1, cellgroup == 2)
 ```
 ```{r, fig.width=12, fig.height=4}
 p_ttest_raw_integrated = ggplot(data = abs(data.frame(raw_t = raw_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"], int_t = integrated_mean_DE[intersect(rownames(raw_mean_DE), rownames(integrated_mean_DE)), "t"])), aes(x = int_t, y = raw_t)) + 
@@ -341,6 +339,16 @@ annotate_figure(figure, top = as.character(key))
 dev.off()
 ```
 
+# P-Value comparison across different methods
+```{r,fig.width = 10, fig.height=6}
+value_comparison("pval")
+```
+
+# Log2 fold change comparison across different methods
+```{r,fig.width = 10, fig.height=6}
+value_comparison("log2FC")
+```
+
 # Violin plot of log2mean of DEGs
 ```{r, fig.width=7}
 p = list()
@@ -358,7 +366,7 @@ for (i in 1:length(dflist)){
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:2){
     cellind = inputData$hippo_cluster %in% clusterlist[[j]]
-    df = rbind(df, data.frame(Log2mean = log2(fun(inputData@assays@data$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
+    df = rbind(df, data.frame(Log2mean = log2(fun(assays(inputData)$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
   }
 }
 levels(df$Group) = clustername
@@ -411,7 +419,7 @@ for (i in 1:length(dflist)){
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:3){
     cellind = inputData$hippo_cluster %in% clusterlist[[j]]
-    df = rbind(df, data.frame(freq = fun(inputData@assays@data$counts[hits_gene,cellind]>0), cluster = clustername[j], method = titlelist[i]))
+    df = rbind(df, data.frame(freq = fun(assays(inputData)$counts[hits_gene,cellind]>0), cluster = clustername[j], method = titlelist[i]))
   }
 }
 levels(df$cluster) = clustername
@@ -459,12 +467,12 @@ sort_log2FC = sort(abs(pois_glmm_df[[key]]$log2FC[pois_glmm_df[[key]]$hits]), in
 hitgenes = pois_glmm_df[[key]]$genes[which(pois_glmm_df[[key]]$hits)][sort_log2FC$ix]
 hits_in_int = hitgenes[hitgenes%in%rownames(subgroupsce_integrated)]
 hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroupsce_integrated)])
-mat = subgroupsce@assays@data$counts[c(hits_in_int, hits_notin_int),]
+mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
 annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
-annotation_df = data.frame(Donor = subgroupsce@colData$donor, Group = factor(colData(subgroupsce)$hippo_cluster, levels = c(group1, group2)))
+annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
 rownames(annotation_df) = colnames(mat)
 annotation_df = annotation_df[with(annotation_df, order(Group, Donor)), ]
 # cell level
@@ -495,7 +503,6 @@ dev.off()
 
 ### VST data
 ```{r}
-subset_ind = colData(inputData)$hippo_cluster%in% c(group1,group2)
 mat = vstcounts[c(hits_in_int, hits_notin_int), subset_ind]
 
 # cell level
@@ -526,7 +533,7 @@ dev.off()
 
 ### CPM data
 ```{r}
-mat = inputData_cpm@assays@data$counts[c(hits_in_int, hits_notin_int), subset_ind]/1000
+mat = assays(subgroupsce)$cpm[c(hits_in_int, hits_notin_int),]/1000
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -543,7 +550,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### Integrated data
 ```{r}
-mat = subgroupsce_integrated@assays@data$counts[hits_in_int,]
+mat = assays(subgroupsce_integrated)$counts[hits_in_int,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -564,8 +571,8 @@ pheatmap(mat[,rownames(annotation_df)],
 ```{r}
 sort_log2FC = sort(abs(DESeq2.muscat[[key]]$log2FC[DESeq2.muscat[[key]]$hits]), index.return = T, decreasing = T)
 hitgenes_deseq2 = DESeq2.muscat[[key]]$genes[which(DESeq2.muscat[[key]]$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes][1:200])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -596,8 +603,8 @@ dev.off()
 ```{r}
 sort_log2FC = sort(abs(binom_glmm_df[[key]]$log2FC[binom_glmm_df[[key]]$hits]), index.return = T, decreasing = T)
 hitgenes_binom = binom_glmm_df[[key]]$genes[which(binom_glmm_df[[key]]$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_binom[!hitgenes_binom%in%hitgenes][1:200])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+hits_notin_glmm = na.omit(hitgenes_binom[!hitgenes_binom%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -627,8 +634,8 @@ dev.off()
 ```{r}
 sort_log2FC = sort(abs(MAST_donor_df[[key]]$log2FC[MAST_donor_df[[key]]$hits]), index.return = T, decreasing = T)
 hitgenes_MAST = MAST_donor_df[[key]]$genes[which(MAST_donor_df[[key]]$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_MAST[!hitgenes_MAST%in%hitgenes][1:200])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+hits_notin_glmm = na.omit(hitgenes_MAST[!hitgenes_MAST%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -659,8 +666,8 @@ dev.off()
 ```{r}
 sort_log2FC = sort(abs(MMpoisson[[key]]$log2FC[MMpoisson[[key]]$hits]), index.return = T, decreasing = T)
 hitgenes_MMpoisson = MMpoisson[[key]]$genes[which(MMpoisson[[key]]$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes][1:200])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
+hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -694,8 +701,8 @@ Additionally, the library size is employed as an offset to normalize the counts.
 
 ```{r}
 hitgenes_MMpoisson = MMpoisson[[key]]$genes[which(MMpoisson[[key]]$hits)]
-hits_notin_MMpoisson = na.omit(hitgenes[!hitgenes%in%hitgenes_MMpoisson][1:200])
-mat = subgroupsce@assays@data$counts[hits_notin_MMpoisson,]
+hits_notin_MMpoisson = na.omit(hitgenes[!hitgenes%in%hitgenes_MMpoisson])
+mat = assays(subgroupsce)$counts[hits_notin_MMpoisson,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
