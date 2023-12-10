@@ -262,8 +262,6 @@ ggplot(data=number_input_hits, aes(x=factor(method,
 
 ```
 
-
-
 # Volcano plot
 ```{r,fig.width = 10, fig.height=6}
 pvalcutoff = 0.05
@@ -272,11 +270,6 @@ log2FCcutoff = log2(v)
 
 p = list()
 for (i in 1:length(dflist)){
-  if(is.null(dflist[[i]][[key]]$genes)){
-    labgene = rownames(dflist[[i]][[key]])
-  }else{
-    labgene = dflist[[i]][[key]]$genes
-  }
   if(i %in% 6){
     xvar = 'avg_log2FC'
     yvar = 'p_val_adj'
@@ -328,11 +321,8 @@ dev.off()
 p = list()
 for (i in 1:length(dflist)){
   if (nrow(dflist[[i]][[key]])==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    df = data.frame(genes = rownames(dflist[[i]][[key]]))
-  }else{
-    df = data.frame(genes = dflist[[i]][[key]]$genes)
-  }
+  df = data.frame(genes = dflist[[i]][[key]]$genes)
+  
   if(i %in% 6){
     df = cbind(df, dflist[[i]][[key]][,c("p_val", "p_val_adj")])
   }else{
@@ -340,7 +330,9 @@ for (i in 1:length(dflist)){
   }
   
   p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
-geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + ylim(c(0,3000)) + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
+geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + 
+coord_cartesian(ylim = c(0, 3000)) +
+    ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
@@ -369,11 +361,7 @@ clustername = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"))
 for (i in 1:length(dflist)){
   if (nrow(dflist[[i]][[key]])==0){next}
   if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
-  }else{
-    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
-  }
+  hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:2){
     cellind = inputData$hippo_cluster %in% clusterlist[[j]]
@@ -427,11 +415,8 @@ clustername = c("All 20 \nclusters", c(paste(group1, collapse = "_"), paste(grou
 for (i in 1:length(dflist)){
   if (nrow(dflist[[i]][[key]])==0){next}
   if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
-  }else{
-    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
-  }
+  hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:3){
     cellind = inputData$hippo_cluster %in% clusterlist[[j]]
