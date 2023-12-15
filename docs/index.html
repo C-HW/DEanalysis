@@ -11,7 +11,7 @@
 
 
 
-<title>DE analysis on scRNA data with poisson GLMM</title>
+<title>The curses of performing differential expression analysis using single-cell data</title>
 
 <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -357,8 +357,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">DE analysis on scRNA data with poisson
-GLMM</h1>
+<h1 class="title toc-ignore">The curses of performing differential
+expression analysis using single-cell data</h1>
 
 </div>
 
@@ -387,7 +387,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-12-09
+<strong>Last updated:</strong> 2023-12-15
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -434,15 +434,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreeac027b05238a1f8a3d130b256c5c22165e517d01targetblankac027b0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreeea89e68e85f58f8d8303c79a98ec8842fd6ed026targetblankea89e68a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/c-hw/DEanalysis/tree/ac027b05238a1f8a3d130b256c5c22165e517d01" target="_blank">ac027b0</a>
+<a href="https://github.com/c-hw/DEanalysis/tree/ea89e68e85f58f8d8303c79a98ec8842fd6ed026" target="_blank">ea89e68</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreeac027b05238a1f8a3d130b256c5c22165e517d01targetblankac027b0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreeea89e68e85f58f8d8303c79a98ec8842fd6ed026targetblankea89e68a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -452,7 +452,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/c-hw/DEanalysis/tree/ac027b05238a1f8a3d130b256c5c22165e517d01" target="_blank">ac027b0</a>.
+<a href="https://github.com/c-hw/DEanalysis/tree/ea89e68e85f58f8d8303c79a98ec8842fd6ed026" target="_blank">ea89e68</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -492,6 +492,11 @@ Unstaged changes:
     Modified:   analysis/CD14+ Monocytes.Rmd
     Modified:   analysis/analysis on Kang.Rmd
     Deleted:    analysis/first-analysis.Rmd
+    Modified:   analysis/group12_13.Rmd
+    Modified:   analysis/group12_19.Rmd
+    Modified:   analysis/group2_19.Rmd
+    Modified:   analysis/group8_17-2_19.Rmd
+    Modified:   analysis/group8_17.Rmd
     Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
@@ -538,6 +543,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/ea89e68e85f58f8d8303c79a98ec8842fd6ed026/analysis/index.Rmd" target="_blank">ea89e68</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-15
+</td>
+<td>
+revise order on index page
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/463f4a9147379ec4adb5b6b0feb35ef2c1dc3302/docs/index.html" target="_blank">463f4a9</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1123,10 +1162,8 @@ create workflowr
 </div>
 </div>
 </div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<div id="motivation" class="section level2">
-<h2>Motivation</h2>
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
 <p>Differential expression (DE) analysis in single-cell transcriptomics
 reveals cell-type-specific responses. Recent studies have raised
 concerns about current methods used to identify differentially expressed
@@ -1156,16 +1193,24 @@ are actually informative in cell-type heterogeneity. Ignoring zeros in
 single-cell gene expression data discards valuable information for any
 analysis.</p></li>
 </ul>
-<p>We provide a generalized linear mixed model framework (GLMM) to
-detect differentially expressed genes (DEGs) between two given cell
-types. The model takes donor-specific variations as random effects, and
-uses raw UMI counts to prevent biases in DE analysis.</p>
-<p><img src="../docs/figure/panel3.png" /></p>
+<p>We provided a generalized linear mixed model framework (<a
+href="https://github.com/C-HW/LEMUR">LEMUR</a>: Linear mixed model-based
+differential Expression analysis accounting for Multiple samples Using
+Random effects) to detect differentially expressed genes (DEGs) between
+two given cell types. The model takes donor-specific variations as
+random effects, and uses raw UMI counts to prevent biases in DE
+analysis.</p>
+<p><img src="./docs/figure/panel3.png" /></p>
 </div>
-<div id="glmm-for-de-analysis" class="section level2">
-<h2>GLMM for DE analysis</h2>
-<div id="poisson-glmm" class="section level3">
-<h3>Poisson GLMM</h3>
+<div id="lemur-framework" class="section level1">
+<h1>LEMUR framework</h1>
+<p>By default, we excluded any genes detected in fewer than 5% cells in
+the compared groups from differential testing. The GLMMs were
+implemented with glmmPQL function of the MASS package. We calculated
+adjusted p-values by using Benjamini-Hochberg correction. Each model
+fitting was applied on one gene and the two compared groups.</p>
+<div id="poisson-glmm" class="section level2">
+<h2>Poisson-glmm</h2>
 <p>For each count <span class="math inline">\(X_{cgk}\)</span> sampled
 from cell <span class="math inline">\(c\)</span>, donor <span
 class="math inline">\(k\)</span>, and gene <span
@@ -1184,8 +1229,8 @@ class="math inline">\(H_0: \beta_g = 0\)</span>. Here <span
 class="math inline">\(e^{\beta_g}\)</span> represents the fold change of
 gene <span class="math inline">\(g\)</span> between two cell types.</p>
 </div>
-<div id="binomial-glmm" class="section level3">
-<h3>Binomial GLMM</h3>
+<div id="binomial-glmm" class="section level2">
+<h2>Binomial-glmm</h2>
 <p><span class="math display">\[
 \begin{aligned}
     \mathbb{1}_{X_{cgk}=0}|p_{cgk} &amp; \sim Bernoulli(p_{cgk})\\
@@ -1198,10 +1243,30 @@ class="math inline">\(\epsilon_{gk}\sim N(0,\sigma_{g}^2)\)</span>
 represents the random effects for donor <span
 class="math inline">\(k\)</span>. Our goal is to test <span
 class="math inline">\(H_0: \beta_g = 0\)</span>.</p>
+<p>For both methods, we provided “log2 fold change” computed by <span
+class="math inline">\(\log_2(\beta_g)\)</span> . In Poisson-glmm, this
+estimate indicates the increment of <span
+class="math inline">\(\log_2(\lambda_2)\)</span> against <span
+class="math inline">\(\log_2(\lambda_1)\)</span>, which is the
+conventional log2 fold change. However, this term in Binomial-glmm
+doesn’t represent the same meaning. It is the difference between
+logit(<span class="math inline">\(p_2\)</span>) and logit(<span
+class="math inline">\(p_1\)</span>). The p-value and BH adjusted p-value
+are provided.</p>
 </div>
 </div>
-<div id="new-criteria-on-determining-degs" class="section level2">
-<h2>New criteria on determining DEGs</h2>
+<div id="benchmarked-methods" class="section level1">
+<h1>Benchmarked methods</h1>
+<p>In this project, we compared a few methods performing the DE analysis
+results. Our comparison encompassed Poisson-glmm and Binomial-glmm from
+the new paradigm, as well as pseudo-bulk approaches including DESeq2 and
+edgeR. Additionally, we assessed the performance of single cell specific
+tools including MAST, Wilcox in Seurat, and linear mixed models in
+Muscat. More details can be found <a
+href="methods_details.html">here</a>.</p>
+</div>
+<div id="new-criteria-on-determining-degs" class="section level1">
+<h1>New criteria on determining DEGs</h1>
 <p>We proposed new criteria that based on the convention and also the
 gene mean and the difference in mean. If the log2 gene mean in two
 groups is lower than a certain value (-2.25 in case study 1) and the
@@ -1213,17 +1278,6 @@ characteristics. An examination in heatmaps and mean difference against
 mean plot in advanced can be helpful to determine the thresholds when
 analyzing a new dataset. More details can be found <a
 href="new_criteria.html">here</a>.</p>
-</div>
-<div id="benchmarked-methods" class="section level2">
-<h2>Benchmarked methods</h2>
-<p>In this project, we compare a few methods performing the DE analysis
-results. Our comparison encompassed Poisson-glmm and Binomial-glmm from
-the new paradigm, as well as pseudo-bulk approaches including DESeq2 and
-edgeR. Additionally, we assessed the performance of single cell specific
-tools including MAST, Wilcox in Seurat, and linear mixed models in
-Muscat. More details can be found <a
-href="methods_details.html">here</a>.</p>
-</div>
 </div>
 <div id="application" class="section level1">
 <h1>Application</h1>
@@ -1275,6 +1329,12 @@ computeLibrarayFactors and logNormCounts functions in Muscat.</p>
 <li><a href="FD_analysis.html">P-values under null setting</a></li>
 </ul></li>
 </ul>
+</div>
+<div id="permutation-analysis" class="section level2">
+<h2>Permutation analysis</h2>
+<p>To examine the p-value calibration in real data, we did a permutation
+analysis on group-of-interest within a null dataset. The results can be
+found <a href="FD_analysis.html">here</a>.</p>
 </div>
 </div>
 
