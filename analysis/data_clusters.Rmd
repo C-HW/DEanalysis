@@ -62,7 +62,6 @@ The violin plot presented below illustrates the significant variation in library
 alldata = readRDS("./data/10Xdata_annotate.rds")
 AllCelltypePrep = subset(alldata, subset = expCond2 %in% c("D3","D4","D5","D6","D7"))
 rm(alldata)
-gc()
 
 AllCelltypePrep@active.ident = recode(AllCelltypePrep@active.ident,
                                       "ST1" = "ST",
@@ -84,7 +83,6 @@ AllCelltypePrep@active.ident = recode(AllCelltypePrep@active.ident,
 load("./data/10X_inputdata_integrated.RData")
 integrated_genes = rownames(inputData_integrated)
 rm(inputData_integrated)
-gc()
 ```
 
 ## All genes
@@ -109,7 +107,7 @@ libsize_raw_all
 dev.off()
 ```
 
-## Genes shown in all dataset
+## Genes shown in integrated dataset
 ```{r, fig.width=10}
 df = data.frame(libsize = colSums(AllCelltypePrep@assays$RNA@counts[integrated_genes,]), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
 
@@ -175,17 +173,15 @@ ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)
 rm(AllCelltypePrep)
 # raw data with hippo cluster labels
 load("./data/10X_inputdata.RData")
-# Seurat normalized data
-load("./data/10X_inputdata_lognorm.RData")
 # Integrated data without batch effect
 load("./data/10X_inputdata_integrated.RData")
-
 load("./data/10X_inputdata_cpm.RData")
 load("./data/vstcounts.RData")
 # library(sctransform)
 # vstcounts = vst(counts(inputData), verbosity = FALSE)$y
 # save(vstcounts, file = "vstcounts.Rdata")
 ```
+
 # Gene expression distribution
 
 ## All genes
@@ -202,7 +198,7 @@ hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main
 # dev.off()
 ```
 
-## Genes shown in all dataset
+## Genes shown in integrated dataset
 
 ```{r, fig.height= 8, fig.width=8}
 rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
@@ -218,6 +214,7 @@ hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main
 ```
 
 If we zoom in on the positive counts, we may observe different distributions for each dataset.
+
 ```{r, fig.height= 8, fig.width=8}
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_nonzero_2000.pdf", width = 3, height = 8)
 rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
@@ -287,7 +284,7 @@ umapcoor_df = inputData@int_metadata$hippo$umap[lastround,-3]
 groupcenter = aggregate(umapcoor_df[,1:2],list(umapcoor_df$label), FUN = mean)
 ```
 
-```{r, echo=FALSE}
+```{r}
 pointsize = 1
 pointalpha = 0.5
 umap_all = ggplot2::ggplot(umapcoor_df,
@@ -372,7 +369,7 @@ umap_grouptoshow
 ```
 
 ## Zero proportion plot
-```{r, fig.height= 7, warning=FALSE}
+```{r, fig.height= 7}
 final_proportion_plot(inputData, 20, proportion_to_plot = 0)
 ```
 
@@ -411,7 +408,7 @@ dev.off()
 
 # Donor/Celltype/Residual variation 
 
-To illustrate the differences in contribution of variation across different datasets, we employed linear regression models (lm(log2(counts + 1) ~ donor + celltype)) to analyze cells in different groups. The donor variation and celltype variation were determined by calculating the variances of their respective components. Additionally, the res variation was obtained by squaring the residual standard error. 
+To gain a deeper understanding of the donor effect and cell type effect concerning various types of counts, we conducted a variation analysis across multiple group comparisons. To ensure the consistency of our results, we restricted our analysis to genes presented in all datasets. For each gene, we employed linear models (lm (count ~ donor + group)) and computed the variances attributed to three components: donor, group, and the residual. Logarithm transformation was applied to UMI counts and CPM data to address skewness. 
 
 The following plots exhibit the top 500 genes with the lowest residual variations, showcasing the contributions of these variations as percentages. The genes were organized into bins based on the quantiles of residual variations. The last plot displays the first quartile and compare the donor variation and celltype variation
 
