@@ -15,6 +15,7 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 load("./data/data2sce.Rdata")
+# load DE results generated from "analysis on Kang.Rmd"
 load("./data/10X_Kang_DEresult.RData")
 library(ggplot2)
 library(dplyr)
@@ -91,7 +92,7 @@ p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) +
 count_cell_df = data.frame(totalcount = apply(subgroupsce@assays@data$counts, 2, sum), Group = subgroupsce$group_id, Donor = subgroupsce$ind)
 
 p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Group)) +
-  geom_histogram(aes(y=..density..), fill= "white", alpha=0.5, position="identity") +
+  geom_histogram(aes(y=after_stat(density)), fill= "white", alpha=0.5, position="identity") +
   geom_density(alpha = 0.2) +
   xlab("Library size") + 
   ylab("Density") +
@@ -103,7 +104,7 @@ p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Group)) +
 ```{r}
 # gene count per cell by donor
 p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
-  geom_histogram(aes(y=..density..),fill="white", alpha=0.5, position="identity") + 
+  geom_histogram(aes(y=after_stat(density)),fill="white", alpha=0.5, position="identity") + 
   geom_density(alpha = 0.2) + 
   xlab("Library size") +
   ylab("Density") +
@@ -311,11 +312,7 @@ dev.off()
 p = list()
 for (i in 1:length(dflist)){
   if (nrow(dflist[[i]][[key]])==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    df = data.frame(genes = rownames(dflist[[i]][[key]]))
-  }else{
-    df = data.frame(genes = dflist[[i]][[key]]$genes)
-  }
+  df = data.frame(genes = dflist[[i]][[key]]$genes)
   if(i %in% 6){
     df = cbind(df, dflist[[i]][[key]][,c("p_val", "p_val_adj")])
   }else{
@@ -323,7 +320,7 @@ for (i in 1:length(dflist)){
   }
   
   p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
-geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + ylim(c(0,1100)) + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
+geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + coord_cartesian(c(0,1100)) + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
@@ -331,6 +328,16 @@ figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2
 annotate_figure(figure, top = as.character(key))
 # dev.off()
 # rm(dflist)
+```
+
+# P-Value comparison across different methods
+```{r,fig.width = 10, fig.height=6}
+value_comparison("pval")
+```
+
+# Log2 fold change comparison across different methods
+```{r,fig.width = 10, fig.height=6}
+value_comparison("log2FC")
 ```
 
 # Violin plot of log2mean of DEGs
@@ -517,6 +524,7 @@ pheatmap(mat[,rownames(annotation_df)],
 dev.off()
 ```
 
+### MMpoisson
 ```{r}
 sort_log2FC = sort(abs(dflist[[8]][[key]]$log2FC[dflist[[8]][[key]]$hits]), index.return = T, decreasing = T)
 hitgenes_MMpoisson = dflist[[8]][[key]]$genes[which(dflist[[8]][[key]]$hits)][sort_log2FC$ix]
@@ -598,14 +606,14 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ```{r eval=FALSE}
 pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
 pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/cnetplot.pdf", width = 12, height = 6)
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 dev.off()
 ```
 
@@ -633,14 +641,14 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ```{r eval=FALSE}
 pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/positive_dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
 pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/positive_cnetplot.pdf", width = 12, height = 6)
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 dev.off()
 ```
 ### Down-regulated DEGs
@@ -667,14 +675,14 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ```{r eval=FALSE}
 pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/negative_dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
 pdf("~/Google Drive/My Drive/spatial/10X/submission preparation/graph_panels/panel7/negative_cnetplot.pdf", width = 12, height = 6)
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 dev.off()
 ```
 
@@ -703,7 +711,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ### Up-regulated DEGs
@@ -730,7 +738,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ### Down-regulated DEGs
@@ -757,7 +765,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ## MMpoisson DEGs
@@ -785,7 +793,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ### Up-regulated DEGs
@@ -812,7 +820,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 ### Down-regulated DEGs
@@ -839,5 +847,5 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
