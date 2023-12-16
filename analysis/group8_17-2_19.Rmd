@@ -130,7 +130,7 @@ p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop, Group = Group)
 ggarrange(p_donor, p_zeroprop, p_countbygroup, p_countbydonor, nrow = 2, ncol = 2)
 ```
 ```{r eval=FALSE, fig.width=8}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/data_summary.pdf", width = 14, height = 3)
+pdf("../submission preparation/graph_panels/panel6/data_summary.pdf", width = 14, height = 3)
 ggarrange(p_countbygroup, p_countbydonor,p_zeroprop, nrow = 1, ncol = 3)
 dev.off()
 ```
@@ -215,25 +215,8 @@ number_input_hits = melt(number_input_hits, id = "method")
 colnames(number_input_hits)[2:3] = c("Gene", "Number_of_genes")
 ```
 
-```{r,fig.width= 6, eval = FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/input_hits.pdf", width = 8, height = 8)
-ggplot(data=number_input_hits, aes(x=factor(method, 
-                                            levels = rev(titlelist)), y=number_of_genes, fill = factor(gene, levels = rev(unique(gene))))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  geom_text(aes(label=Number_of_genes), hjust=-0.2, position=position_dodge(0.9), size = 2) +
-  theme_bw() + 
-  theme(panel.grid = element_blank(), axis.text.y = element_text(angle = 30)) +
-  scale_fill_manual(values = c("#BCAAA4", "#5D4037"), breaks = levels(number_input_hits$gene)) +
-  labs(fill = "gene", labels = c("inputs", "hits")) +
-  xlab("methods") +
-  ylab("number of genes") +
-  ggtitle(paste("DEGs summary of ", key)) + coord_flip()
-dev.off()
-
-```
 
 ```{r}
-# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/input_hits.pdf", width = 8, height = 8)
 ggplot(data=number_input_hits, aes(x=factor(method, 
                                             levels = titlelist), y=Number_of_genes, fill = Gene)) +
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -244,9 +227,6 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   xlab("") +
   ylab("Number of genes") +
   ggtitle(paste("DEGs summary of ", key))
-# dev.off()
-
-
 ```
 
 
@@ -312,10 +292,8 @@ geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + them
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
-# tiff(paste0("result/",key,"/hist_pvalue.tiff"), width=900, height=900, res=120)
 annotate_figure(figure, top = as.character(key))
-# dev.off()
-# rm(dflist)
+
 ```
 
 # P-Value comparison across different methods
@@ -347,8 +325,8 @@ for (i in 1:length(dflist)){
 levels(df$Group) = clustername
 ```
 
-```{r, eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/violin_log2mean.pdf", width = 8, height = 8)
+
+```{r, eval = FALSE}
 ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=Log2mean, fill = factor(Group, levels = rev(levels(Group))))) +
   geom_violin() + 
   theme_bw() + 
@@ -356,15 +334,12 @@ ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=Log2mean, fill = fa
   ylab("Log2mean") + 
   ylim(c(-3,4)) + 
   xlab("") + 
-  scale_fill_manual(values = combined_palette, breaks = levels(df$Group)) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   labs(fill = "Group") +
-  coord_flip()
-dev.off()
-
+  scale_fill_manual(values = combined_palette, breaks = levels(df$Group)) + coord_flip()
 ```
 
 ```{r, fig.width=7}
-# pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/violin_log2mean.pdf", width = 8, height = 8)
 ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = factor(Group, levels = levels(Group)))) +
   geom_violin() + 
   theme_bw() + 
@@ -375,7 +350,6 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = factor(
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   labs(fill = "Group") +
   scale_fill_manual(values = combined_palette, breaks = levels(df$Group))
-# dev.off()
 ```
 
 # Violin plot of gene expression frequency of DEGs
@@ -397,21 +371,6 @@ for (i in 1:length(dflist)){
 levels(df$cluster) = clustername
 ```
 
-````{r, fig.width = 4, fig.height = 7, eval =FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/violin_freq.pdf", width = 8, height = 8)
-ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=freq, fill = factor(cluster, levels =  rev(levels(cluster))))) + 
-  geom_violin() + 
-  theme_bw() + 
-  theme(panel.grid = element_blank()) + 
-  ylab("Gene expression frequency") + 
-  ylim(c(0,1)) + 
-  xlab("") + 
-  scale_fill_manual(values = c("gray", combined_palette), breaks = levels(df$cluster)) +
-  labs(fill = "Group") +
-  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) + coord_flip()
-
-dev.off()
-```
 
 ````{r fig.width = 7}
 ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(cluster, levels =  levels(cluster)))) + 
@@ -457,7 +416,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ```
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_raw.pdf", width = 5, height = 5)
+pdf("../submission preparation/graph_panels/panel6/heatmap_raw.pdf", width = 5, height = 5)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("Poisson-glmm DEGs\nin UMI counts (", nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
@@ -488,7 +447,7 @@ pheatmap(mat[,rownames(annotation_df)],
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_VST.pdf", width = 5, height = 5)
+pdf("../submission preparation/graph_panels/panel6/heatmap_VST.pdf", width = 5, height = 5)
 pheatmap(mat[,rownames(annotation_df)], 
          main = "VST data",
          annotation_col = annotation_df, 
@@ -555,9 +514,42 @@ pheatmap(mat[,rownames(annotation_df)],
          color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
 ```
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_deseq2.pdf", width = 5, height = 5)
+png("../submission preparation/graph_panels/panel6/heatmap_deseq2.png", width = 500, height = 500)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("pb-DESeq2 DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         # annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+dev.off()
+```
+
+### pb-edgeR
+```{r}
+sort_log2FC = sort(abs(edgeR.cpm[[key]]$log2FC[edgeR.cpm[[key]]$hits]), index.return = T, decreasing = T)
+hitgenes_edgeR = edgeR.cpm[[key]]$genes[which(edgeR.cpm[[key]]$hits)][sort_log2FC$ix]
+hits_notin_glmm = na.omit(hitgenes_edgeR[!hitgenes_edgeR%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
+
+# cell level
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("pb-edgeR DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         # annotation_row = annotation_log2FC,
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+```
+
+```{r eval=FALSE}
+png("../submission preparation/graph_panels/panel6/heatmap_edgeR.png", width = 500, height = 500)
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("pb-edgeR DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
          # annotation_row = annotation_log2FC,
          annotation_colors = annotation_colors,
@@ -587,7 +579,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ```
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_binomial_glmm.pdf", width = 5, height = 5)
+png("../submission preparation/graph_panels/panel6/heatmap_binomial_glmm.png", width = 500, height = 500)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("Binomial-glmm DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
@@ -619,9 +611,40 @@ pheatmap(mat[,rownames(annotation_df)],
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_MAST_donor.pdf", width = 5, height = 5)
+png("../submission preparation/graph_panels/panel6/heatmap_MAST_donor.png", width = 500, height = 500)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("MAST DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+dev.off()
+```
+
+### MMvst
+```{r}
+sort_log2FC = sort(abs(MMvst[[key]]$log2FC[MMvst[[key]]$hits]), index.return = T, decreasing = T)
+hitgenes_MMvst = MMvst[[key]]$genes[which(MMvst[[key]]$hits)][sort_log2FC$ix]
+hits_notin_glmm = na.omit(hitgenes_MMvst[!hitgenes_MMvst%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
+
+# cell level
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("MMvst DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+```
+
+```{r eval=FALSE}
+png("../submission preparation/graph_panels/panel6/heatmap_MMvst.png", width = 500, height = 500)
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("MMvst DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
          annotation_colors = annotation_colors,
          cluster_rows=F, cluster_cols=F, 
@@ -650,7 +673,7 @@ pheatmap(mat[,rownames(annotation_df)],
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_MMpoisson.pdf", width = 5, height = 5)
+png("../submission preparation/graph_panels/panel6/heatmap_MMpoisson.png", width = 500, height = 500)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("MMpoisson DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
@@ -686,7 +709,7 @@ pheatmap(mat[,rownames(annotation_df)],
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/heatmap_Extra_hits.pdf", width = 5, height = 5)
+png("../submission preparation/graph_panels/panel6/heatmap_Extra_hits.png", width = 500, height = 500)
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("Poisson-glmm DEGs \nnot identified by MMpoisson (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
@@ -700,22 +723,8 @@ dev.off()
 
 # MA plot 
 ```{r, fig.width = 10, fig.height=5}
-# tiff(paste0("result/",key,"/FC_mean_diff/MAplot.tiff"), width=900, height=900, res=120)
 fig_FC_mean = FC_mean_plot(subgroupsce@metadata$log2mean, c(-6,6), "Log2 mean") 
 annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
-# dev.off()
-
-# tiff(paste0("result/",key,"/FC_mean_diff/FC_meandiff.tiff"), width=900, height=900, res=120)
-# fig_FC_meandiff = FC_mean_plot(subgroupsce@metadata$log2meandiff, c(-15,6), "log2 mean diff")
-# annotate_figure(fig_FC_meandiff, top = paste("log2FC vs. log2 mean diff ",key))
-# dev.off()
-
-# tiff(paste0("result/",key,"/FC_mean_diff/mean_meandiff.tiff"), width=900, height=900, res=120)
-# fig_mean_diff = mean_meandiff_plot()
-# annotate_figure(fig_mean_diff, top = paste("log2 mean vs. log2 mean diff ",key))
-# dev.off()
-# rm(dflist)
-# gc()
 ```
 
 # Enrichment analysis
@@ -746,9 +755,9 @@ cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/dotplot.pdf", width = 6, height = 5)
+pdf("../submission preparation/graph_panels/panel6/dotplot.pdf", width = 6, height = 5)
 dotplot(go_enrich)
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/cnetplot.pdf", width = 12, height = 6)
+pdf("../submission preparation/graph_panels/panel6/cnetplot.pdf", width = 12, height = 6)
 cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
 dev.off()
 ```
@@ -782,7 +791,7 @@ dotplot(kk,
 ```
 
 ```{r eval=FALSE}
-pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel6/dotplot2.pdf", width = 6, height = 5)
+pdf("../submission preparation/graph_panels/panel6/dotplot2.pdf", width = 6, height = 5)
 dotplot(kk, 
         showCategory = 10, 
         title = "Enriched Pathways",
@@ -791,8 +800,6 @@ dev.off()
 ```
 
 ```{r, fig.width = 10}
-# tiff(file=paste0("result/",key,"/enrichment/kegg_cnetplot.tiff"), width = 1500, height = 700, res = 100)
 cnetplot(kk, categorySize="pvalue", foldChange=kegg_gene_list)
-# dev.off()
 
 ```
