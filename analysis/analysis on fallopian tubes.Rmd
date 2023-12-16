@@ -1,0 +1,121 @@
+---
+title: "analysis on fallopian tubes"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+```{r, setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+source("../code/hippo_all_proportion.R")
+source("../code/DE_methods.R")
+source("../code/functions_in_rmd.R")
+load("../data/10X_inputdata.RData")
+load("../data/10X_inputdata_integrated.RData")
+library(ggplot2)
+library(dplyr)
+library(MASS)
+library(DESeq2)
+library(MAST)
+library(MuMIn)
+library(Hmisc)
+library(Seurat)
+library(muscat)
+library(sctransform)
+library(SingleCellExperiment)
+```
+
+```{r}
+vstcounts = vst(counts(inputData), verbosity = FALSE)$y
+assays(inputData)$cpm = edgeR::cpm(counts(inputData))
+# save(vstcounts, file = "../data/vstcounts.RData")
+# load("../data/vstcounts.RData")
+```
+
+# Run DE methods on tube data
+```{r}
+pois_glmm_df = list()
+binom_glmm_df = list()
+MAST_donor_df = list()
+Wilcox_Seurat_integrated_df = list()
+DESeq2.muscat = list()
+edgeR.cpm = list()
+MMvst = list() 
+MMpoisson = list()
+
+pair = list(c(2,19), c(8,17), c(12,13), list(c(8,17), c(2,19)), c(12,19))
+for(i in 1:length(pair)){
+  assign_subgroup(unlist(pair[[i]][1]), unlist(pair[[i]][2]))
+  # poisson_glmm
+  pois_glmm_df[[key]] = poisson_glmm_DE(subgroupsce, cellgroup, subgroupsce$donor)
+  pois_glmm_df[[key]]$hits = identifyDEGs(pois_glmm_df[[key]]$BH, pois_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T)
+  
+  # binom_glmm
+  binom_glmm_df[[key]] = binomial_glmm_DE(subgroupsce, cellgroup, subgroupsce$donor)
+  binom_glmm_df[[key]]$hits = identifyDEGs(binom_glmm_df[[key]]$BH, binom_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T)
+
+  
+  # MAST
+  MAST_donor_df[[key]] = MAST_DE(subgroupsce, cellgroup, subgroupsce$donor)
+  MAST_donor_df[[key]]$hits = identifyDEGs(MAST_donor_df[[key]]$BH, MAST_donor_df[[key]]$log2FC)
+  
+  # Seurat
+  Seurat_subgroup_int = CreateSeuratObject(counts(subgroupsce_integrated), project = as.character(subgroupsce$hippo_cluster), assay = "RNA", meta.data = data.frame(colData(subgroupsce)))
+  
+  # Wilcox
+  Wilcox_Seurat_integrated_df[[key]] = FindMarkers(Seurat_subgroup_int, ident.1 = as.character(group1), ident.2 = as.character(group2), test.use = "wilcox")
+  Wilcox_Seurat_integrated_df[[key]]$genes = rownames(Wilcox_Seurat_integrated_df[[key]])
+  Wilcox_Seurat_integrated_df[[key]]$hits = identifyDEGs(Wilcox_Seurat_integrated_df[[key]]$p_val_adj, Wilcox_Seurat_integrated_df[[key]]$avg_log2FC)
+
+  subgroupsce$cluster_id = "void"
+  subgroupsce$group_id = factor(paste0("hippo",sapply(subgroupsce$hippo_cluster,                                        function(x){ifelse(x%in% group1, paste0(group1, collapse = "_"), paste0(group2, collapse = "_"))})), levels = paste0("hippo",c(paste0(group1, collapse = "_"), paste0(group2, collapse = "_"))))
+
+
+  subgroupsce$sample_id = as.factor(paste0(subgroupsce$group_id, subgroupsce$donor))
+  subgroupsce = prepSCE(subgroupsce,
+                      kid = "cluster_id", 
+                      gid = "group_id",
+                      sid = "sample_id",
+                      drop = FALSE)
+    # DESeq2.muscat
+  pb = aggregateData(subgroupsce,
+    assay = "counts", fun = "sum",
+    by = c("cluster_id", "sample_id"))
+  res = pbDS(pb, method = "DESeq2", verbose = F)
+  DESeq2.muscat[[key]] = data.frame(res$table[[1]][[1]])[,c(1,4,7,8)]
+  DESeq2.muscat[[key]]$logFC = log2(exp(DESeq2.muscat[[key]]$logFC))
+  colnames(DESeq2.muscat[[key]]) = c("genes", "log2FC", "pval", "BH")
+  DESeq2.muscat[[key]]$hits = identifyDEGs(DESeq2.muscat[[key]]$BH, DESeq2.muscat[[key]]$log2FC)
+  
+  # edgeR.sum.cpm
+  pb = aggregateData(subgroupsce,
+    assay = "cpm", fun = "sum",
+    by = c("cluster_id", "sample_id"))
+  res = pbDS(pb, method = "edgeR", verbose = FALSE)
+  edgeR.cpm[[key]] = data.frame(res$table[[1]][[1]])[,c(1,3,6,7)]
+  edgeR.cpm[[key]]$logFC = log2(exp(edgeR.cpm[[key]]$logFC))
+  colnames(edgeR.cpm[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  edgeR.cpm[[key]]$hits = identifyDEGs(edgeR.cpm[[key]]$BH, edgeR.cpm[[key]]$log2FC)
+
+  
+  # MM-vst
+  subgroupsce_vst = subgroupsce[rownames(subgroupsce) %in% rownames(vstcounts),]
+  assays(subgroupsce_vst)$vstresiduals = vstcounts[, colnames(vstcounts)%in% colnames(subgroupsce_vst)]
+  res = mmDS(subgroupsce_vst, method = "vst", vst = "sctransform")
+  MMvst[[key]] = data.frame(res[[1]])[,c(1,3,6,7)]
+  MMvst[[key]]$beta = log2(exp(MMvst[[key]]$beta))
+  colnames(MMvst[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  MMvst[[key]]$hits = identifyDEGs(MMvst[[key]]$BH, MMvst[[key]]$log2FC)
+  
+  # MM-poisson
+  res = mmDS(subgroupsce, method = "poisson")
+  MMpoisson[[key]] = data.frame(res[[1]])[,c(1,3,6,7)]
+  MMpoisson[[key]]$beta = log2(exp(MMpoisson[[key]]$beta))
+  colnames(MMpoisson[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  MMpoisson[[key]]$hits = identifyDEGs(MMpoisson[[key]]$BH,                                    MMpoisson[[key]]$log2FC) 
+}
+```
+```{r}
+save(pois_glmm_df, binom_glmm_df, MAST_donor_df, Wilcox_Seurat_integrated_df, DESeq2.muscat, edgeR.cpm, MMvst, MMpoisson,file = "./data/10X_DEresult_update.RData")
+```
