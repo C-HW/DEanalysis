@@ -367,7 +367,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -378,8 +378,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -388,13 +388,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-11-29
+<strong>Last updated:</strong> 2023-12-15
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 2
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEanalysis/</code> <span
@@ -417,21 +417,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -507,56 +504,30 @@ run.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
-<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-Using absolute paths to the files within your workflowr project makes it
-difficult for you and others to run your code on a different machine.
-Change the absolute path(s) below to the suggested relative path(s) to
-make your code more reproducible.
-</p>
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th style="text-align:left;">
-absolute
-</th>
-<th style="text-align:left;">
-relative
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-~/Google Drive/My Drive/spatial/10X/DEanalysis
-</td>
-<td style="text-align:left;">
-.
-</td>
-</tr>
-</tbody>
-</table>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree91b404eb0d8577ed48a664cf4986028414793807targetblank91b404ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreed0b22d06db6dc78ba878bd13fc17530a20fe502ftargetblankd0b22d0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/91b404eb0d8577ed48a664cf4986028414793807" target="_blank">91b404e</a>
+<a href="https://github.com/c-hw/DEanalysis/tree/d0b22d06db6dc78ba878bd13fc17530a20fe502f" target="_blank">d0b22d0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree91b404eb0d8577ed48a664cf4986028414793807targetblank91b404ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistreed0b22d06db6dc78ba878bd13fc17530a20fe502ftargetblankd0b22d0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -566,7 +537,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/91b404eb0d8577ed48a664cf4986028414793807" target="_blank">91b404e</a>.
+<a href="https://github.com/c-hw/DEanalysis/tree/d0b22d06db6dc78ba878bd13fc17530a20fe502f" target="_blank">d0b22d0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -583,24 +554,9 @@ were generated:
 Untracked files:
     Untracked:  .DS_Store
     Untracked:  .Rhistory
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/.Rapp.history
-    Untracked:  analysis/.Rhistory
-    Untracked:  analysis/Bcells.Rmd
-    Untracked:  analysis/CD14+ Monocytes.Rmd
-    Untracked:  analysis/FD_analysis.Rmd
-    Untracked:  analysis/analysis on Kang.Rmd
-    Untracked:  analysis/data2.Rmd
-    Untracked:  analysis/data_clusters.Rmd
-    Untracked:  analysis/figure/
-    Untracked:  analysis/group12_13.Rmd
-    Untracked:  analysis/group12_19.Rmd
-    Untracked:  analysis/group2_19.Rmd
-    Untracked:  analysis/group8_17-2_19.Rmd
-    Untracked:  analysis/group8_17.Rmd
-    Untracked:  analysis/methods_details.Rmd
-    Untracked:  analysis/new_criteria.Rmd
+    Untracked:  analysis/analysis on fallopian tubes.Rmd
     Untracked:  data/.Rhistory
+    Untracked:  data/10X_DEresult_update.RData
     Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
     Untracked:  data/10X_inputdata_DEresult.RData
@@ -612,10 +568,20 @@ Untracked files:
     Untracked:  data/Bcellsce.rds
     Untracked:  data/data2sce.RData
     Untracked:  data/permutation.RData
+    Untracked:  data/permutation13.RData
+    Untracked:  data/permutation2.RData
     Untracked:  data/vstcounts.Rdata
+    Untracked:  figure/
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/CD14+ Monocytes.Rmd
+    Modified:   analysis/analysis on Kang.Rmd
+    Deleted:    analysis/first-analysis.Rmd
+    Modified:   analysis/group12_13.Rmd
+    Modified:   analysis/group12_19.Rmd
+    Modified:   analysis/group2_19.Rmd
+    Modified:   analysis/group8_17-2_19.Rmd
+    Modified:   analysis/group8_17.Rmd
     Modified:   code/DE_methods.R
     Modified:   code/functions_in_rmd.R
 
@@ -665,10 +631,61 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/d0b22d06db6dc78ba878bd13fc17530a20fe502f/analysis/data_clusters.Rmd" target="_blank">d0b22d0</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-15
+</td>
+<td>
+wflow_publish("analysis/data_clusters.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/38036979db676956659d028827462d615c9f4cf1/analysis/data_clusters.Rmd" target="_blank">3803697</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-12-01
+</td>
+<td>
+upload rmd
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/86545ff7d888c62d447941f3c45770e6db207a30/docs/data_clusters.html" target="_blank">86545ff</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/data_clusters.html" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+<td>
+update index, FD permuation, plots axes
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/86545ff7d888c62d447941f3c45770e6db207a30/docs/data_clusters.html" target="_blank">86545ff</a>
 </td>
 <td>
 C-HW
@@ -685,7 +702,7 @@ data_cluster
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/4dfb7c0438cc5652e1abbf734ba12d41b2480c39/docs/data_clusters.html" target="_blank">4dfb7c0</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/4dfb7c0438cc5652e1abbf734ba12d41b2480c39/docs/data_clusters.html" target="_blank">4dfb7c0</a>
 </td>
 <td>
 C-HW
@@ -702,7 +719,7 @@ update data_cluster page
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/data_clusters.html" target="_blank">d7d838c</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/data_clusters.html" target="_blank">d7d838c</a>
 </td>
 <td>
 C-HW
@@ -719,7 +736,7 @@ update graph
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/data_clusters.html" target="_blank">0faef69</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/data_clusters.html" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -736,7 +753,7 @@ exp on integrated
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/data_clusters.html" target="_blank">91d6ad2</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/data_clusters.html" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -753,7 +770,7 @@ adjust ylim
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/data_clusters.html" target="_blank">87a6bb9</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/data_clusters.html" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -770,7 +787,7 @@ add freq plot
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/data_clusters.html" target="_blank">e7fb941</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/data_clusters.html" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -787,7 +804,7 @@ color variationcomparison
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/data_clusters.html" target="_blank">d8c99b1</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/data_clusters.html" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -804,7 +821,7 @@ variation description
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/data_clusters.html" target="_blank">366cd53</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/data_clusters.html" target="_blank">366cd53</a>
 </td>
 <td>
 C-HW
@@ -821,7 +838,7 @@ add group8_17&amp;2_19
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/data_clusters.html" target="_blank">13d726d</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/data_clusters.html" target="_blank">13d726d</a>
 </td>
 <td>
 C-HW
@@ -838,7 +855,7 @@ add DE results on different groups
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/fc9f4b6a78f05402b94483374fba17363245b131/docs/data_clusters.html" target="_blank">fc9f4b6</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/fc9f4b6a78f05402b94483374fba17363245b131/docs/data_clusters.html" target="_blank">fc9f4b6</a>
 </td>
 <td>
 C-HW
@@ -855,7 +872,7 @@ add new_criteria
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/C-HW/DEanalysis/75869536c17b66292074ac0e2e25deaf985d149e/docs/data_clusters.html" target="_blank">7586953</a>
+<a href="https://rawcdn.githack.com/c-hw/DEanalysis/75869536c17b66292074ac0e2e25deaf985d149e/docs/data_clusters.html" target="_blank">7586953</a>
 </td>
 <td>
 C-HW
@@ -947,7 +964,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -958,7 +975,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -969,7 +986,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">f313764</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-4-1.png" target="_blank">f313764</a>
 </td>
 <td>
 C-HW
@@ -983,8 +1000,8 @@ C-HW
 </div>
 </div>
 </div>
-<div id="genes-shown-in-all-dataset" class="section level2">
-<h2>Genes shown in all dataset</h2>
+<div id="genes-shown-in-integrated-dataset" class="section level2">
+<h2>Genes shown in integrated dataset</h2>
 <p><img src="figure/data_clusters.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -1010,7 +1027,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1021,7 +1038,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1032,7 +1049,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1043,7 +1060,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-6-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1081,7 +1098,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1092,7 +1109,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1103,7 +1120,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1114,7 +1131,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-8-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1156,7 +1173,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1167,7 +1184,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1178,7 +1195,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1189,7 +1206,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">f313764</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-10-1.png" target="_blank">f313764</a>
 </td>
 <td>
 C-HW
@@ -1232,7 +1249,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1243,7 +1260,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1254,7 +1271,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1265,7 +1282,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">13d726d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/13d726dde0214c2d74705c21397e8bb2f49f8b6f/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">13d726d</a>
 </td>
 <td>
 C-HW
@@ -1276,7 +1293,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">f313764</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/f3137642695f910c96d11d8c57e0d880826d853a/docs/figure/data_clusters.Rmd/unnamed-chunk-12-1.png" target="_blank">f313764</a>
 </td>
 <td>
 C-HW
@@ -1290,8 +1307,8 @@ C-HW
 </div>
 </div>
 </div>
-<div id="genes-shown-in-all-dataset-1" class="section level2">
-<h2>Genes shown in all dataset</h2>
+<div id="genes-shown-in-integrated-dataset-1" class="section level2">
+<h2>Genes shown in integrated dataset</h2>
 <p><img src="figure/data_clusters.Rmd/unnamed-chunk-13-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
@@ -1317,7 +1334,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1328,7 +1345,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1339,7 +1356,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1350,7 +1367,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-13-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1364,8 +1381,8 @@ C-HW
 </div>
 </div>
 <p>If we zoom in on the positive counts, we may observe different
-distributions for each dataset.
-<img src="figure/data_clusters.Rmd/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
+distributions for each dataset.</p>
+<p><img src="figure/data_clusters.Rmd/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
 Past versions of unnamed-chunk-14-1.png
@@ -1390,7 +1407,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1401,7 +1418,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1412,7 +1429,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1423,7 +1440,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1434,7 +1451,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1445,7 +1462,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/fc9f4b6a78f05402b94483374fba17363245b131/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">fc9f4b6</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/fc9f4b6a78f05402b94483374fba17363245b131/docs/figure/data_clusters.Rmd/unnamed-chunk-14-1.png" target="_blank">fc9f4b6</a>
 </td>
 <td>
 C-HW
@@ -1486,7 +1503,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1497,7 +1514,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1508,7 +1525,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1519,7 +1536,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1530,7 +1547,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">366cd53</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/366cd53204c6da534d7b31df1350afc7cc2f8507/docs/figure/data_clusters.Rmd/unnamed-chunk-15-1.png" target="_blank">366cd53</a>
 </td>
 <td>
 C-HW
@@ -1571,7 +1588,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1582,7 +1599,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1593,7 +1610,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1604,7 +1621,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1615,7 +1632,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1626,7 +1643,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1637,7 +1654,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/fc9f4b6a78f05402b94483374fba17363245b131/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">fc9f4b6</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/fc9f4b6a78f05402b94483374fba17363245b131/docs/figure/data_clusters.Rmd/unnamed-chunk-16-1.png" target="_blank">fc9f4b6</a>
 </td>
 <td>
 C-HW
@@ -1680,7 +1697,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1691,7 +1708,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1702,7 +1719,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1713,7 +1730,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">d8c99b1</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d8c99b1531f7934a71d092a6c59c0ffc01f03dbe/docs/figure/data_clusters.Rmd/unnamed-chunk-17-1.png" target="_blank">d8c99b1</a>
 </td>
 <td>
 C-HW
@@ -1762,7 +1779,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1773,7 +1790,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1784,7 +1801,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1795,7 +1812,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1806,7 +1823,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-22-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1847,7 +1864,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1858,7 +1875,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">d7d838c</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/d7d838cef72eaad50b0fc216b940c795f63c5f5f/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">d7d838c</a>
 </td>
 <td>
 C-HW
@@ -1869,7 +1886,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -1880,7 +1897,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1891,7 +1908,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-24-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -1933,7 +1950,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -1944,7 +1961,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -1955,7 +1972,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -1966,7 +1983,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-25-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -2007,7 +2024,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2018,7 +2035,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2029,7 +2046,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-26-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -2046,12 +2063,14 @@ C-HW
 </div>
 <div id="donorcelltyperesidual-variation" class="section level1">
 <h1>Donor/Celltype/Residual variation</h1>
-<p>To illustrate the differences in contribution of variation across
-different datasets, we employed linear regression models (lm(log2(counts
-+ 1) ~ donor + celltype)) to analyze cells in different groups. The
-donor variation and celltype variation were determined by calculating
-the variances of their respective components. Additionally, the res
-variation was obtained by squaring the residual standard error.</p>
+<p>To gain a deeper understanding of the donor effect and cell type
+effect concerning various types of counts, we conducted a variation
+analysis across multiple group comparisons. To ensure the consistency of
+our results, we restricted our analysis to genes presented in all
+datasets. For each gene, we employed linear models (lm (count ~ donor +
+group)) and computed the variances attributed to three components:
+donor, group, and the residual. Logarithm transformation was applied to
+UMI counts and CPM data to address skewness.</p>
 <p>The following plots exhibit the top 500 genes with the lowest
 residual variations, showcasing the contributions of these variations as
 percentages. The genes were organized into bins based on the quantiles
@@ -2090,7 +2109,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2101,7 +2120,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2112,7 +2131,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -2123,7 +2142,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-29-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -2161,7 +2180,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2172,7 +2202,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2183,7 +2213,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -2194,7 +2224,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">e7fb941</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e7fb9417b4cb637260e67e09300e9e68e8adf765/docs/figure/data_clusters.Rmd/unnamed-chunk-30-1.png" target="_blank">e7fb941</a>
 </td>
 <td>
 C-HW
@@ -2235,7 +2265,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2246,7 +2276,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2257,7 +2287,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">87a6bb9</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/87a6bb9c04eafec41948ee27ab24956ef9a5ddaf/docs/figure/data_clusters.Rmd/unnamed-chunk-32-1.png" target="_blank">87a6bb9</a>
 </td>
 <td>
 C-HW
@@ -2295,7 +2325,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2306,7 +2347,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2317,7 +2358,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">91d6ad2</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/91d6ad2ec15454d8f265e600730258b1b630dc5c/docs/figure/data_clusters.Rmd/unnamed-chunk-33-1.png" target="_blank">91d6ad2</a>
 </td>
 <td>
 C-HW
@@ -2358,7 +2399,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-35-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-35-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2369,7 +2410,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-35-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-35-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2407,7 +2448,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-36-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/data_clusters.Rmd/unnamed-chunk-36-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-36-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2418,7 +2470,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-36-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-36-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2459,7 +2511,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-38-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-38-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2470,7 +2522,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-38-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-38-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2508,7 +2560,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-39-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/data_clusters.Rmd/unnamed-chunk-39-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-39-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2519,7 +2582,7 @@ C-HW
 </tr>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-39-1.png" target="_blank">0faef69</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/0faef696af5cadf4e191b29d5615905ecf82f3f7/docs/figure/data_clusters.Rmd/unnamed-chunk-39-1.png" target="_blank">0faef69</a>
 </td>
 <td>
 C-HW
@@ -2560,7 +2623,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-41-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-41-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2598,7 +2661,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/C-HW/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-42-1.png" target="_blank">e1f752d</a>
+<a href="https://github.com/c-hw/DEanalysis/blob/59b08c200b9c52499eb93ac1d3db385ede971a1f/docs/figure/data_clusters.Rmd/unnamed-chunk-42-1.png" target="_blank">59b08c2</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2023-11-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/c-hw/DEanalysis/blob/e1f752deb9cb0e607fbfe78664e9d03048a76399/docs/figure/data_clusters.Rmd/unnamed-chunk-42-1.png" target="_blank">e1f752d</a>
 </td>
 <td>
 C-HW
@@ -2651,43 +2725,42 @@ loaded via a namespace (and not attached):
  [10] digest_0.6.33          htmltools_0.5.5        fansi_1.0.4           
  [13] magrittr_2.0.3         tensor_1.5             cluster_2.1.4         
  [16] ROCR_1.0-11            globals_0.16.2         spatstat.sparse_3.0-2 
- [19] colorspace_2.1-0       ggrepel_0.9.3          xfun_0.39             
+ [19] colorspace_2.1-0       ggrepel_0.9.3          xfun_0.41             
  [22] RCurl_1.98-1.12        jsonlite_1.8.7         progressr_0.13.0      
  [25] spatstat.data_3.0-1    survival_3.5-5         zoo_1.8-12            
  [28] glue_1.6.2             polyclip_1.10-4        gtable_0.3.3          
  [31] zlibbioc_1.44.0        XVector_0.38.0         leiden_0.4.3          
  [34] DelayedArray_0.24.0    car_3.1-2              future.apply_1.11.0   
- [37] abind_1.4-5            scales_1.2.1           spatstat.random_3.1-5 
- [40] rstatix_0.7.2          miniUI_0.1.1.1         Rcpp_1.0.11           
+ [37] abind_1.4-5            scales_1.2.1           rstatix_0.7.2         
+ [40] spatstat.random_3.1-5  miniUI_0.1.1.1         Rcpp_1.0.11           
  [43] viridisLite_0.4.2      xtable_1.8-4           reticulate_1.30       
  [46] htmlwidgets_1.6.2      httr_1.4.6             RColorBrewer_1.1-3    
  [49] ellipsis_0.3.2         ica_1.0-3              farver_2.1.1          
  [52] pkgconfig_2.0.3        uwot_0.1.16            sass_0.4.7            
  [55] deldir_1.0-9           utf8_1.2.3             labeling_0.4.2        
- [58] tidyselect_1.2.0       rlang_1.1.1            later_1.3.1           
+ [58] tidyselect_1.2.0       rlang_1.1.2            later_1.3.1           
  [61] munsell_0.5.0          tools_4.2.2            cachem_1.0.8          
  [64] cli_3.6.1              generics_0.1.3         broom_1.0.5           
- [67] ggridges_0.5.4         evaluate_0.21          stringr_1.5.0         
- [70] fastmap_1.1.1          goftest_1.2-3          yaml_2.3.7            
- [73] knitr_1.27             fs_1.6.3               fitdistrplus_1.1-11   
+ [67] ggridges_0.5.4         evaluate_0.23          stringr_1.5.1         
+ [70] fastmap_1.1.1          yaml_2.3.7             goftest_1.2-3         
+ [73] knitr_1.29             fs_1.6.3               fitdistrplus_1.1-11   
  [76] purrr_1.0.1            RANN_2.6.1             nlme_3.1-162          
  [79] pbapply_1.7-2          future_1.33.0          whisker_0.4.1         
  [82] mime_0.12              compiler_4.2.2         rstudioapi_0.15.0     
  [85] plotly_4.10.2          png_0.1-8              ggsignif_0.6.4        
  [88] spatstat.utils_3.0-3   tibble_3.2.1           bslib_0.5.0           
- [91] stringi_1.7.12         highr_0.10             lattice_0.21-8        
- [94] Matrix_1.5-4.1         vctrs_0.6.3            pillar_1.9.0          
- [97] lifecycle_1.0.3        spatstat.geom_3.2-4    lmtest_0.9-40         
-[100] jquerylib_0.1.4        RcppAnnoy_0.0.21       data.table_1.14.8     
-[103] cowplot_1.1.1          bitops_1.0-7           irlba_2.3.5.1         
-[106] httpuv_1.6.11          patchwork_1.1.2        R6_2.5.1              
-[109] promises_1.2.0.1       KernSmooth_2.23-22     gridExtra_2.3         
-[112] parallelly_1.36.0      codetools_0.2-19       MASS_7.3-60           
-[115] rprojroot_2.0.3        withr_2.5.0            sctransform_0.3.5     
-[118] GenomeInfoDbData_1.2.9 parallel_4.2.2         grid_4.2.2            
-[121] tidyr_1.3.0            rmarkdown_2.23         carData_3.0-5         
-[124] Rtsne_0.16             git2r_0.32.0           spatstat.explore_3.2-1
-[127] shiny_1.7.4.1         </code></pre>
+ [91] stringi_1.8.2          lattice_0.21-8         Matrix_1.5-4.1        
+ [94] vctrs_0.6.4            pillar_1.9.0           lifecycle_1.0.4       
+ [97] spatstat.geom_3.2-4    lmtest_0.9-40          jquerylib_0.1.4       
+[100] RcppAnnoy_0.0.21       data.table_1.14.8      cowplot_1.1.1         
+[103] bitops_1.0-7           irlba_2.3.5.1          httpuv_1.6.11         
+[106] patchwork_1.1.2        R6_2.5.1               promises_1.2.0.1      
+[109] KernSmooth_2.23-22     gridExtra_2.3          parallelly_1.36.0     
+[112] codetools_0.2-19       MASS_7.3-60            rprojroot_2.0.3       
+[115] withr_2.5.0            sctransform_0.3.5      GenomeInfoDbData_1.2.9
+[118] parallel_4.2.2         grid_4.2.2             tidyr_1.3.0           
+[121] rmarkdown_2.23         carData_3.0-5          Rtsne_0.16            
+[124] git2r_0.32.0           spatstat.explore_3.2-1 shiny_1.7.4.1         </code></pre>
 </div>
 </div>
 </div>
