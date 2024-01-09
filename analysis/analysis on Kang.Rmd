@@ -7,7 +7,18 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
-
+```{r message=FALSE, warning=FALSE, include=FALSE}
+source("../code/DE_methods.R")
+source("../code/functions_in_rmd.R")
+library(ggplot2)
+library(dplyr)
+library(DESeq2)
+library(MAST)
+library(Seurat)
+library(muscat)
+library(sctransform)
+library(SingleCellExperiment)
+```
 ```{r}
 library(ExperimentHub)
 eh <- ExperimentHub()
@@ -25,9 +36,10 @@ dim(sce)
 ```
 ```{r}
 # compute sum-factors & normalize
+library(sctransform)
+library(scater)
 sce <- computeLibraryFactors(sce)
 sce <- logNormCounts(sce)
-library(sctransform)
 assays(sce)$vstresiduals <- vst(counts(sce), verbosity = FALSE)$y
 assays(sce)$cpm = edgeR::cpm(counts(sce))
 ```
@@ -40,8 +52,7 @@ sce <- prepSCE(sce,
     gid = "stim",  # group IDs (ctrl/stim)
     sid = "id",   # sample IDs (ctrl/stim.1234)
     drop = FALSE)  # drop all other colData columns
-save(sce, file = "data2sce.RData")
-getwd()
+# save(sce, file = "data2sce.RData")
 ```
 
 # run analysis on Kang dataset
