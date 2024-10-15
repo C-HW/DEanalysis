@@ -11,12 +11,12 @@ knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 ```
 
 ```{r}
-source("./code/hippo_all_proportion.R")
-source("./code/DE_methods.R")
-source("./code/functions_in_rmd.R")
-load("./data/data2sce.Rdata")
+source("../code/hippo_all_proportion.R")
+source("../code/DE_methods.R")
+source("../code/functions_in_rmd.R")
+load("../data/Kang_data.Rdata")
 # load DE results generated from "analysis on Kang.Rmd"
-load("./data/10X_Kang_DEresult.RData")
+load("../data/Kang_DEresult.RData")
 library(ggplot2)
 library(dplyr)
 library(ggpubr)
@@ -30,11 +30,11 @@ library("org.Hs.eg.db")
 library(pathview)
 assign_celltype("B cells")
 subgroupsce$ind = paste0("D",subgroupsce$ind)
-Kang_Wilcox_Seurat_df[[key]]$avg_log2FC = -Kang_Wilcox_Seurat_df[[key]]$avg_log2FC
-Kang_Wilcox_Seurat_df[[key]]$genes = gsub("-", "_", rownames(Kang_Wilcox_Seurat_df[[key]]))
-for(i in 1:length(Kang_Wilcox_Seurat_df[[key]]$genes)){
-  if(Kang_Wilcox_Seurat_df[[key]]$genes[i] %in%rownames(subgroupsce)){}else{
-    Kang_Wilcox_Seurat_df[[key]]$genes[i] = gsub("_ENSG", "-ENSG", Kang_Wilcox_Seurat_df[[key]]$genes[i])
+Kang_Wilcox_Seurat_df[[cur_key]]$avg_log2FC = -Kang_Wilcox_Seurat_df[[cur_key]]$avg_log2FC
+Kang_Wilcox_Seurat_df[[cur_key]]$genes = gsub("-", "_", rownames(Kang_Wilcox_Seurat_df[[cur_key]]))
+for(i in 1:length(Kang_Wilcox_Seurat_df[[cur_key]]$genes)){
+  if(Kang_Wilcox_Seurat_df[[cur_key]]$genes[i] %in%rownames(subgroupsce)){}else{
+    Kang_Wilcox_Seurat_df[[cur_key]]$genes[i] = gsub("_ENSG", "-ENSG", Kang_Wilcox_Seurat_df[[cur_key]]$genes[i])
   }
 }
 ```
@@ -72,9 +72,9 @@ p_donor = ggplot(df, aes(x = Group, y = Count, fill = Donor)) +
 
 ```{r, eval = FALSE}
 composition = data.frame(
-  zeromean = sum(glm_df[[key]]$status=="zero mean"),
-  lowlyexpressed = sum(glm_df[[key]]$status=="lowly expressed"), 
-  valid = sum(glm_df[[key]]$status=="done"))
+  zeromean = sum(glm_df[[cur_key]]$status=="zero mean"),
+  lowlyexpressed = sum(glm_df[[cur_key]]$status=="lowly expressed"), 
+  valid = sum(glm_df[[cur_key]]$status=="done"))
 composition = melt(composition)
 
 p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) + 
@@ -84,7 +84,7 @@ p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) +
   scale_fill_discrete(name = "", labels=c("zero mean", "freq < 5%", "freq > 5%")) +
   geom_text(aes(label=value), position = position_stack(vjust = 0.5), size = 3) + 
   theme_bw() + theme(panel.grid = element_blank()) + 
-  ggtitle(paste("gene composition of ", key))
+  ggtitle(paste("gene composition of ", cur_key))
 ```
 
 ```{r}
@@ -158,18 +158,18 @@ titlelist = c("Poisson-glmm_UMI",
               "pb-DESeq2_UMI", 
               "pb-edgeR_cpm",
               "MAST_CPM",
-              "Wilcox_int",
+              "Wilcox_Norm",
               # "MMdream",
               "MMvst_VST",
               "MMpoisson_UMI")
 
 
 number_input_hits = data.frame(DEGs = integer(0), Input = integer(0))
-pois_glmm_inputgene = Kang_pois_glmm_df[[key]]$genes[!is.na(Kang_pois_glmm_df[[key]]$hits)]
+pois_glmm_inputgene = Kang_pois_glmm_df[[cur_key]]$genes[!is.na(Kang_pois_glmm_df[[cur_key]]$hits)]
 for (df in dflist){
   number_input_hits = rbind(number_input_hits, 
-                            c(sum(!is.na(df[[key]]$hits)), 
-                              sum(df[[key]]$hits, na.rm = T))) 
+                            c(sum(!is.na(df[[cur_key]]$hits)), 
+                              sum(df[[cur_key]]$hits, na.rm = T))) 
 }
 colnames(number_input_hits) = c("Inputs", "DEGs")
 number_input_hits$method = titlelist
@@ -191,7 +191,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   labs(fill = "gene", labels = c("inputs", "hits")) +
   xlab("methods") +
   ylab("number of genes") +
-  ggtitle(paste("DEGs summary of ", key)) +coord_flip()
+  ggtitle(paste("DEGs summary of ", cur_key)) +coord_flip()
 
 
 dev.off()
@@ -207,26 +207,26 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   scale_fill_manual(values = c("#BCAAA4", "#5D4037")) +
   xlab("") +
   ylab("Number of genes") +
-  ggtitle(paste("DEGs summary of ", key))
+  ggtitle(paste("DEGs summary of ", cur_key))
 ```
 
 To compare the results fairly, the genes displayed in all of the plots below are restricted to the inputs of pois_glmm. That is, the genes not containing in the inputs of pois_glmm are excluded.
 
 ```{r}
 for (i in 1:length(dflist)){
-  dflist[[i]][[key]] = dflist[[i]][[key]][dflist[[i]][[key]]$genes%in%pois_glmm_inputgene,]
+  dflist[[i]][[cur_key]] = dflist[[i]][[cur_key]][dflist[[i]][[cur_key]]$genes%in%pois_glmm_inputgene,]
 }
 for (df in dflist){
-  df[[key]] = df[[key]][df[[key]]$genes%in%pois_glmm_inputgene,]
+  df[[cur_key]] = df[[cur_key]][df[[cur_key]]$genes%in%pois_glmm_inputgene,]
 }
 ```
 ```{r}
 number_input_hits = data.frame(DEGs = integer(0), input = integer(0))
-pois_glmm_inputgene = Kang_pois_glmm_df[[key]]$genes[!is.na(Kang_pois_glmm_df[[key]]$hits)]
+pois_glmm_inputgene = Kang_pois_glmm_df[[cur_key]]$genes[!is.na(Kang_pois_glmm_df[[cur_key]]$hits)]
 for (df in dflist){
   number_input_hits = rbind(number_input_hits, 
-                            c(sum(!is.na(df[[key]]$hits)), 
-                              sum(df[[key]]$hits, na.rm = T)))
+                            c(sum(!is.na(df[[cur_key]]$hits)), 
+                              sum(df[[cur_key]]$hits, na.rm = T)))
 }
 colnames(number_input_hits) = c("Inputs", "DEGs")
 number_input_hits$method = titlelist
@@ -245,7 +245,32 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   scale_fill_manual(values = c("#BCAAA4", "#5D4037")) +
   xlab("") +
   ylab("Number of genes") +
-  ggtitle(paste("DEGs summary of ", key))
+  ggtitle(paste("DEGs summary of ", cur_key))
+```
+
+# Upset plot
+```{r}
+library(UpSetR)
+all_genes = c()
+for(df in dflist){
+  all_genes = c(all_genes, df[[cur_key]]$genes[which(df[[cur_key]]$hits)])
+}
+
+all_genes = unique(all_genes)
+
+# Create a binary matrix where rows are genes and columns represent methods
+upset_data = data.frame(gene = all_genes)
+for (i in seq_along(dflist)){
+  title = titlelist[i]
+  upset_data[[title]] = as.numeric(all_genes %in% dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)])
+}
+
+# Generate the upset plot
+upset(upset_data[,-1], 
+      sets = rev(titlelist), 
+      keep.order = TRUE, 
+      order.by = "freq")
+
 ```
 
 # Volcano plot
@@ -256,10 +281,10 @@ log2FCcutoff = log2(v)
 
 p = list()
 for (i in 1:length(dflist)){
-  if(is.null(dflist[[i]][[key]]$genes)){
-    labgene = rownames(dflist[[i]][[key]])
+  if(is.null(dflist[[i]][[cur_key]]$genes)){
+    labgene = rownames(dflist[[i]][[cur_key]])
   }else{
-    labgene = dflist[[i]][[key]]$genes
+    labgene = dflist[[i]][[cur_key]]$genes
   }
   if(i %in% 6){
     xvar = 'avg_log2FC'
@@ -268,8 +293,8 @@ for (i in 1:length(dflist)){
     xvar = 'log2FC'
     yvar = 'BH'
   }
-  if (nrow(dflist[[i]][[key]])==0){next}
-  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]][[key]])), aes_string(x = xvar, y = sprintf("-log10(%s)", yvar), colour = "hits")) +
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]][[cur_key]])), aes_string(x = xvar, y = sprintf("-log10(%s)", yvar), colour = "hits")) +
     geom_point(alpha = 0.5, size = 0.5) +
     labs(color = "hits") +
     geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
@@ -290,7 +315,7 @@ figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2
 
 # Annotate the figure by adding a common labels
 annotate_figure(figure,
-                top = paste("Volcano plot",key),
+                top = paste("Volcano plot",cur_key),
                 bottom = text_grob(paste( "log2FCcutoff", paste0("log2(",v,")"),"; adj.pval cutoff", pvalcutoff)
                                    , x = 0.99, just = "right")
 )
@@ -299,7 +324,7 @@ annotate_figure(figure,
 ```{r eval=FALSE}
 pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/volcano.pdf", width = 14, height = 3)
 annotate_figure(figure,
-                top = paste("Volcano plot",key),
+                top = paste("Volcano plot",cur_key),
                 bottom = text_grob(paste( "log2FCcutoff", paste0("log2(",v,")"),"; adj.pval cutoff", pvalcutoff)
                                    , x = 0.99, just = "right")
 )
@@ -311,12 +336,12 @@ dev.off()
 ```{r, fig.width = 10, fig.height=6}
 p = list()
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  df = data.frame(genes = dflist[[i]][[key]]$genes)
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  df = data.frame(genes = dflist[[i]][[cur_key]]$genes)
   if(i %in% 6){
-    df = cbind(df, dflist[[i]][[key]][,c("p_val", "p_val_adj")])
+    df = cbind(df, dflist[[i]][[cur_key]][,c("p_val", "p_val_adj")])
   }else{
-    df = cbind(df, dflist[[i]][[key]][,c("pval", "BH")])
+    df = cbind(df, dflist[[i]][[cur_key]][,c("pval", "BH")])
   }
   
   p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
@@ -324,8 +349,8 @@ geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + them
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
-# tiff(paste0("result/",key,"/hist_pvalue.tiff"), width=900, height=900, res=120)
-annotate_figure(figure, top = as.character(key))
+# tiff(paste0("result/",cur_key,"/hist_pvalue.tiff"), width=900, height=900, res=120)
+annotate_figure(figure, top = as.character(cur_key))
 # dev.off()
 # rm(dflist)
 ```
@@ -347,12 +372,12 @@ df = data.frame()
 clusterlist = list(group1, group2)
 clustername = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"))
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  if (sum(dflist[[i]][[cur_key]]$hits, na.rm = T)==0){next}
+  if(is.null(dflist[[i]][[cur_key]]$genes)){
+    hits_gene = rownames(dflist[[i]][[cur_key]])[which(dflist[[i]][[cur_key]]$hits)]
   }else{
-    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+    hits_gene = dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)]
   }
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:2){
@@ -372,7 +397,7 @@ ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=Log2mean, fill = fa
   xlab("") + 
   scale_fill_manual(values = group_palette, breaks = levels(df$Group)) +
   coord_flip()
-# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
 
 # dev.off()
 # rm(dflist)
@@ -388,7 +413,7 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = Group))
   xlab("") + 
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   scale_fill_manual(labels = c("Ctrl", "Stim"),values = group_palette)
-# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
 
 # dev.off()
 # rm(dflist)
@@ -399,15 +424,15 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = Group))
 ````{r, fig.width = 7}
 p = list()
 df = data.frame()
-clusterlist = list(key, levels(sce$cluster_id))
-clustername = c(key, "All clusters")
+clusterlist = list(cur_key, levels(sce$cluster_id))
+clustername = c(cur_key, "All clusters")
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  if(is.null(dflist[[i]][[key]]$genes)){
-    hits_gene = rownames(dflist[[i]][[key]])[which(dflist[[i]][[key]]$hits)]
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  if (sum(dflist[[i]][[cur_key]]$hits, na.rm = T)==0){next}
+  if(is.null(dflist[[i]][[cur_key]]$genes)){
+    hits_gene = rownames(dflist[[i]][[cur_key]])[which(dflist[[i]][[cur_key]]$hits)]
   }else{
-    hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+    hits_gene = dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)]
   }
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:2){
@@ -430,7 +455,7 @@ ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=freq, fill = factor
   labs(fill = "cluster") +
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   coord_flip()
-# tiff(paste0("result/",key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
 
 # dev.off()
 # rm(dflist)
@@ -445,7 +470,7 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(clus
   ylab("Gene expression frequency") + 
   ylim(c(0,1)) + 
   xlab("") + 
-  scale_fill_manual(values = setNames(c(celltype_palette[key], "gray"), c(key, "All clusters"))) +
+  scale_fill_manual(values = setNames(c(celltype_palette[cur_key], "gray"), c(cur_key, "All clusters"))) +
   labs(fill = "Cluster") +
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) 
 ```
@@ -454,11 +479,11 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(clus
 
 ## Poisson-glmm DEGs
 ```{r}
-sort_log2FC = sort(abs(Kang_pois_glmm_df[[key]]$log2FC[Kang_pois_glmm_df[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes = Kang_pois_glmm_df[[key]]$genes[which(Kang_pois_glmm_df[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(Kang_pois_glmm_df[[cur_key]]$log2FC[Kang_pois_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes = Kang_pois_glmm_df[[cur_key]]$genes[which(Kang_pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 mat = subgroupsce@assays@data$counts[hitgenes,]
 #row annotation
-annotation_log2FC = data.frame(abs_log2FC = abs(Kang_pois_glmm_df[[key]]$log2FC[match(hitgenes,Kang_pois_glmm_df[[key]]$genes)]))
+annotation_log2FC = data.frame(abs_log2FC = abs(Kang_pois_glmm_df[[cur_key]]$log2FC[match(hitgenes,Kang_pois_glmm_df[[cur_key]]$genes)]))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$ind, Group = subgroupsce$group_id)
@@ -495,8 +520,8 @@ dev.off()
 
 ### pb-DESeq2
 ```{r}
-sort_log2FC = sort(abs(Kang_DESeq2.muscat[[key]]$log2FC[Kang_DESeq2.muscat[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_deseq2 = Kang_DESeq2.muscat[[key]]$genes[which(Kang_DESeq2.muscat[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(Kang_DESeq2.muscat[[cur_key]]$log2FC[Kang_DESeq2.muscat[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_deseq2 = Kang_DESeq2.muscat[[cur_key]]$genes[which(Kang_DESeq2.muscat[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes][1:600])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
 
@@ -526,8 +551,8 @@ dev.off()
 
 ### MMpoisson
 ```{r}
-sort_log2FC = sort(abs(dflist[[8]][[key]]$log2FC[dflist[[8]][[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_MMpoisson = dflist[[8]][[key]]$genes[which(dflist[[8]][[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(dflist[[8]][[cur_key]]$log2FC[dflist[[8]][[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_MMpoisson = dflist[[8]][[cur_key]]$genes[which(dflist[[8]][[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes][1:600])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
 
@@ -561,23 +586,26 @@ dev.off()
 
 # MA plot 
 ```{r fig.width = 8, fig.height=5}
-# tiff(paste0("result/",key,"/FC_mean_diff/MAplot.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/FC_mean_diff/MAplot.tiff"), width=900, height=900, res=120)
 fig_FC_mean = FC_mean_plot(subgroupsce@metadata$log2mean, c(-6,6), "Log2 mean")
-annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
+annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",cur_key))
 # dev.off()
 
-# tiff(paste0("result/",key,"/FC_mean_diff/FC_meandiff.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/FC_mean_diff/FC_meandiff.tiff"), width=900, height=900, res=120)
 # fig_FC_meandiff = FC_mean_plot(subgroupsce@metadata$log2meandiff, c(-15,6), "log2 mean diff")
-# annotate_figure(fig_FC_meandiff, top = paste("log2FC vs. log2 mean diff ",key))
+# annotate_figure(fig_FC_meandiff, top = paste("log2FC vs. log2 mean diff ",cur_key))
 # dev.off()
 
-# tiff(paste0("result/",key,"/FC_mean_diff/mean_meandiff.tiff"), width=900, height=900, res=120)
+# tiff(paste0("result/",cur_key,"/FC_mean_diff/mean_meandiff.tiff"), width=900, height=900, res=120)
 # fig_mean_diff = mean_meandiff_plot()
-# annotate_figure(fig_mean_diff, top = paste("log2 mean vs. log2 mean diff ",key))
+# annotate_figure(fig_mean_diff, top = paste("log2 mean vs. log2 mean diff ",cur_key))
 # dev.off()
 # rm(dflist)
 # gc()
 ```
+
+
+
 
 # Enrichment analysis
 
@@ -585,17 +613,17 @@ annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
 
 ### All DEGs
 ```{r}
-original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
-names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+original_gene_list = Kang_pois_glmm_df[[cur_key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-genes = Kang_pois_glmm_df[[key]]$genes[which(Kang_pois_glmm_df[[key]]$hits)]
+genes = Kang_pois_glmm_df[[cur_key]]$genes[which(Kang_pois_glmm_df[[cur_key]]$hits)]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -619,18 +647,18 @@ dev.off()
 
 ### Up-regulated DEGs
 ```{r}
-original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
-names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+original_gene_list = Kang_pois_glmm_df[[cur_key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC > 0)
-genes = Kang_pois_glmm_df[[key]]$genes[positive_genes]
+positive_genes = which(Kang_pois_glmm_df[[cur_key]]$hits & Kang_pois_glmm_df[[cur_key]]$log2FC > 0)
+genes = Kang_pois_glmm_df[[cur_key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -653,18 +681,18 @@ dev.off()
 ```
 ### Down-regulated DEGs
 ```{r}
-original_gene_list = Kang_pois_glmm_df[[key]]$log2FC
-names(original_gene_list) = Kang_pois_glmm_df[[key]]$genes
+original_gene_list = Kang_pois_glmm_df[[cur_key]]$log2FC
+names(original_gene_list) = Kang_pois_glmm_df[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_pois_glmm_df[[key]]$hits & Kang_pois_glmm_df[[key]]$log2FC < 0)
-genes = Kang_pois_glmm_df[[key]]$genes[negative_genes]
+negative_genes = which(Kang_pois_glmm_df[[cur_key]]$hits & Kang_pois_glmm_df[[cur_key]]$log2FC < 0)
+genes = Kang_pois_glmm_df[[cur_key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -690,17 +718,17 @@ dev.off()
 
 ### All DEGs
 ```{r}
-original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
-names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+original_gene_list = Kang_DESeq2.muscat[[cur_key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-genes = Kang_DESeq2.muscat[[key]]$genes[which(Kang_DESeq2.muscat[[key]]$hits)]
+genes = Kang_DESeq2.muscat[[cur_key]]$genes[which(Kang_DESeq2.muscat[[cur_key]]$hits)]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -716,18 +744,18 @@ cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene
 
 ### Up-regulated DEGs
 ```{r}
-original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
-names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+original_gene_list = Kang_DESeq2.muscat[[cur_key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC > 0)
-genes = Kang_DESeq2.muscat[[key]]$genes[positive_genes]
+positive_genes = which(Kang_DESeq2.muscat[[cur_key]]$hits & Kang_DESeq2.muscat[[cur_key]]$log2FC > 0)
+genes = Kang_DESeq2.muscat[[cur_key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -743,18 +771,18 @@ cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene
 
 ### Down-regulated DEGs
 ```{r}
-original_gene_list = Kang_DESeq2.muscat[[key]]$log2FC
-names(original_gene_list) = Kang_DESeq2.muscat[[key]]$genes
+original_gene_list = Kang_DESeq2.muscat[[cur_key]]$log2FC
+names(original_gene_list) = Kang_DESeq2.muscat[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_DESeq2.muscat[[key]]$hits & Kang_DESeq2.muscat[[key]]$log2FC < 0)
-genes = Kang_DESeq2.muscat[[key]]$genes[negative_genes]
+negative_genes = which(Kang_DESeq2.muscat[[cur_key]]$hits & Kang_DESeq2.muscat[[cur_key]]$log2FC < 0)
+genes = Kang_DESeq2.muscat[[cur_key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -772,17 +800,17 @@ cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene
 
 ### All DEGs
 ```{r}
-original_gene_list = Kang_MMpoisson[[key]]$log2FC
-names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+original_gene_list = Kang_MMpoisson[[cur_key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-genes = Kang_MMpoisson[[key]]$genes[which(Kang_MMpoisson[[key]]$hits)]
+genes = Kang_MMpoisson[[cur_key]]$genes[which(Kang_MMpoisson[[cur_key]]$hits)]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -798,18 +826,18 @@ cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene
 
 ### Up-regulated DEGs
 ```{r}
-original_gene_list = Kang_MMpoisson[[key]]$log2FC
-names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+original_gene_list = Kang_MMpoisson[[cur_key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-positive_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC > 0)
-genes = Kang_MMpoisson[[key]]$genes[positive_genes]
+positive_genes = which(Kang_MMpoisson[[cur_key]]$hits & Kang_MMpoisson[[cur_key]]$log2FC > 0)
+genes = Kang_MMpoisson[[cur_key]]$genes[positive_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 
@@ -825,18 +853,18 @@ cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene
 
 ### Down-regulated DEGs
 ```{r}
-original_gene_list = Kang_MMpoisson[[key]]$log2FC
-names(original_gene_list) = Kang_MMpoisson[[key]]$genes
+original_gene_list = Kang_MMpoisson[[cur_key]]$log2FC
+names(original_gene_list) = Kang_MMpoisson[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-negative_genes = which(Kang_MMpoisson[[key]]$hits & Kang_MMpoisson[[key]]$log2FC < 0)
-genes = Kang_MMpoisson[[key]]$genes[negative_genes]
+negative_genes = which(Kang_MMpoisson[[cur_key]]$hits & Kang_MMpoisson[[cur_key]]$log2FC < 0)
+genes = Kang_MMpoisson[[cur_key]]$genes[negative_genes]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
-                      keyType = 'SYMBOL',
+                      cur_keyType = 'SYMBOL',
                       readable = T,
                       ont = "BP",
                       pvalueCutoff = 0.05, 

@@ -152,7 +152,7 @@ titlelist = c("Poisson-glmm_UMI",
               "pb-DESeq2_UMI", 
               "pb-edgeR_cpm",
               "MAST_CPM",
-              "Wilcox_int",
+              "Wilcox_Norm",
               # "MMdream",
               "MMvst_VST",
               "MMpoisson_UMI")
@@ -222,6 +222,31 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   xlab("") +
   ylab("Number of genes") +
   ggtitle(paste("DEGs summary of ", key))
+```
+
+# Upset plot
+```{r}
+library(UpSetR)
+all_genes = c()
+for(df in dflist){
+  all_genes = c(all_genes, df[[cur_key]]$genes[which(df[[cur_key]]$hits)])
+}
+
+all_genes = unique(all_genes)
+
+# Create a binary matrix where rows are genes and columns represent methods
+upset_data = data.frame(gene = all_genes)
+for (i in seq_along(dflist)){
+  title = titlelist[i]
+  upset_data[[title]] = as.numeric(all_genes %in% dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)])
+}
+
+# Generate the upset plot
+upset(upset_data[,-1], 
+      sets = rev(titlelist), 
+      keep.order = TRUE, 
+      order.by = "freq")
+
 ```
 
 # Volcano plot
@@ -450,6 +475,7 @@ fig_FC_mean = FC_mean_plot(subgroupsce@metadata$log2mean, c(-6,6), "Log2 mean")
 annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
 
 ```
+
 
 # Enrichment analysis
 

@@ -1,5 +1,5 @@
 ---
-title: "Data and Clusters"
+title: "Fallopian tubes data overview"
 author: "Chih-Hsuan Wu"
 output: workflowr::wflow_html
 editor_options:
@@ -39,18 +39,18 @@ remove_y = theme(
 
 For this project, we are analyzing an scRNA-seq dataset that comprises human immune cells. The dataset consists of a total of 57,182 cells contributed by 5 donors, and it includes sequencing data for 29,382 genes. The raw counts represent UMI counts generated using 10X protocols.
 
-In this project, we utilize four distinct datasets as inputs.
+In this project, we utilize four distinct assays as inputs.
 
-- Raw data: This refers to the raw UMI counts generated from 10X protocols without any normalization or adjustments applied.
+- Raw counts: This refers to the raw UMI counts generated from 10X protocols without any normalization or adjustments applied.
 
-- (Unused) Seurat normalized data: This data type represents the counts from each input sample after normalization using the 'Seurat::NormalizeData(x, normalization.method = "LogNormalize", scale.factor = 10000)' function. This normalization method helps to account for differences in library sizes between samples and scales the data by a factor of 10,000.
+- (Unused) Seurat normalized counts: This data type represents the counts from each input sample after normalization using the 'Seurat::NormalizeData(x, normalization.method = "LogNormalize", scale.factor = 10000)' function. This normalization method helps to account for differences in library sizes between samples and scales the data by a factor of 10,000.
 
-- Integrated data: The integrated data refers to the normalized counts after removing batch effects. This dataset only contains information for 2000 genes. The purpose of removing batch effects is to minimize any systematic differences introduced by technical variations across different experimental batches.
+- Integrated counts: The integrated data refers to the normalized counts after removing batch effects. This assay only contains information for 2000 genes. The purpose of removing batch effects is to minimize any systematic differences introduced by technical variations across different experimental batches.
 
-- CPM data: CPM stands for Counts Per Million. This data is obtained by dividing the counts by the sum of library counts and multiplying the result by a million. The CPM values provide a normalized representation of the expression levels, allowing for meaningful comparisons between samples while accounting for differences in library sizes.
+- CPM counts: CPM stands for Counts Per Million. This assay is obtained by dividing the counts by the sum of library counts and multiplying the result by a million. The CPM values provide a normalized representation of the expression levels, allowing for meaningful comparisons between samples while accounting for differences in library sizes.
 
 
-- VST data: VST data (variance stabilizing transformation) is computed via the sctransform package (Hafemeister and Satija 2019), which returns Pearson residuals from a regularized negative binomial regression model that can be interpreted as normalized expression values.
+- VST counts: VST (variance stabilizing transformation) is computed via the sctransform package (Hafemeister and Satija 2019), which returns Pearson residuals from a regularized negative binomial regression model that can be interpreted as normalized expression values.
 
 # Library size
 
@@ -59,30 +59,8 @@ Before focusing on specific cell types (NK/T), it is important to examine the or
 The violin plot presented below illustrates the significant variation in library size among different cell types. This discrepancy can lead to erroneous underestimation or overestimation of gene counts during normalization procedures.
 
 ```{r, include=FALSE}
-alldata = readRDS("./data/10Xdata_annotate.rds")
-AllCelltypePrep = subset(alldata, subset = expCond2 %in% c("D3","D4","D5","D6","D7"))
-rm(alldata)
-
-AllCelltypePrep@active.ident = recode(AllCelltypePrep@active.ident,
-                                      "ST1" = "ST",
-                                      "ST2" = "ST",
-                                      "ST3" = "ST",
-                                      "ST4" = "ST",
-                                      "ST5" = "ST",
-                                      "P/V1" = "P/V",
-                                      "P/V2" = "P/V",
-                                      "P/V3" = "P/V",
-                                      "EN1" = "EN",
-                                      "EN2" = "EN",
-                                      "EN3" = "EN",
-                                      "EN4" = "EN",
-                                      "T/NK1" = "T/NK",
-                                      "T/NK2" = "T/NK",
-                                      "T/NK3" = "T/NK",
-                                      )
-load("./data/10X_inputdata_integrated.RData")
-integrated_genes = rownames(inputData_integrated)
-rm(inputData_integrated)
+load("./data/fallopian_tubes_all.RData")
+load("./data/fallopian_tubes.RData")
 ```
 
 ## All genes
@@ -109,6 +87,7 @@ dev.off()
 
 ## Genes shown in integrated dataset
 ```{r, fig.width=10}
+integrated_genes = rownames(AllCelltypePrep@assays$integrated$data)
 df = data.frame(libsize = colSums(AllCelltypePrep@assays$RNA@counts[integrated_genes,]), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
 
 libsize_raw_common = ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=libsize, fill = Donor)) + 
@@ -154,7 +133,7 @@ dev.off()
 # Gene expression frequency
 
 ```{r, fig.width=9}
-df = data.frame(freq = colMeans(AllCelltypePrep@assays$RNA@counts>0), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
+df = data.frame(freq = colMeans(AllCelltypePrep@assays$RNA$counts>0), celltype = AllCelltypePrep@active.ident, Donor = AllCelltypePrep@meta.data$expCond2)
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_freq.pdf", width = 12, height = 5)
 ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)), y=freq, fill = Donor)) + 
   geom_violin() + 
@@ -169,31 +148,18 @@ ggplot(df, aes(x = factor(celltype,levels = levels(AllCelltypePrep@active.ident)
 # dev.off()
 ```
 
-```{r}
-rm(AllCelltypePrep)
-# raw data with hippo cluster labels
-load("./data/10X_inputdata.RData")
-# Integrated data without batch effect
-load("./data/10X_inputdata_integrated.RData")
-load("./data/10X_inputdata_cpm.RData")
-load("./data/vstcounts.RData")
-# library(sctransform)
-# vstcounts = vst(counts(inputData), verbosity = FALSE)$y
-# save(vstcounts, file = "vstcounts.Rdata")
-```
-
 # Gene expression distribution
 
 ## All genes
 ```{r, fig.height= 8, fig.width=8}
-rawcts.v = as.vector(inputData@assays@data$counts)
+rawcts.v = as.vector(sce_fallopian_tubes@assays@data$counts)
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_allgenes.pdf", width = 12, height = 12)
 par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
 hist(rawcts.v[rawcts.v<100], breaks = 20, xlab = "Counts", main = "Raw UMI counts", ylim = c(0,1.4e8))
 hist(vstcounts, breaks = 20, xlab = "Counts", main = "VST data", ylim = c(0,1.4e8))
-hist(inputData_cpm@assays@data$counts/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1.4e8))
+hist(sce_fallopian_tubes@assays@data$cpm/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1.4e8))
 # hist(inputData_lognorm@assays@data$counts, breaks = 20, xlab = "counts", main = "Seurat normalized data", ylim = c(0,1.4e8))
-hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1.4e8))
+hist(as.numeric(Seurat_fallopian_tubes@assays$integrated@data), breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1.4e8))
 
 # dev.off()
 ```
@@ -201,13 +167,13 @@ hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main
 ## Genes shown in integrated dataset
 
 ```{r, fig.height= 8, fig.width=8}
-rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
+rawcts.v = as.vector(sce_fallopian_tubes@assays@data$counts[integrated_genes,])
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_2000.pdf", width = 12, height = 12)
 par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
 hist(rawcts.v[rawcts.v<100], breaks = 20, xlab = "Counts", main = "Raw UMI counts", ylim = c(0,1e7))
 hist(vstcounts[rownames(vstcounts) %in% integrated_genes,], breaks = 20, xlab = "Counts", main = "VST data", ylim = c(0,1e7))
-hist(inputData_cpm@assays@data$counts[integrated_genes,]/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1e7))
-hist(inputData_integrated@assays@data$counts, breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1e7))
+hist(sce_fallopian_tubes@assays@data$cpm[integrated_genes,]/1000, breaks = 20, xlab = "Counts", main = "CPM data/1000", ylim = c(0,1e7))
+hist(as.numeric(Seurat_fallopian_tubes@assays$integrated@data), breaks = 20, xlab = "Counts", main = "Integrated data", ylim = c(0,1e7))
 
 
 # dev.off()
@@ -217,14 +183,14 @@ If we zoom in on the positive counts, we may observe different distributions for
 
 ```{r, fig.height= 8, fig.width=8}
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_nonzero_2000.pdf", width = 3, height = 8)
-rawcts.v = as.vector(inputData@assays@data$counts[integrated_genes,])
+rawcts.v = as.vector(sce_fallopian_tubes@assays@data$counts[integrated_genes,])
 par(mfrow = c(2,2), cex.axis = 0.9, cex.main = 0.9)
 hist(rawcts.v[rawcts.v<=6 & rawcts.v>0.5], breaks = 20, xlab = "Counts", ylab = "", main = "Raw UMI counts", xlim = c(0,6), ylim = c(0,6e5))
 data = as.vector(vstcounts)
 hist(data[data>0.1 & data <=6], breaks = 22, xlab = "", main = "VST data", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
-data = as.vector(inputData_integrated@assays@data$counts)
+data = as.vector(Seurat_fallopian_tubes@assays$integrated@data)
 hist(data[data>0.1 & data <=6], breaks = 22, xlab = "", main = "Integrated data", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
-data = as.vector(inputData_cpm@assays@data$counts[integrated_genes,])
+data = as.vector(sce_fallopian_tubes@assays@data$cpm[integrated_genes,])
 hist(data[data>0.1 & data <=6000]/1000, breaks = 22, xlab = "", main = "CPM data/1000", ylab = "Counts", xlim = c(0,6), ylim = c(0,6e5))
 # dev.off()
 ```
@@ -236,7 +202,7 @@ hist(data[data>0.1 & data <=6000]/1000, breaks = 22, xlab = "", main = "CPM data
 par(mfrow = c(1,3), cex.axis = 0.9, cex.main = 0.9)
 data = as.vector(vstcounts[match(integrated_genes,rownames(vstcounts)),])
 hist(data[data>(-3) & data <6], breaks = 22, xlab = "Counts", main = "VST data", xlim = c(-3, 6))
-rawcts_vstgenes = inputData@assays@data$counts[rownames(vstcounts),]
+rawcts_vstgenes = sce_fallopian_tubes@assays@data$counts[rownames(vstcounts),]
 rawcts_vstgenes = as.vector(rawcts_vstgenes[match(integrated_genes,rownames(vstcounts)),])
 vstdata = as.vector(vstcounts[match(integrated_genes,rownames(vstcounts)),])
 hist(vstdata[rawcts_vstgenes==0 & vstdata>(-1.5)], breaks = 22, xlab = "Counts", main = "VST data (zeros in UMI)", ylim = c(0,3e6))
@@ -248,9 +214,9 @@ hist(vstdata[rawcts_vstgenes>0 & vstdata<8], breaks = 22, xlab = "Counts", main 
 ```{r, fig.height= 3, fig.width=8}
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/gene_exp_distribution_integrated.pdf", width = 8, height = 3)
 par(mfrow = c(1,3), cex.axis = 0.9, cex.main = 0.9)
-data = as.vector(assays(inputData_integrated)$counts)
+data = as.vector(Seurat_fallopian_tubes@assays$integrated$data)
 hist(data[data>(-3) & data <6], breaks = 22, xlab = "Counts", main = "Integrated data", xlim = c(-3, 6))
-rawcts_intgenes = as.vector(inputData@assays@data$counts[integrated_genes,])
+rawcts_intgenes = as.vector(sce_fallopian_tubes@assays@data$counts[integrated_genes,])
 hist(data[rawcts_intgenes==0 & data>(-1.5) & data <1.5], breaks = 22, xlab = "Counts", main = "Integrated data (zeros in UMI)", ylim = c(0,4e6))
 hist(data[rawcts_intgenes>0 & data<8], breaks = 22, xlab = "Counts", main = "Integrated data (nonzeros in UMI)", ylim = c(0,6e5))
 # dev.off()
@@ -261,13 +227,13 @@ hist(data[rawcts_intgenes>0 & data<8], breaks = 22, xlab = "Counts", main = "Int
 We randomly choose one moderately expressed gene *RUNX3*. After normalization, the distribution of the counts changes a lot. 
 ```{r, fig.width=8}
 # pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel1/RUNX3.pdf", width = 8, height = 8)
-gene_name = rownames(inputData)[199]
+gene_name = rownames(sce_fallopian_tubes)[199]
 par(mfrow = c(2,2), cex.axis = 0.8, cex.main = 0.8)
-hist(log2(inputData@assays@data$counts[gene_name,] +1), xlab = "counts", main = paste0(gene_name," in raw UMI counts (log2(x+1))"), ylim = c(0,2100), breaks = 20, xlim = c(-2,4))
+hist(log2(sce_fallopian_tubes@assays@data$counts[gene_name,] +1), xlab = "counts", main = paste0(gene_name," in raw UMI counts (log2(x+1))"), ylim = c(0,2100), breaks = 20, xlim = c(-2,4))
 # hist(inputData_lognorm@assays@data$counts[gene_name,], xlab = "counts", main = paste0(gene_name," in Seurat normalized data"), ylim = c(0,2100), breaks = 20)
 hist(vstcounts[gene_name,], xlab = "Counts", main = paste0(gene_name," in VST data"), ylim = c(0,2100), breaks = 50, xlim = c(-2,4))
-hist(log2(inputData_cpm@assays@data$counts[gene_name,]/1000+1), xlab = "Counts", main = paste0(gene_name," in CPM/1000 data (log2(x+1))"), ylim =c(0,2100), breaks = 10, xlim = c(-2,4))
-hist(inputData_integrated@assays@data$counts[gene_name,], xlab = "Counts", main = paste0(gene_name, " in Integrated data"), ylim = c(0,2100), breaks = 21, xlim = c(-2,4))
+hist(log2(sce_fallopian_tubes@assays@data$cpm[gene_name,]/1000+1), xlab = "Counts", main = paste0(gene_name," in CPM/1000 data (log2(x+1))"), ylim =c(0,2100), breaks = 10, xlim = c(-2,4))
+hist(Seurat_fallopian_tubes@assays$integrated$data[gene_name,], xlab = "Counts", main = paste0(gene_name, " in Integrated data"), ylim = c(0,2100), breaks = 21, xlim = c(-2,4))
 
 # dev.off()
 ```
@@ -278,9 +244,8 @@ We applied HIPPO (Heterogeneity-Inspired Pre-Processing tOol) on the raw counts 
 
 ## UMAP
 ```{r}
-set.seed(1)
-lastround = inputData@int_metadata$hippo$umap$K==20 
-umapcoor_df = inputData@int_metadata$hippo$umap[lastround,-3]
+lastround = sce_fallopian_tubes@int_metadata$hippo$umap$K==20 
+umapcoor_df = sce_fallopian_tubes@int_metadata$hippo$umap[lastround,-3]
 groupcenter = aggregate(umapcoor_df[,1:2],list(umapcoor_df$label), FUN = mean)
 ```
 
@@ -356,6 +321,7 @@ umap_eachgroup = ggplot2::ggplot(umapcoor_df,
 ```{r, fig.width=12, fig.height=6}
 ggarrange(umap_all, umap_eachgroup)
 ```
+
 ```{r, eval = FALSE}
 pdf("~/Google Drive/My Drive/spatial/10X/graph_panels/panel2/umap_all.pdf", width = 10, height = 10)
 umap_all
@@ -370,12 +336,12 @@ umap_grouptoshow
 
 ## Zero proportion plot
 ```{r, fig.height= 7}
-final_proportion_plot(inputData, 20, proportion_to_plot = 0)
+final_proportion_plot(sce_fallopian_tubes, 20, proportion_to_plot = 0)
 ```
 
 ## Donor distribution
 ```{r}
-df = data.frame(cellgroup = colData(inputData)$hippo_cluster, Donor = colData(inputData)$donor, count = 1)
+df = data.frame(cellgroup = colData(sce_fallopian_tubes)$hippo_cluster, Donor = colData(sce_fallopian_tubes)$donor, count = 1)
 df = aggregate(df$count, list(df$Donor, df$cellgroup), FUN = sum)
 colnames(df) = c("Donor", "cellgroup", "count")
 cumcount = rev(unlist(aggregate(df[nrow(df):1,]$count, list((df[nrow(df):1,]$cellgroup)), FUN = cumsum)$x))
@@ -443,7 +409,7 @@ p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,2
 
 p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
   geom_boxplot() + 
-  ggtitle(key) +
+  ggtitle(cur_key) +
   xlab("") + 
   ylab("Variation proportion(%)") +
   ylim(c(0,40)) + 
@@ -527,7 +493,7 @@ p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,2
 
 p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
   geom_boxplot() + 
-  ggtitle(key) +
+  ggtitle(cur_key) +
   xlab("") + 
   ylab("Variation proportion(%)") +
   ylim(c(0,40)) + 
@@ -612,7 +578,7 @@ p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,2
 
 p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
   geom_boxplot() + 
-  ggtitle(key) +
+  ggtitle(cur_key) +
   xlab("") + 
   ylab("Variation proportion(%)") +
   ylim(c(0,40)) + 
@@ -698,7 +664,7 @@ p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,2
 
 p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
   geom_boxplot() + 
-  ggtitle(key) +
+  ggtitle(cur_key) +
   xlab("") + 
   ylab("Variation proportion(%)") +
   ylim(c(0,40)) + 
@@ -783,7 +749,7 @@ p_celltype = ggplot(combined_df, aes(x = factor(quantile_res, levels = seq(100,2
 
 p_donor_celltype = ggplot(melt_combined[melt_combined$quantile_res==25,], aes(x = factor(source, levels = c("donor", "celltype")), y = variation*100, fill = factor(data, levels = c("Raw UMI", "VST", "CPM", "Integrated")))) +
   geom_boxplot() + 
-  ggtitle(key) +
+  ggtitle(cur_key) +
   xlab("") + 
   ylab("Variation proportion(%)") +
   ylim(c(0,40)) + 

@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 source("../code/DE_methods.R")
 source("../code/functions_in_rmd.R")
+load("../data/Kang_data.RData")
 library(ggplot2)
 library(dplyr)
 library(DESeq2)
@@ -18,41 +19,6 @@ library(Seurat)
 library(muscat)
 library(sctransform)
 library(SingleCellExperiment)
-```
-```{r}
-library(ExperimentHub)
-eh <- ExperimentHub()
-query(eh, "Kang")
-sce <- eh[["EH2259"]]
-```
-
-```{r}
-# remove undetected genes
-sce <- sce[rowSums(counts(sce) > 0) > 0, ]
-
-# remove lowly expressed genes
-sce <- sce[rowSums(counts(sce) > 1) >= 10, ]
-dim(sce)
-```
-```{r}
-# compute sum-factors & normalize
-library(sctransform)
-library(scater)
-sce <- computeLibraryFactors(sce)
-sce <- logNormCounts(sce)
-assays(sce)$vstresiduals <- vst(counts(sce), verbosity = FALSE)$y
-assays(sce)$cpm = edgeR::cpm(counts(sce))
-```
-
-```{r}
-library(muscat)
-sce$id <- paste0(sce$stim, sce$ind)
-sce <- prepSCE(sce, 
-    kid = "cell", # subpopulation assignments
-    gid = "stim",  # group IDs (ctrl/stim)
-    sid = "id",   # sample IDs (ctrl/stim.1234)
-    drop = FALSE)  # drop all other colData columns
-# save(sce, file = "data2sce.RData")
 ```
 
 # run analysis on Kang dataset
@@ -63,38 +29,34 @@ Kang_MAST_df = list()
 Kang_Wilcox_Seurat_df = list()
 Kang_DESeq2.muscat = list()
 Kang_edgeR.cpm = list()
-Kang_MMvst = list() 
+Kang_MMvst = list()
 Kang_MMpoisson = list()
 
-celltype = levels(sce$cluster_id)[1:3]
+celltype = levels(sce$cluster_id)[1:2]
 
-for(i in 3:length(celltype)){
+for(i in 1:length(celltype)){
   assign_celltype(celltype[i])
   
   # poisson_glmm
-  Kang_pois_glmm_df[[key]] = hippo_poisson_glmm_DE(subgroupsce, cellgroup, subgroupsce$ind)
-  Kang_pois_glmm_df[[key]]$hits = identifyhits(Kang_pois_glmm_df[[key]]$BH, Kang_pois_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T, log2FCcutoff = 1)
+  Kang_pois_glmm_df[[cur_key]] = poisson_glmm_DE(subgroupsce, comparison = "group_id", replicates = "ind", exp_batch = "sample_id")
+  Kang_pois_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_pois_glmm_df[[cur_key]]$BH, Kang_pois_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff)
   
-  # Kang_pois_glmm_celldonor_df[[key]] = hippo_poisson_glmm_DE(subgroupsce, cellgroup, subgroupsce$sample_id)
-  # Kang_pois_glmm_celldonor_df[[key]]$hits = identifyhits(Kang_pois_glmm_celldonor_df[[key]]$BH, Kang_pois_glmm_celldonor_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T, log2FCcutoff = 1)
   
   
   # binom_glmm
-  Kang_binom_glmm_df[[key]] = hippo_binomial_glmm_DE(subgroupsce, cellgroup, subgroupsce$ind)
-  Kang_binom_glmm_df[[key]]$hits = identifyhits(Kang_binom_glmm_df[[key]]$BH, Kang_binom_glmm_df[[key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, newcriteria = T, log2FCcutoff = 1)
+  Kang_binom_glmm_df[[cur_key]] = binomial_glmm_DE(subgroupsce, comparison = "group_id", replicates = "ind", exp_batch = "sample_id")
+  Kang_binom_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_binom_glmm_df[[cur_key]]$BH, Kang_binom_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff)
 
   
   
   # MAST
-  Kang_MAST_df[[key]] = MAST_DE(subgroupsce, cellgroup, subgroupsce$ind)
-  Kang_MAST_df[[key]]$hits = identifyhits(Kang_MAST_df[[key]]$BH, Kang_MAST_df[[key]]$log2FC, log2FCcutoff = 1)
-  
-  # Seurat
-  Seurat_subgroup_lognorm = CreateSeuratObject(subgroupsce@assays@data$logcounts, project = as.character(subgroupsce$group_id), assay = "RNA", meta.data = data.frame(colData(subgroupsce)))
-  
-  # Wilcox
-  Kang_Wilcox_Seurat_df[[key]] = FindMarkers(Seurat_subgroup_lognorm, ident.1 = as.character(group1), ident.2 = as.character(group2), test.use = "wilcox")
-  Kang_Wilcox_Seurat_df[[key]]$hits = identifyhits(Kang_Wilcox_Seurat_df[[key]]$p_val_adj, Kang_Wilcox_Seurat_df[[key]]$avg_log2FC, log2FCcutoff = 1)
+  Kang_MAST_df[[cur_key]] = MAST_DE(subgroupsce, cellgroup, subgroupsce$ind)
+  Kang_MAST_df[[cur_key]]$hits = identifyDEGs(Kang_MAST_df[[cur_key]]$BH, Kang_MAST_df[[cur_key]]$log2FC, newcriteria = F)
+
+  # Seurat-Wilcox
+  Kang_Wilcox_Seurat_df[[cur_key]] = FindMarkers(subgroup_Seurat, ident.1 = as.character(group1), ident.2 = as.character(group2), test.use = "wilcox")
+  Kang_Wilcox_Seurat_df[[cur_key]]$genes = rownames(Kang_Wilcox_Seurat_df[[cur_key]])
+  Kang_Wilcox_Seurat_df[[cur_key]]$hits = identifyDEGs(Kang_Wilcox_Seurat_df[[cur_key]]$p_val_adj, Kang_Wilcox_Seurat_df[[cur_key]]$avg_log2FC, newcriteria = F)
 
   
     # DESeq2.muscat
@@ -102,62 +64,49 @@ for(i in 3:length(celltype)){
     assay = "counts", fun = "sum",
     by = c("cluster_id", "sample_id"))
   res = pbDS(pb, method = "DESeq2", verbose = F)
-  Kang_DESeq2.muscat[[key]] = data.frame(res$table[[1]][[1]])[,c(1,4,7,8)]
-  Kang_DESeq2.muscat[[key]]$logFC = log2(exp(Kang_DESeq2.muscat[[key]]$logFC))
-  colnames(Kang_DESeq2.muscat[[key]]) = c("genes", "log2FC", "pval", "BH")
-  Kang_DESeq2.muscat[[key]]$hits = identifyhits(Kang_DESeq2.muscat[[key]]$BH, Kang_DESeq2.muscat[[key]]$log2FC, log2FCcutoff = 1)
-  
+  Kang_DESeq2.muscat[[cur_key]] = data.frame(res$table[[1]][[1]])[,c(1,4,7,8)]
+  Kang_DESeq2.muscat[[cur_key]]$logFC = log2(exp(Kang_DESeq2.muscat[[cur_key]]$logFC))
+  colnames(Kang_DESeq2.muscat[[cur_key]]) = c("genes", "log2FC", "pval", "BH")
+  Kang_DESeq2.muscat[[cur_key]]$hits = identifyDEGs(Kang_DESeq2.muscat[[cur_key]]$BH, Kang_DESeq2.muscat[[cur_key]]$log2FC, newcriteria = F)
+
   # edgeR.sum.cpm
   pb = aggregateData(subgroupsce,
     assay = "cpm", fun = "sum",
     by = c("cluster_id", "sample_id"))
   res = pbDS(pb, method = "edgeR", verbose = FALSE)
-  Kang_edgeR.cpm[[key]] = data.frame(res$table[[1]][[1]])[,c(1,3,6,7)]
-  Kang_edgeR.cpm[[key]]$logFC = log2(exp(Kang_edgeR.cpm[[key]]$logFC))
-  colnames(Kang_edgeR.cpm[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
-  Kang_edgeR.cpm[[key]]$hits = identifyhits(Kang_edgeR.cpm[[key]]$BH, Kang_edgeR.cpm[[key]]$log2FC, log2FCcutoff = 1)
-  
-  
+  Kang_edgeR.cpm[[cur_key]] = data.frame(res$table[[1]][[1]])[,c(1,3,6,7)]
+  Kang_edgeR.cpm[[cur_key]]$logFC = log2(exp(Kang_edgeR.cpm[[cur_key]]$logFC))
+  colnames(Kang_edgeR.cpm[[cur_key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_edgeR.cpm[[cur_key]]$hits = identifyhits(Kang_edgeR.cpm[[cur_key]]$BH, Kang_edgeR.cpm[[cur_key]]$log2FC, newcriteria = F)
+
+
   # MM-dream
   res = mmDS(subgroupsce, method = "dream")
-  Kang_MMdream[[key]] = data.frame(res[[1]])[,c(1,3,6,7)]
-  Kang_MMdream[[key]]$logFC = log2(exp(Kang_MMdream[[key]]$logFC))
-  colnames(Kang_MMdream[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
-  Kang_MMdream[[key]]$hits = identifyhits(Kang_MMdream[[key]]$BH, Kang_MMdream[[key]]$log2FC, log2FCcutoff = 1)
-  
+  Kang_MMdream[[cur_key]] = data.frame(res[[1]])[,c(1,3,6,7)]
+  Kang_MMdream[[cur_key]]$logFC = log2(exp(Kang_MMdream[[cur_key]]$logFC))
+  colnames(Kang_MMdream[[cur_key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_MMdream[[cur_key]]$hits = identifyhits(Kang_MMdream[[cur_key]]$BH, Kang_MMdream[[cur_key]]$log2FC, newcriteria = F)
+
   # MM-vst
-  # assays(subgroupsce)$vstresiduals = vst(counts(subgroupsce), verbosity = FALSE)$y
   res = mmDS(subgroupsce, method = "vst", vst = "sctransform")
-  Kang_MMvst[[key]] = data.frame(res[[1]])[,c(1,3,6,7)]
-  Kang_MMvst[[key]]$beta = log2(exp(Kang_MMvst[[key]]$beta))
-  colnames(Kang_MMvst[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
-  Kang_MMvst[[key]]$hits = identifyhits(Kang_MMvst[[key]]$BH, Kang_MMvst[[key]]$log2FC, log2FCcutoff = 1)
+  Kang_MMvst[[cur_key]] = data.frame(res[[1]])[,c(1,3,6,7)]
+  Kang_MMvst[[cur_key]]$beta = log2(exp(Kang_MMvst[[cur_key]]$beta))
+  colnames(Kang_MMvst[[cur_key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_MMvst[[cur_key]]$hits = identifyDEGs(Kang_MMvst[[cur_key]]$BH, Kang_MMvst[[cur_key]]$log2FC, newcriteria = F)
   # MM-poisson
   res = mmDS(subgroupsce, method = "poisson")
-  Kang_MMpoisson[[key]] = data.frame(res[[1]])[,c(1,3,6,7)]
-  Kang_MMpoisson[[key]]$beta = log2(exp(Kang_MMpoisson[[key]]$beta))
-  colnames(Kang_MMpoisson[[key]])[1:4] = c("genes", "log2FC", "pval", "BH")
-  Kang_MMpoisson[[key]]$hits = identifyhits(Kang_MMpoisson[[key]]$BH,
-                                            Kang_MMpoisson[[key]]$log2FC, log2FCcutoff = 1)
+  Kang_MMpoisson[[cur_key]] = data.frame(res[[1]])[,c(1,3,6,7)]
+  Kang_MMpoisson[[cur_key]]$beta = log2(exp(Kang_MMpoisson[[cur_key]]$beta))
+  colnames(Kang_MMpoisson[[cur_key]])[1:4] = c("genes", "log2FC", "pval", "BH")
+  Kang_MMpoisson[[cur_key]]$hits = identifyDEGs(Kang_MMpoisson[[cur_key]]$BH,
+                                            Kang_MMpoisson[[cur_key]]$log2FC, newcriteria = F)
 }
 ```
 
 ```{r}
-save(Kang_pois_glmm_df, Kang_binom_glmm_df, Kang_MAST_df, Kang_Wilcox_Seurat_df, Kang_DESeq2.muscat, Kang_edgeR.cpm, Kang_MMvst, Kang_MMpoisson,file = "10X_Kang_DEresult.RData")
+save(Kang_pois_glmm_df, Kang_binom_glmm_df, Kang_MAST_df, Kang_Wilcox_Seurat_df, Kang_DESeq2.muscat, Kang_edgeR.cpm, Kang_MMvst, Kang_MMpoisson,file = "../data/Kang_DEresult.RData")
 ```
 
 
-```{r}
-assign_celltype = function(celltype){
-  group1 <<- "ctrl"
-  group2 <<- "stim"
-  key <<- celltype
-  subgroupsce <<- sce[, sce$cluster_id %in% celltype]
-  cellgroup <<- subgroupsce$group_id
-  genemean1 = rowMeans(subgroupsce@assays@data$counts[,cellgroup==levels(cellgroup)[1]])
-  genemean2 = rowMeans(subgroupsce@assays@data$counts[,cellgroup==levels(cellgroup)[2]])
-  subgroupsce@metadata$log2mean <<- log2(genemean1*genemean2)/2
-  subgroupsce@metadata$log2meandiff <<- log2(abs(genemean1-genemean2))
-}
-```
+
 
