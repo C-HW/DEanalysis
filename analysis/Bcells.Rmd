@@ -192,7 +192,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
 dev.off()
 ```
 
-```{r}
+```{r, eval = FALSE}
 ggplot(data=number_input_hits, aes(x=factor(method, 
                                             levels = titlelist), y=Number_of_genes, fill = Gene)) +
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -205,15 +205,15 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   ggtitle(paste("DEGs summary of ", cur_key))
 ```
 
-To compare the results fairly, the genes displayed in all of the plots below are restricted to the inputs of pois_glmm. That is, the genes not containing in the inputs of pois_glmm are excluded.
+To compare the results, the genes displayed in all of the plots below are restricted to the inputs of pois_glmm. That is, the genes not containing in the inputs of pois_glmm are excluded.
 
 ```{r}
-# for (i in 1:length(dflist)){
-#   dflist[[i]][[cur_key]] = dflist[[i]][[cur_key]][dflist[[i]][[cur_key]]$genes%in%pois_glmm_inputgene,]
-# }
-# for (df in dflist){
-#   df[[cur_key]] = df[[cur_key]][df[[cur_key]]$genes%in%pois_glmm_inputgene,]
-# }
+for (i in 1:length(dflist)){
+  dflist[[i]][[cur_key]] = dflist[[i]][[cur_key]][dflist[[i]][[cur_key]]$genes%in%pois_glmm_inputgene,]
+}
+for (df in dflist){
+  df[[cur_key]] = df[[cur_key]][df[[cur_key]]$genes%in%pois_glmm_inputgene,]
+}
 ```
 ```{r}
 number_input_hits = data.frame(DEGs = integer(0), input = integer(0))
@@ -515,8 +515,8 @@ dev.off()
 
 ### Wilcox
 ```{r}
-sort_log2FC = sort(abs(Kang_Wilcox_Seurat_df[[cur_key]]$avg_log2FC[Kang_Wilcox_Seurat_df[[cur_key]]$hits]), index.return = T, decreasing = T)
-hitgenes_wilcox = Kang_Wilcox_Seurat_df[[cur_key]]$genes[which(Kang_Wilcox_Seurat_df[[cur_key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(dflist[[6]][[cur_key]]$avg_log2FC[dflist[[6]][[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_wilcox = dflist[[6]][[cur_key]]$genes[which(dflist[[6]][[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
 
