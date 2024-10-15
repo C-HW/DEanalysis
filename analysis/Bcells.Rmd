@@ -618,8 +618,6 @@ annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",cur_key))
 ```
 
 
-
-
 # Enrichment analysis
 
 ## Poisson-glmm DEGs
