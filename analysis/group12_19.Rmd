@@ -13,10 +13,10 @@ knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
-load("./data/10X_inputdata.RData")
-load("./data/10X_inputdata_integrated.RData")
-load("./data/10X_DEresult_update.RData")
+# load DE result generated from "analysis on fallopian tubes.Rmd"
+load("./data/10X_DEresult_update2.RData")
 load("./data/vstcounts.RData")
+load("./data/fallopian_tubes.RData")
 library(ggplot2)
 library(dplyr)
 library(ggpubr)
@@ -29,7 +29,7 @@ library(enrichplot)
 library("org.Hs.eg.db")
 library(pathview)
 assign_subgroup(12,19)
-Wilcox_Seurat_integrated_df[[key]]$avg_log2FC = - Wilcox_Seurat_integrated_df[[key]]$avg_log2FC
+Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC = - Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC
 ```
 ```{r}
 combined_palette = c("#E91E63", "#00BCD4")
@@ -62,9 +62,9 @@ p_donor = ggplot(df, aes(x = Group, y = Count, fill = Donor)) +
 
 ```{r}
 composition = data.frame(
-  zeromean = sum(pois_glmm_df[[key]]$status=="zero mean"),
-  lowlyexpressed = sum(pois_glmm_df[[key]]$status=="lowly expressed"), 
-  valid = sum(pois_glmm_df[[key]]$status=="done"))
+  zeromean = sum(pois_glmm_df[[cur_key]]$status=="zero mean"),
+  lowlyexpressed = sum(pois_glmm_df[[cur_key]]$status=="lowly expressed"), 
+  valid = sum(pois_glmm_df[[cur_key]]$status=="done"))
 composition = melt(composition)
 
 p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) + 
@@ -74,7 +74,7 @@ p_composition = ggplot(composition, aes(x = "", y = value, fill = variable)) +
   scale_fill_discrete(name = "", labels=c("zero mean", "freq < 5%", "freq > 5%")) +
   geom_text(aes(label=value), position = position_stack(vjust = 0.5), size = 3) + 
   theme_bw() + theme(panel.grid = element_blank()) + 
-  ggtitle(paste("gene composition of ", key))
+  ggtitle(paste("gene composition of ", cur_key))
 ```
 
 ```{r}
@@ -107,12 +107,12 @@ p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
 ```
 ```{r}
 # zero proportion per gene
-zeroprop_df = rbind(data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group1]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group1]), Group = paste(group1, collapse = "_")),
-                data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group2]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% group2]), Group = paste(group2, collapse = "_")),
-                data.frame(zero_prop = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% c(group1,group2)]== 0), genemean = rowMeans(assays(inputData)$counts[, inputData$hippo_cluster %in% c(group1,group2)]), Group = key)
+zeroprop_df = rbind(data.frame(zero_prop = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% group1]== 0), genemean = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% group1]), Group = paste(group1, collapse = "_")),
+                data.frame(zero_prop = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% group2]== 0), genemean = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% group2]), Group = paste(group2, collapse = "_")),
+                data.frame(zero_prop = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% c(group1,group2)]== 0), genemean = rowMeans(assays(sce_fallopian_tubes)$counts[, sce_fallopian_tubes$hippo_cluster %in% c(group1,group2)]), Group = cur_key)
                 )
 zeroprop_df = zeroprop_df[which(zeroprop_df$genemean>0),]
-zeroprop_df$Group = factor(zeroprop_df$Group, levels = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"), key))
+zeroprop_df$Group = factor(zeroprop_df$Group, levels = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"), cur_key))
 p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop, Group = Group)) + 
   geom_point(aes(shape = Group, color = Group), alpha=0.5, size = 1.2) + 
   xlab("Gene mean") + 
@@ -129,12 +129,20 @@ p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop, Group = Group)
 ggarrange(p_donor, p_zeroprop, p_countbygroup, p_countbydonor, nrow = 2, ncol = 2)
 ```
 
+# Difference in library size
+```{r}
+ks_result = ks.test(subset(count_cell_df, Group == group1, totalcount)$totalcount, subset(count_cell_df, Group == group2, totalcount)$totalcount)
+t_test = t.test(subset(count_cell_df, Group == group1, totalcount)$totalcount, subset(count_cell_df, Group == group2, totalcount)$totalcount)
+print(ks_result)
+print(t_test)
+```
+
 # Mean difference in raw data/normalized data
 
 ```{r}
-subset_ind = inputData$hippo_cluster%in% c(group1,group2)
+subset_ind = sce_fallopian_tubes$hippo_cluster%in% c(group1,group2)
 raw_mean_DE = simple_mean_DE(log2(assays(subgroupsce)$counts+1), cellgroup == 1, cellgroup == 2)
-integrated_mean_DE = simple_mean_DE(assays(subgroupsce_integrated)$counts, cellgroup == 1, cellgroup == 2)
+integrated_mean_DE = simple_mean_DE(subgroup_Seurat@assays$integrated$data, cellgroup == 1, cellgroup == 2)
 vst_mean_DE = simple_mean_DE(vstcounts[,subset_ind], cellgroup == 1, cellgroup == 2)
 cpm_mean_DE = simple_mean_DE(log2(assays(subgroupsce)$cpm+1), cellgroup == 1, cellgroup == 2)
 ```
@@ -186,7 +194,7 @@ dflist = list(pois_glmm_df,
 titlelist = c("Poisson-glmm_UMI", 
               "Binomial-glmm_UMI",
               "pb-DESeq2_UMI", 
-              "pb-edgeR_cpm",
+              "pb-edgeR_CPM",
               "MAST_CPM",
               "Wilcox_int",
               # "MMdream",
@@ -196,11 +204,11 @@ titlelist = c("Poisson-glmm_UMI",
 
 
 number_input_hits = data.frame(DEGs = integer(0), Input = integer(0))
-pois_glmm_inputgene = pois_glmm_df[[key]]$genes[!is.na(pois_glmm_df[[key]]$hits)]
+pois_glmm_inputgene = pois_glmm_df[[cur_key]]$genes[!is.na(pois_glmm_df[[cur_key]]$hits)]
 for (df in dflist){
   number_input_hits = rbind(number_input_hits, 
-                            c(sum(!is.na(df[[key]]$hits)), 
-                              sum(df[[key]]$hits, na.rm = T))) 
+                            c(sum(!is.na(df[[cur_key]]$hits)), 
+                              sum(df[[cur_key]]$hits, na.rm = T))) 
 }
 colnames(number_input_hits) = c("Inputs", "DEGs")
 number_input_hits$method = titlelist
@@ -220,7 +228,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   scale_fill_manual(values = c("#BCAAA4", "#5D4037")) +
   xlab("") +
   ylab("Number of genes") +
-  ggtitle(paste("DEGs summary of ", key))
+  ggtitle(paste("DEGs summary of ", cur_key))
 ```
 
 
@@ -239,8 +247,8 @@ for (i in 1:length(dflist)){
     xvar = 'log2FC'
     yvar = 'BH'
   }
-  if (nrow(dflist[[i]][[key]])==0){next}
-  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]][[key]])), aes_string(x = xvar, y = sprintf("-log10(%s)", yvar), colour = "hits")) +
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]][[cur_key]])), aes_string(x = xvar, y = sprintf("-log10(%s)", yvar), colour = "hits")) +
     geom_point(alpha = 0.5, size = 0.5) +
     labs(color = "hits") +
     geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
@@ -261,7 +269,7 @@ figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2
 
 # Annotate the figure by adding a common labels
 annotate_figure(figure,
-                top = paste("Volcano plot",key),
+                top = paste("Volcano plot", cur_key),
                 bottom = text_grob(paste( "log2FC cutoff ", paste0("log2(",v,")"),"; adj.pval cutoff", pvalcutoff)
                                    , x = 0.99, just = "right")
 )
@@ -272,12 +280,12 @@ annotate_figure(figure,
 ```{r, fig.width = 10, fig.height=6}
 p = list()
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  df = data.frame(genes = dflist[[i]][[key]]$genes)
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  df = data.frame(genes = dflist[[i]][[cur_key]]$genes)
   if(i %in% 6){
-    df = cbind(df, dflist[[i]][[key]][,c("p_val", "p_val_adj")])
+    df = cbind(df, dflist[[i]][[cur_key]][,c("p_val", "p_val_adj")])
   }else{
-    df = cbind(df, dflist[[i]][[key]][,c("pval", "BH")])
+    df = cbind(df, dflist[[i]][[cur_key]][,c("pval", "BH")])
   }
   
   p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
@@ -285,7 +293,7 @@ geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + them
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
-annotate_figure(figure, top = as.character(key))
+annotate_figure(figure, top = as.character(cur_key))
 
 ```
 
@@ -306,13 +314,13 @@ df = data.frame()
 clusterlist = list(group1, group2)
 clustername = c(paste(group1, collapse = "_"), paste(group2, collapse = "_"))
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  if (sum(dflist[[i]][[cur_key]]$hits, na.rm = T)==0){next}
+  hits_gene = dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)]
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:2){
-    cellind = inputData$hippo_cluster %in% clusterlist[[j]]
-    df = rbind(df, data.frame(Log2mean = log2(fun(assays(inputData)$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
+    cellind = sce_fallopian_tubes$hippo_cluster %in% clusterlist[[j]]
+    df = rbind(df, data.frame(Log2mean = log2(fun(assays(sce_fallopian_tubes)$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
   }
 }
 levels(df$Group) = clustername
@@ -334,26 +342,26 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = factor(
 ```
 
 # Violin plot of gene expression frequency of DEGs
-````{r, fig.width = 7}
+```{r, fig.width = 7}
 p = list()
 df = data.frame()
 clusterlist = list(1:20, group1, group2)
 clustername = c("All 20 \nclusters", c(paste(group1, collapse = "_"), paste(group2, collapse = "_")))
 for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]][[key]])==0){next}
-  if (sum(dflist[[i]][[key]]$hits, na.rm = T)==0){next}
-  hits_gene = dflist[[i]][[key]]$genes[which(dflist[[i]][[key]]$hits)]
+  if (nrow(dflist[[i]][[cur_key]])==0){next}
+  if (sum(dflist[[i]][[cur_key]]$hits, na.rm = T)==0){next}
+  hits_gene = dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)]
   if(length(hits_gene)>1){fun = rowMeans}else{fun = mean}
   for (j in 1:3){
-    cellind = inputData$hippo_cluster %in% clusterlist[[j]]
-    df = rbind(df, data.frame(freq = fun(assays(inputData)$counts[hits_gene,cellind]>0), cluster = clustername[j], method = titlelist[i]))
+    cellind = sce_fallopian_tubes$hippo_cluster %in% clusterlist[[j]]
+    df = rbind(df, data.frame(freq = fun(assays(sce_fallopian_tubes)$counts[hits_gene,cellind]>0), cluster = clustername[j], method = titlelist[i]))
   }
 }
 levels(df$cluster) = clustername
 ```
 
 
-````{r, fig.width = 7}
+```{r, fig.width = 7}
 ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(cluster, levels =  levels(cluster)))) + 
   geom_violin() + 
   theme_bw() + 
@@ -366,6 +374,30 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(clus
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) 
 ```
 
+# Upset plot
+```{r}
+library(UpSetR)
+all_genes = c()
+for(df in dflist){
+  all_genes = c(all_genes, df[[cur_key]]$genes[which(df[[cur_key]]$hits)])
+}
+
+all_genes = unique(all_genes)
+
+# Create a binary matrix where rows are genes and columns represent methods
+upset_data = data.frame(gene = all_genes)
+for (i in seq_along(dflist)){
+  title = titlelist[i]
+  upset_data[[title]] = as.numeric(all_genes %in% dflist[[i]][[cur_key]]$genes[which(dflist[[i]][[cur_key]]$hits)])
+}
+
+# Generate the upset plot
+upset(upset_data[,-1], 
+      sets = rev(titlelist), 
+      keep.order = TRUE, 
+      order.by = "freq")
+
+```
 
 # Heatmap of top DEGs
 
@@ -373,13 +405,13 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(clus
 
 ### UMI counts
 ```{r}
-sort_log2FC = sort(abs(pois_glmm_df[[key]]$log2FC[pois_glmm_df[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes = pois_glmm_df[[key]]$genes[which(pois_glmm_df[[key]]$hits)][sort_log2FC$ix]
-hits_in_int = hitgenes[hitgenes%in%rownames(subgroupsce_integrated)]
-hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroupsce_integrated)])
+sort_log2FC = sort(abs(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
+hits_in_int = hitgenes[hitgenes%in%rownames(subgroup_Seurat)]
+hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroup_Seurat)])
 mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
-annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
+annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
@@ -435,7 +467,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### Integrated data
 ```{r}
-mat = assays(subgroupsce_integrated)$counts[hits_in_int,]
+mat = subgroup_Seurat@assays$integrated$data[hits_in_int,]
 
 # cell level
 pheatmap(mat[,rownames(annotation_df)], 
@@ -454,8 +486,8 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### pb-DESeq2
 ```{r}
-sort_log2FC = sort(abs(DESeq2.muscat[[key]]$log2FC[DESeq2.muscat[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_deseq2 = DESeq2.muscat[[key]]$genes[which(DESeq2.muscat[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(DESeq2.muscat[[cur_key]]$log2FC[DESeq2.muscat[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_deseq2 = DESeq2.muscat[[cur_key]]$genes[which(DESeq2.muscat[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
@@ -473,8 +505,8 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### Binomial-glmm
 ```{r}
-sort_log2FC = sort(abs(binom_glmm_df[[key]]$log2FC[binom_glmm_df[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_binom = binom_glmm_df[[key]]$genes[which(binom_glmm_df[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(binom_glmm_df[[cur_key]]$log2FC[binom_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_binom = binom_glmm_df[[cur_key]]$genes[which(binom_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_binom[!hitgenes_binom%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
@@ -490,10 +522,29 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ```
 
+### Wilcox
+```{r}
+sort_log2FC = sort(abs(Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC[Wilcox_Seurat_integrated_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_wilcox = Wilcox_Seurat_integrated_df[[cur_key]]$genes[which(Wilcox_Seurat_integrated_df[[cur_key]]$hits)][sort_log2FC$ix]
+hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
+mat = assays(subgroupsce)$counts[hits_notin_glmm,]
+
+# cell level
+pheatmap(mat[,rownames(annotation_df)], 
+         main = paste0("Wilcox DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
+         annotation_col = annotation_df, 
+         annotation_colors = annotation_colors,
+         cluster_rows=F, cluster_cols=F, 
+         show_colnames = F, show_rownames = F,
+         annotation_names_row = F,
+         color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))
+
+```
+
 ### MAST
 ```{r}
-sort_log2FC = sort(abs(MAST_donor_df[[key]]$log2FC[MAST_donor_df[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_MAST = MAST_donor_df[[key]]$genes[which(MAST_donor_df[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(MAST_donor_df[[cur_key]]$log2FC[MAST_donor_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_MAST = MAST_donor_df[[cur_key]]$genes[which(MAST_donor_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MAST[!hitgenes_MAST%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
@@ -512,8 +563,8 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### MMpoisson
 ```{r}
-sort_log2FC = sort(abs(MMpoisson[[key]]$log2FC[MMpoisson[[key]]$hits]), index.return = T, decreasing = T)
-hitgenes_MMpoisson = MMpoisson[[key]]$genes[which(MMpoisson[[key]]$hits)][sort_log2FC$ix]
+sort_log2FC = sort(abs(MMpoisson[[cur_key]]$log2FC[MMpoisson[[cur_key]]$hits]), index.return = T, decreasing = T)
+hitgenes_MMpoisson = MMpoisson[[cur_key]]$genes[which(MMpoisson[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
 
@@ -535,7 +586,7 @@ In the MMpoisson model, cell type is considered as a random effect. This approac
 Additionally, the library size is employed as an offset to normalize the counts. That is, the model is considering rate instead of counts. Suppose some genes are highly expressed in one cell type than the other, the absolute difference could be eliminate after accounting for library size. This normalization approach may inadvertently mask certain gene expression differences between cell types.
 
 ```{r}
-hitgenes_MMpoisson = MMpoisson[[key]]$genes[which(MMpoisson[[key]]$hits)]
+hitgenes_MMpoisson = MMpoisson[[cur_key]]$genes[which(MMpoisson[[cur_key]]$hits)]
 hits_notin_MMpoisson = na.omit(hitgenes[!hitgenes%in%hitgenes_MMpoisson])
 mat = assays(subgroupsce)$counts[hits_notin_MMpoisson,]
 
@@ -556,19 +607,19 @@ pheatmap(mat[,rownames(annotation_df)],
 # MA plot 
 ```{r, fig.width = 10, fig.height=5}
 fig_FC_mean = FC_mean_plot(subgroupsce@metadata$log2mean, c(-6,6), "Log2 mean") 
-annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ",key))
+annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ", cur_key))
 ```
 
 # Enrichment analysis
 
 ## GO object
 ```{r, fig.width = 6, fig.height=8}
-original_gene_list = pois_glmm_df[[key]]$log2FC
-names(original_gene_list) = pois_glmm_df[[key]]$genes
+original_gene_list = pois_glmm_df[[cur_key]]$log2FC
+names(original_gene_list) = pois_glmm_df[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
 # sort the list in decreasing order (required for clusterProfiler)
 gene_list = sort(gene_list, decreasing = TRUE)
-genes = pois_glmm_df[[key]]$genes[which(pois_glmm_df[[key]]$hits)]
+genes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)]
 # create GO object
 go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
@@ -583,7 +634,7 @@ go_enrich = enrichGO(gene = genes,
 dotplot(go_enrich)
 ```
 ```{r, fig.width = 14, fig.height=7}
-cnetplot(go_enrich, categorySize="pvalue", foldChange=gene_list)
+cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
 
@@ -595,13 +646,13 @@ ids = bitr(names(original_gene_list), fromType = "SYMBOL", toType = "ENTREZID", 
 dedup_ids = ids[!duplicated(ids[c("SYMBOL")]),]
 
 # Create a vector of the gene universe
-match_logic = pois_glmm_df[[key]]$genes %in% dedup_ids$SYMBOL
-kegg_gene_list <- pois_glmm_df[[key]]$log2FC[match_logic]
+match_logic = pois_glmm_df[[cur_key]]$genes %in% dedup_ids$SYMBOL
+kegg_gene_list <- pois_glmm_df[[cur_key]]$log2FC[match_logic]
 names(kegg_gene_list) <- dedup_ids$ENTREZID
 kegg_gene_list<-na.omit(kegg_gene_list)
 kegg_gene_list = sort(kegg_gene_list, decreasing = TRUE)
 # hits
-kegg_genes = na.omit(dedup_ids$ENTREZID[pois_glmm_df[[key]]$hits[match_logic]])
+kegg_genes = na.omit(dedup_ids$ENTREZID[pois_glmm_df[[cur_key]]$hits[match_logic]])
 # create enrichKEGG object
 kk = enrichKEGG(gene=kegg_genes,
                 universe=names(kegg_gene_list),
