@@ -1,0 +1,287 @@
+---
+title: "preprocess_human_spine"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(SingleCellExperiment)
+library(scater)
+library(sctransform)
+library(data.table)
+
+```
+
+# read raw_counts to list
+```{r}
+# Directory where the raw count matrices are stored
+raw_counts_dir = "../data/human/count_matrix"
+annotation_dir = "../data/human/annotation"
+
+raw_files <- list.files(raw_counts_dir, pattern = "\\.txt$", full.names = TRUE)
+# Function to read and clean raw count matrix
+read_and_clean <- function(file) {
+  data <- read.table(file, header = TRUE, row.names = NULL)  # Read the file
+  
+  # Remove rows starting with "ambiguous"
+  data <- data[!grepl("^__ambiguous", data[[1]]), ]
+  
+  if (nrow(data) > 0) {
+    gene_names <- as.character(data[[1]])  # Extract gene names
+    unique_gene_names <- make.unique(gene_names)  # Make gene names unique
+    
+    # Set unique gene names as row names
+    rownames(data) <- unique_gene_names
+    data[[1]] <- NULL  # Remove the first column now that it's used as row names
+  }
+  # Return the cleaned data
+  return(data)
+}
+
+# Read all raw count matrices into a list, applying the cleaning function
+raw_counts_list <- lapply(raw_files, read_and_clean)
+
+# Find the common genes across all files
+common_genes <- Reduce(intersect, lapply(raw_counts_list, rownames))
+
+# Filter each matrix to keep only the common genes
+filtered_counts_list <- lapply(raw_counts_list, function(data) {
+  data[common_genes, , drop = FALSE]  # Keep only rows (genes) in common_genes
+})
+
+names(filtered_counts_list) <- sapply(basename(raw_files), function(file) {
+  parts <- strsplit(file, "_")[[1]]  # Split the filename by "_"
+  paste(parts[1:2], collapse = "_")   # Join the first two parts with "_"
+})
+# Check the structure of one of the cleaned, filtered matrices
+str(filtered_counts_list[[1]])
+
+```
+
+# read annotation to list
+```{r}
+# Read all annotation matrices into a list
+annotation_files <- list.files(annotation_dir, pattern = "\\.tsv$", full.names = TRUE)
+
+# Function to read the annotation matrix
+read_annotation <- function(file) {
+  data <- read.table(file, header = TRUE, row.names = NULL) 
+  data$location = paste0("X", data$xPos,"_", data$yPos)
+  # Create the 'region' column by finding the column names where the value is 1
+  data$region <- apply(data[, 5:17], 1, function(row) {
+    # Get the names of columns that have the value 1
+    region_names <- names(data)[5:17][row == 1]
+    # Return the first region name if any found, or NA if none found
+    if (length(region_names) > 0) {
+      return(region_names[1])
+    } else {
+      return("Undefined")
+    }
+  })
+  return(data[-(5:17)])
+}
+
+# Read the annotation matrices
+annotation_list <- lapply(annotation_files, read_annotation)
+
+# Name the annotation list similarly to how you've named the counts
+names(annotation_list) <- sapply(basename(annotation_files), function(file) {
+  parts <- strsplit(file, "\\.")[[1]]
+  return(parts[1])  # Get the name before the "."
+})
+
+# Match locations and add region data to each matrix in filtered_counts_list
+annotated_counts_list <- lapply(names(filtered_counts_list), function(name) {
+  count_matrix <- filtered_counts_list[[name]]
+  annotation_matrix <- annotation_list[[name]]
+  
+  # Ensure that the locations (columns in count matrix) match the rows in annotation matrix
+  if (!all(colnames(count_matrix) %in% rownames(annotation_matrix))) {
+    stop(paste("Mismatch between locations in count matrix and annotation matrix for", name))
+  }
+  
+  # Extract the matching rows from the annotation matrix
+  matched_annotations <- annotation_matrix[colnames(count_matrix), , drop = FALSE]
+  
+  # Return a list containing both the count matrix and its annotations
+  list(counts = count_matrix, annotations = matched_annotations)
+})
+
+# Check the structure of one of the annotated matrices
+str(annotated_counts_list[[1]])
+
+```
+
+# create meta data
+```{r}
+# Read the SRA metadata file
+sra_metadata <- read.delim2("../data/human/human_sample_names_sra.tsv", row.names = 1)
+split_string <- strsplit(sra_metadata$replicate, "_")
+sra_metadata$Slide <- sapply(split_string, `[`, 1)
+sra_metadata$Array <- sapply(split_string, `[`, 2)
+# Extract relevant columns (adjust column names as needed)
+metadata <- sra_metadata[, c("replicate", "Slide", "Array", "sex", "patient..ID")]
+
+```
+# merge counts and annotation and metadata
+```{r}
+# Initialize a list to store the new metadata for each count matrix
+metadata_list <- list()
+
+# Loop through each filtered count matrix
+for (i in seq_along(filtered_counts_list)) {
+  # Get the name of the count matrix (to match annotation)
+  count_name <- names(filtered_counts_list)[i]
+  
+  # Get the corresponding annotation data
+  annotation <- annotation_list[[count_name]]
+  
+  # Extract the column names of the count matrix (i.e., locations)
+  count_data <- filtered_counts_list[[i]]
+  count_locations <- colnames(count_data)
+  
+  # Filter annotation data to match the count locations
+  matching_annotation <- annotation[annotation$location %in% count_locations, ]
+  
+  # Ensure ordering of metadata matches column names
+  matching_annotation <- matching_annotation[match(count_locations, matching_annotation$location), c("location","region")]
+  
+  # Add original metadata (patient ID, sex, etc.) to the matching annotation
+  sample_metadata <- sra_metadata[sra_metadata$replicate == count_name, c("patient..ID", "sex", "Slide", "Array")]  # Adjust column name as needed
+  
+  # Repeat the sample metadata for the number of cells in the count matrix
+  repeated_metadata <- sample_metadata[rep(1, nrow(matching_annotation)), ]
+  
+  # Combine the metadata and annotation for this sample
+  combined_metadata <- cbind(matching_annotation, repeated_metadata)
+  
+  # Store the result in the metadata list
+  metadata_list[[count_name]] <- combined_metadata
+}
+
+
+# Combine all the counts into a single matrix
+all_counts <- do.call(cbind, filtered_counts_list)
+
+# Combine all metadata entries into one dataframe
+all_metadata <- do.call(rbind, metadata_list)
+
+# Ensure that the combined metadata matches the column order of all_counts
+rownames(all_metadata) <- colnames(all_counts)
+
+# Create the SingleCellExperiment object
+sce_human_spine <- SingleCellExperiment(
+  assays = list(counts = all_counts),  # Expression data
+  colData = all_metadata                   # Metadata including annotations
+)
+
+```
+
+
+# Check gene mean distribution in different patients and remove 2 patients
+```{r}
+# Extract expression matrix (counts) from the SCE object
+counts <- assay(sce_human_spine, "counts")
+
+# Extract patient metadata from the colData
+patient_ids <- sce_human_spine@colData$patient..ID
+
+# Calculate mean expression of each gene for each patient
+gene_means <- t(apply(counts, 1, function(gene) tapply(gene, patient_ids, mean)))
+
+# Convert to a data frame for plotting
+gene_means_df <- as.data.frame(gene_means)
+gene_means_df$gene <- rownames(gene_means_df)  # Add gene names as a column
+
+# Melt the data for ggplot
+gene_means_melt <- melt(gene_means_df, id.vars = "gene", 
+                        variable.name = "patient_ID", 
+                        value.name = "mean_expression")
+
+ggplot(gene_means_melt, aes(x = patient_ID, y = mean_expression, fill = patient_ID)) +
+  geom_violin(trim = FALSE) +
+  ylim(c(0,1)) +
+  labs(title = "Gene Mean Expression Distribution by Patient",
+       x = "Patient", 
+       y = "Mean Gene Expression") +
+  theme_minimal() +
+  theme(legend.position = "none")  # Remove legend for patient fill
+
+patients_to_remove <- c("109_HRAL", "99_HRAC")
+# Get the patient information from the colData
+patient_ids <- colData(sce_human_spine)$patient..ID
+# Subset the SCE to remove specified patients
+sce_human_spine_filtered <- sce_human_spine[, !(patient_ids %in% patients_to_remove)]
+
+# Check total counts per cell
+total_counts <- colSums(counts(sce_human_spine_filtered))
+# Set a threshold for minimum counts per cell (e.g., 100)
+min_counts <- 100
+
+# Filter out cells with low total counts
+sce_human_spine_filtered <- sce_human_spine_filtered[, total_counts > min_counts]
+colnames(sce_human_spine_filtered@colData)[3] = "patient_ID"
+```
+
+# Generate logcounts, vst counts, cpm counts
+```{r}
+# Calculate library size factors and normalize
+sce_human_spine_filtered <- computeLibraryFactors(sce_human_spine_filtered)  # Size factor normalization
+sce_human_spine_filtered <- logNormCounts(sce_human_spine_filtered)  # This will add log-normalized counts to "logcounts" slot
+
+assays(sce_human_spine_filtered)$vstresiduals <- vst(as.matrix(counts(sce_human_spine_filtered)), verbosity = FALSE)$y
+assays(sce_human_spine_filtered)$cpm = edgeR::cpm(as.matrix(counts(sce_human_spine_filtered)))
+```
+
+# run UMAP
+```{r}
+# Run UMAP on the logcounts (log-transformed data)
+sce_human_spine_filtered <- runUMAP(sce_human_spine_filtered, exprs_values = "logcounts")
+plotReducedDim(sce_human_spine_filtered, dimred = "UMAP", colour_by = "region")
+plotReducedDim(sce_human_spine_filtered, dimred = "UMAP", colour_by = "patient_ID")
+plotReducedDim(sce_human_spine_filtered, dimred = "UMAP", colour_by = "Slide")
+```
+
+# Seurat workflow
+```{r}
+
+library(Seurat)
+# standard Seurat workflow
+Seurat_human_spine = CreateSeuratObject(sce_human_spine_filtered@assays@data$counts, project = "human_spine", assay = "RNA", meta.data = data.frame(colData(sce_human_spine_filtered)))
+
+Seurat_human_spine = NormalizeData(Seurat_human_spine)
+Seurat_human_spine <- ScaleData(object = Seurat_human_spine)
+Seurat_human_spine <- FindVariableFeatures(object = Seurat_human_spine)
+Seurat_human_spine <- RunPCA(object = Seurat_human_spine)
+
+# split layer for integration
+Seurat_human_spine[["RNA"]] <- split(Seurat_human_spine[["RNA"]], f = Seurat_human_spine$Slide)
+
+# integration
+Seurat_human_spine_integrate <- IntegrateLayers(object = Seurat_human_spine, method = CCAIntegration, orig.reduction = "pca", new.reduction = "integrated.cca",
+    verbose = FALSE)
+
+# re-join layers after integration
+Seurat_human_spine_integrate[["RNA"]] <- JoinLayers(Seurat_human_spine_integrate[["RNA"]])
+
+# perform analysis with integration
+Seurat_human_spine_integrate <- FindNeighbors(object = Seurat_human_spine_integrate, dims = 1:30)
+Seurat_human_spine_integrate <- FindClusters(object = Seurat_human_spine_integrate)
+Seurat_human_spine_integrate <- RunUMAP(object = Seurat_human_spine_integrate, dims = 1:30)
+DimPlot(object = Seurat_human_spine_integrate, reduction = "umap")
+```
+
+
+```{r}
+save(sce_human_spine_filtered, Seurat_human_spine_integrate,file = "../data/human_spine.RData")
+
+```
+

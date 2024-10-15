@@ -1,0 +1,62 @@
+---
+title: "preprocess_fallopian_tubes"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(SingleCellExperiment)
+library(scater)
+library(sctransform)
+library(data.table)
+library(Seurat)
+library(dplyr)
+```
+
+```{r}
+
+alldata = readRDS("../data/10Xdata_annotate.rds")
+AllCelltypePrep = subset(alldata, subset = expCond2 %in% c("D3","D4","D5","D6","D7"))
+
+rm(alldata)
+AllCelltypePrep@active.ident = recode(AllCelltypePrep@active.ident,
+                                      "ST1" = "ST",
+                                      "ST2" = "ST",
+                                      "ST3" = "ST",
+                                      "ST4" = "ST",
+                                      "ST5" = "ST",
+                                      "P/V1" = "P/V",
+                                      "P/V2" = "P/V",
+                                      "P/V3" = "P/V",
+                                      "EN1" = "EN",
+                                      "EN2" = "EN",
+                                      "EN3" = "EN",
+                                      "EN4" = "EN",
+                                      "T/NK1" = "T/NK",
+                                      "T/NK2" = "T/NK",
+                                      "T/NK3" = "T/NK",
+                                      )
+AllCelltypePrep@meta.data$annotate = AllCelltypePrep@active.ident
+Seurat_fallopian_tubes = subset(AllCelltypePrep, idents = "T/NK")
+
+```
+
+```{r}
+load("../data/10X_inputdata.RData")
+sce_fallopian_tubes = inputData
+Seurat_fallopian_tubes$hippo_cluster = sce_fallopian_tubes$hippo_cluster
+Idents(Seurat_fallopian_tubes) = "hippo_cluster"
+save(sce_fallopian_tubes, Seurat_fallopian_tubes, vstcounts, file = "../data/fallopian_tubes.RData") 
+save(AllCelltypePrep, file = "../data/fallopian_tubes_all.RData")
+```
+
+
+

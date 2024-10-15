@@ -1,0 +1,57 @@
+---
+title: "preprocess_Kang"
+author: "Chih-Hsuan Wu"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(SingleCellExperiment)
+library(scater)
+library(sctransform)
+library(data.table)
+library(ExperimentHub)
+```
+```{r}
+
+eh <- ExperimentHub()
+query(eh, "Kang")
+sce <- eh[["EH2259"]]
+```
+
+```{r}
+# remove undetected genes
+sce <- sce[rowSums(counts(sce) > 0) > 0, ]
+
+# remove lowly expressed genes
+sce <- sce[rowSums(counts(sce) > 1) >= 10, ]
+dim(sce)
+```
+```{r}
+# compute sum-factors & normalize
+sce <- computeLibraryFactors(sce)
+sce <- logNormCounts(sce)
+assays(sce)$vstresiduals <- vst(counts(sce), verbosity = FALSE)$y
+assays(sce)$cpm = edgeR::cpm(counts(sce))
+```
+
+```{r}
+sce$id <- paste0(sce$stim, sce$ind)
+sce <- prepSCE(sce, 
+    kid = "cell", # subpopulation assignments
+    gid = "stim",  # group IDs (ctrl/stim)
+    sid = "id",   # sample IDs (ctrl/stim.1234)
+    drop = FALSE)  # drop all other colData columns
+sce <- runUMAP(sce, pca = 20)
+
+Seurat_sce = CreateSeuratObject(sce@assays@data$counts, project = "Kang", assay = "RNA", meta.data = data.frame(colData(sce)))
+  Seurat_sce = NormalizeData(Seurat_sce)
+Idents(Seurat_sce) = "group_id"
+  save(sce, Seurat_sce, file = "../data/Kang_data.RData")
+```
