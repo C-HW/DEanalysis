@@ -1,0 +1,187 @@
+---
+title: "human_spine_analysis"
+author: "Chih-Hsuan Wu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+load("./data/human_spine.RData")
+library(ggplot2)
+library(dplyr)
+library(SingleCellExperiment)
+library(Seurat)
+library(scater)
+```
+
+```{r}
+region_palette = c(
+  "#A0522D", "#6A00FF", "#A4C400", "#F472D0",
+  "#0050EF", "#00ABA9", "#F0A30A", "#008A00",
+  "#647687", "#1BA1E2", "#FA6800", "#E3C800")
+donors_palette <- c("#FDA4AF", "#FCD34D", "#BEF264", "#67E8F9", "#A5B4FC", 
+                    "#FF6F61", "#6A4C93", "#001688", "#009A33")
+remove_y = theme(
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank(),
+  axis.title.y = element_blank()
+)
+```
+
+# Data introduction
+
+For this case study, we are analyzing an scRNA-seq dataset that comprises human spine cells. The dataset consists of a total of 48644 cells contributed by 9 donors. After removing ambiguous genes and only keeping common genes across all samples, it includes sequencing data for 8092 genes. 
+
+In this project, we utilize four distinct counts as inputs.
+
+- Raw data: This refers to the raw counts without any normalization or adjustments applied.
+
+- Seurat normalized data: This data type represents the counts from each input sample after normalization using the 'Seurat::NormalizeData(x, normalization.method = "LogNormalize", scale.factor = 10000)' function. This normalization method helps to account for differences in library sizes between samples and scales the data by a factor of 10,000.
+
+- Integrated data (Only for clustering result): The integrated data refers to the normalized counts after removing batch effects (Seurat v5 integration workflow). The workflow generates an integrated dimensional reduction embedding which can be used as input for clustering.
+
+- CPM data: CPM stands for Counts Per Million. This data is obtained by dividing the counts by the sum of library counts and multiplying the result by a million. The CPM values provide a normalized representation of the expression levels, allowing for meaningful comparisons between samples while accounting for differences in library sizes.
+
+
+- VST data: VST data (variance stabilizing transformation) is computed via the sctransform package (Hafemeister and Satija 2019), which returns Pearson residuals from a regularized negative binomial regression model that can be interpreted as normalized expression values.
+
+
+# Library size
+
+## Raw data
+```{r, fig.width=10}
+df = data.frame(libsize = colSums(assay(sce_human_spine_filtered, "counts")), region = sce_human_spine_filtered@colData$region, Patient = sce_human_spine_filtered@colData$patient_ID)
+
+libsize_raw_all = ggplot(df, aes(x = factor(region), y=libsize, fill = Patient)) + 
+  geom_violin() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ggtitle("Raw counts") +
+  ylim(c(0,5000)) + 
+  scale_fill_manual(values = donors_palette) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+libsize_raw_all
+```
+
+## Normalized data
+```{r, fig.width=10}
+df = data.frame(libsize = colSums(exp(assay(sce_human_spine_filtered, "logcounts"))-1), region = sce_human_spine_filtered@colData$region, Patient = sce_human_spine_filtered@colData$patient_ID)
+
+libsize_logcounts_all = ggplot(df, aes(x = factor(region), y=libsize, fill = Patient)) + 
+  geom_violin() + 
+  ylab("Library size") + 
+  xlab("") + 
+  ggtitle("Normalized counts (Inversed log(x+1))") +
+  ylim(c(2000,5000)) + 
+  scale_fill_manual(values = donors_palette) + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+libsize_logcounts_all
+```
+
+# UMAP
+
+## raw data
+```{r}
+sample_cells = sample(1:ncol(sce_human_spine_filtered), 2000)
+plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "region")
+plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "patient_ID")
+plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "Slide")
+
+```
+
+## integrated data for cluster
+
+```{r}
+DimPlot(object = Seurat_human_spine_integrate, reduction = "umap")
+```
+
+# Zero proportion
+
+```{r}
+df = data.frame(genemean = double(0), zero_prop = double(0), region = character(0))
+for (region in levels(as.factor(sce_human_spine_filtered$region))){
+  ind = sce_human_spine_filtered$region%in%region
+  df = rbind(df,data.frame(genemean = rowMeans(sce_human_spine_filtered@assays@data$counts[, ind]),
+                       zero_prop = rowMeans(sce_human_spine_filtered@assays@data$counts[, ind]==0),
+                       region = region))
+}
+ggplot(df, aes(x = genemean, y = zero_prop)) + 
+  geom_point(size = 0.5, alpha = 0.5) + 
+  ylab("Zero proportion") +
+  xlab("Gene mean")+
+  stat_function(fun = function(x) exp(-x), colour = "black") +
+  facet_wrap(~ region) +
+  xlim(0,10) +
+  theme_bw() + theme(panel.grid = element_blank())
+```
+
+# Donor distribution
+```{r}
+df = as.data.frame(table(sce_human_spine_filtered$region, sce_human_spine_filtered$patient_ID))
+colnames(df) = c("region", "donor", "count")
+
+donor_hist = ggplot(df, aes(x = region, y = count, fill = donor)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Donor distribution",
+       x = "",
+       y = "Count",
+       fill = "Donor") +
+  theme_bw() + theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15)))
+
+donor_hist
+```
+
+# Variation of a single gene on different level
+
+```{r}
+
+#"GPM6B"         "HSP90AA1"      "GNAS"         "CRYAB"         "CLU"           "PLP1"         "GFAP"          "MAP1B"         "TPT1"         "GLUL"          "S100B"         "FTH1"         "MOBP"          "AQP4"          "MBP"          "CALM1"         "NEAT1"         "MALAT1"       
+
+# Boxplot for a specific gene across patients
+# c("CFH", "BAD", "CD99", 
+gene_of_interest <- "PLP1" 
+count_data <- as.numeric(assay(sce_human_spine_filtered, "logcounts")[gene_of_interest, ])
+metadata <- as.data.frame(colData(sce_human_spine_filtered))
+
+# Combine counts with metadata
+plot_data <- cbind(count_data, metadata)
+
+# # Create boxplot
+# ggplot(plot_data, aes(x = as.factor(patient_ID), y = log(1+count_data))) +
+#   geom_boxplot() +
+#   labs(title = paste("Boxplot of", gene_of_interest, "by Patient"),
+#        x = "Patient ID",
+#        y = "Gene Count") +
+#   theme_minimal()
+
+# Create violin plot
+ggplot(plot_data, aes(x = as.factor(patient_ID), y = count_data)) +
+  geom_violin() +
+  labs(title = paste("Violin Plot of", gene_of_interest, "by Patient"),
+       x = "Patient ID",
+       y = "Normalized Counts") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(plot_data, aes(x = as.factor(Slide), y = count_data)) +
+  geom_violin() +
+  labs(title = paste("Violin Plot of", gene_of_interest, "by Slide"),
+       x = "Slide",
+       y = "Normalized Counts") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
