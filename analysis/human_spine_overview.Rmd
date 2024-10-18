@@ -1,5 +1,5 @@
 ---
-title: "human_spine_analysis"
+title: "Human spine data overview"
 author: "Chih-Hsuan Wu"
 output: workflowr::wflow_html
 editor_options:
@@ -56,7 +56,7 @@ In this project, we utilize four distinct counts as inputs.
 
 # Library size
 
-## Raw data
+## Raw counts
 ```{r, fig.width=10}
 df = data.frame(libsize = colSums(assay(sce_human_spine_filtered, "counts")), region = sce_human_spine_filtered@colData$region, Patient = sce_human_spine_filtered@colData$patient_ID)
 
@@ -68,11 +68,12 @@ libsize_raw_all = ggplot(df, aes(x = factor(region), y=libsize, fill = Patient))
   ylim(c(0,5000)) + 
   scale_fill_manual(values = donors_palette) + 
   theme_bw() + 
-  theme(panel.grid = element_blank())
+  theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
 libsize_raw_all
 ```
 
-## Normalized data
+## Normalized counts
 ```{r, fig.width=10}
 df = data.frame(libsize = colSums(exp(assay(sce_human_spine_filtered, "logcounts"))-1), region = sce_human_spine_filtered@colData$region, Patient = sce_human_spine_filtered@colData$patient_ID)
 
@@ -84,13 +85,14 @@ libsize_logcounts_all = ggplot(df, aes(x = factor(region), y=libsize, fill = Pat
   ylim(c(2000,5000)) + 
   scale_fill_manual(values = donors_palette) + 
   theme_bw() + 
-  theme(panel.grid = element_blank())
+  theme(panel.grid = element_blank()) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
 libsize_logcounts_all
 ```
 
 # UMAP
 
-## raw data
+## Raw counts
 ```{r}
 sample_cells = sample(1:ncol(sce_human_spine_filtered), 2000)
 plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "region")
@@ -99,7 +101,7 @@ plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour
 
 ```
 
-## integrated data for cluster
+## Integrated embeddings for cluster
 
 ```{r}
 DimPlot(object = Seurat_human_spine_integrate, reduction = "umap")
@@ -172,7 +174,7 @@ ggplot(plot_data, aes(x = as.factor(patient_ID), y = count_data)) +
        x = "Patient ID",
        y = "Normalized Counts") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
 
 ggplot(plot_data, aes(x = as.factor(Slide), y = count_data)) +
   geom_violin() +
@@ -180,7 +182,7 @@ ggplot(plot_data, aes(x = as.factor(Slide), y = count_data)) +
        x = "Slide",
        y = "Normalized Counts") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
 ```
 
 
