@@ -29,6 +29,8 @@ region_palette = c(
   "#647687", "#1BA1E2", "#FA6800", "#E3C800")
 donors_palette <- c("#FDA4AF", "#FCD34D", "#BEF264", "#67E8F9", "#A5B4FC", 
                     "#FF6F61", "#6A4C93", "#001688", "#009A33")
+names(region_palette) = levels(as.factor(sce_human_spine_filtered$region))
+names(donors_palette) = levels(as.factor(sce_human_spine_filtered$patient_ID))
 remove_y = theme(
   axis.text.y = element_blank(),
   axis.ticks.y = element_blank(),
@@ -95,8 +97,8 @@ libsize_logcounts_all
 ## Raw counts
 ```{r}
 sample_cells = sample(1:ncol(sce_human_spine_filtered), 2000)
-plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "region")
-plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "patient_ID")
+plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "region") + scale_color_manual(name = "Region", values = region_palette)
+plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "patient_ID") + scale_color_manual(name = "Patient", values = donors_palette)
 plotReducedDim(sce_human_spine_filtered[, sample_cells], dimred = "UMAP", colour_by = "Slide")
 
 ```
