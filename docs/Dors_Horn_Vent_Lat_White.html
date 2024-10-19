@@ -520,15 +520,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreeb100704479342a945bcc3e596aab5045295dd8b5targetblankb100704a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree39acae5eaa90c68f037ed19e873421e258abf100targetblank39acae5a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/b100704479342a945bcc3e596aab5045295dd8b5" target="_blank">b100704</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/39acae5eaa90c68f037ed19e873421e258abf100" target="_blank">39acae5</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreeb100704479342a945bcc3e596aab5045295dd8b5targetblankb100704a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree39acae5eaa90c68f037ed19e873421e258abf100targetblank39acae5a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -538,7 +538,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/b100704479342a945bcc3e596aab5045295dd8b5" target="_blank">b100704</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/39acae5eaa90c68f037ed19e873421e258abf100" target="_blank">39acae5</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,7 +555,6 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/.Rhistory
 
 Untracked files:
@@ -648,6 +647,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/39acae5eaa90c68f037ed19e873421e258abf100/analysis/Dors_Horn_Vent_Lat_White.Rmd" target="_blank">39acae5</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+<td>
+workflowr::wflow_publish("./analysis/Dors_Horn_Vent_Lat_White.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/Dors_Horn_Vent_Lat_White.html" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/b100704479342a945bcc3e596aab5045295dd8b5/analysis/Dors_Horn_Vent_Lat_White.Rmd" target="_blank">b100704</a>
 </td>
 <td>
@@ -667,312 +700,55 @@ workflowr::wflow_publish("./analysis/Dors_Horn_Vent_Lat_White.Rmd")
 </div>
 </div>
 </div>
-<pre class="r"><code>source(&quot;./code/hippo_all_proportion.R&quot;)
-source(&quot;./code/DE_methods.R&quot;)
-source(&quot;./code/functions_in_rmd.R&quot;)
-# load DE result generated from &quot;analysis_humanspine.Rmd&quot;
-load(&quot;./data/human_spine_DEresult.RData&quot;)
-load(&quot;./data/human_spine.RData&quot;)
-load(&quot;./data/fallopian_tubes.RData&quot;)
-library(ggplot2)
-library(dplyr)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(ggpubr)
-library(SingleCellExperiment)</code></pre>
-<pre><code>Loading required package: SummarizedExperiment</code></pre>
-<pre><code>Loading required package: MatrixGenerics</code></pre>
-<pre><code>Loading required package: matrixStats</code></pre>
-<pre><code>
-Attaching package: &#39;matrixStats&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    count</code></pre>
-<pre><code>
-Attaching package: &#39;MatrixGenerics&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
-
-    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-    colWeightedMeans, colWeightedMedians, colWeightedSds,
-    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-    rowWeightedSds, rowWeightedVars</code></pre>
-<pre><code>Loading required package: GenomicRanges</code></pre>
-<pre><code>Loading required package: stats4</code></pre>
-<pre><code>Loading required package: BiocGenerics</code></pre>
-<pre><code>
-Attaching package: &#39;BiocGenerics&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    combine, intersect, setdiff, union</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    IQR, mad, sd, var, xtabs</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
-    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
-    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
-    Position, rank, rbind, Reduce, rownames, sapply, setdiff, table,
-    tapply, union, unique, unsplit, which.max, which.min</code></pre>
-<pre><code>Loading required package: S4Vectors</code></pre>
-<pre><code>
-Attaching package: &#39;S4Vectors&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    first, rename</code></pre>
-<pre><code>The following object is masked from &#39;package:utils&#39;:
-
-    findMatches</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    expand.grid, I, unname</code></pre>
-<pre><code>Loading required package: IRanges</code></pre>
-<pre><code>
-Attaching package: &#39;IRanges&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    collapse, desc, slice</code></pre>
-<pre><code>Loading required package: GenomeInfoDb</code></pre>
-<pre><code>Loading required package: Biobase</code></pre>
-<pre><code>Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    &#39;browseVignettes()&#39;. To cite Bioconductor, see
-    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
-<pre><code>
-Attaching package: &#39;Biobase&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:MatrixGenerics&#39;:
-
-    rowMedians</code></pre>
-<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
-
-    anyMissing, rowMedians</code></pre>
-<pre class="r"><code>library(pheatmap)
-library(gridExtra)</code></pre>
-<pre><code>
-Attaching package: &#39;gridExtra&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:Biobase&#39;:
-
-    combine</code></pre>
-<pre><code>The following object is masked from &#39;package:BiocGenerics&#39;:
-
-    combine</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    combine</code></pre>
-<pre class="r"><code>library(reshape)</code></pre>
-<pre><code>
-Attaching package: &#39;reshape&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:S4Vectors&#39;:
-
-    expand, rename</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    rename</code></pre>
-<pre class="r"><code>library(clusterProfiler)</code></pre>
-<pre><code></code></pre>
-<pre><code>clusterProfiler v4.12.6 Learn more at https://yulab-smu.top/contribution-knowledge-mining/
-
-Please cite:
-
-Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.
-clusterProfiler: an R package for comparing biological themes among
-gene clusters. OMICS: A Journal of Integrative Biology. 2012,
-16(5):284-287</code></pre>
-<pre><code>
-Attaching package: &#39;clusterProfiler&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:reshape&#39;:
-
-    rename</code></pre>
-<pre><code>The following object is masked from &#39;package:IRanges&#39;:
-
-    slice</code></pre>
-<pre><code>The following object is masked from &#39;package:S4Vectors&#39;:
-
-    rename</code></pre>
-<pre><code>The following object is masked from &#39;package:stats&#39;:
-
-    filter</code></pre>
-<pre class="r"><code>library(enrichplot)</code></pre>
-<pre><code>
-Attaching package: &#39;enrichplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:ggpubr&#39;:
-
-    color_palette</code></pre>
-<pre class="r"><code>library(&quot;org.Hs.eg.db&quot;)</code></pre>
-<pre><code>Loading required package: AnnotationDbi</code></pre>
-<pre><code>
-Attaching package: &#39;AnnotationDbi&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:clusterProfiler&#39;:
-
-    select</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    select</code></pre>
-<pre><code></code></pre>
-<pre class="r"><code>library(pathview)</code></pre>
-<pre><code>##############################################################################
-Pathview is an open source software package distributed under GNU General
-Public License version 3 (GPLv3). Details of GPLv3 is available at
-http://www.gnu.org/licenses/gpl-3.0.html. Particullary, users are required to
-formally cite the original Pathview paper (not just mention it) in publications
-or products. For details, do citation(&quot;pathview&quot;) within R.
-
-The pathview downloads and uses KEGG data. Non-academic uses may require a KEGG
-license agreement (details at http://www.kegg.jp/kegg/legal.html).
-##############################################################################</code></pre>
-<pre class="r"><code>group1 = &quot;Dors_Horn&quot;
-group2 = &quot;Vent_Lat_White&quot;
-pair = c(group1, group2)
-subgroupsce = sce_human_spine_filtered[, sce_human_spine_filtered$region%in%pair]
-subgroup_Seurat = Seurat_human_spine_integrate[, Seurat_human_spine_integrate$region%in%pair]
-cellgroup = ifelse(subgroupsce$region%in% group1, 1, 2)
-  genemean1 = rowMeans(counts(subgroupsce)[,cellgroup==1])
-  genemean2 = rowMeans(counts(subgroupsce)[,cellgroup==2])
-  subgroupsce@metadata$log2mean = log2(genemean1*genemean2)/2
-  subgroupsce@metadata$log2meandiff = log2(abs(genemean1-genemean2))
-
-Wilcox_Seurat_df$avg_log2FC = - Wilcox_Seurat_df$avg_log2FC</code></pre>
-<pre class="r"><code>region_palette = c(
-  &quot;#A0522D&quot;, &quot;#6A00FF&quot;, &quot;#A4C400&quot;, &quot;#F472D0&quot;,
-  &quot;#0050EF&quot;, &quot;#00ABA9&quot;, &quot;#F0A30A&quot;, &quot;#008A00&quot;,
-  &quot;#647687&quot;, &quot;#1BA1E2&quot;, &quot;#FA6800&quot;, &quot;#E3C800&quot;)
-donors_palette &lt;- c(&quot;#FDA4AF&quot;, &quot;#FCD34D&quot;, &quot;#BEF264&quot;, &quot;#67E8F9&quot;, &quot;#A5B4FC&quot;, 
-                    &quot;#FF6F61&quot;, &quot;#6A4C93&quot;, &quot;#001688&quot;, &quot;#009A33&quot;)
-names(region_palette) = levels(as.factor(sce_human_spine_filtered$region))
-names(donors_palette) = levels(as.factor(sce_human_spine_filtered$patient_ID))
-annotation_colors = list(Region = region_palette[c(group1, group2)], Donor = donors_palette)
-remove_y = theme(
-  axis.text.y = element_blank(),
-  axis.ticks.y = element_blank(),
-  axis.title.y = element_blank()
-)</code></pre>
 <div id="data-summary" class="section level1">
 <h1>Data summary</h1>
-<pre class="r"><code>df = data.frame(Region = subgroupsce$region, Donor = subgroupsce$patient_ID, Count = 1)
-df = aggregate(df$Count, list(df$Donor, df$Region), FUN = sum)
-colnames(df) = c(&quot;Donor&quot;, &quot;Region&quot;, &quot;Count&quot;)
-df = df[nrow(df):1,]
-df$cumcount= c(t(aggregate(df$Count, list(rev(df$Region)), FUN = cumsum)[,-1]))
-p_donor = ggplot(df, aes(x = Region, y = Count, fill = Donor)) + 
-  geom_bar(stat = &quot;identity&quot;) + 
-  xlab(&quot;Region&quot;) + 
-  ylab(&quot;Number of cells&quot;) + 
-  scale_fill_manual(values = donors_palette) + 
-  geom_text(aes(label=Count, y = cumcount), vjust = -0.2, size = 2) + 
-  theme_bw() + 
-  theme(panel.grid = element_blank())</code></pre>
-<pre class="r"><code># gene count per cell by region
-count_cell_df = data.frame(totalcount = apply(assays(subgroupsce)$counts, 2, sum), Region = as.factor(subgroupsce$region), Donor = as.factor(subgroupsce$patient_ID), Slide = as.factor(subgroupsce$Slide))
-
-p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Region)) +
-  geom_histogram(aes(y=..density..), fill= &quot;white&quot;, alpha=0.5, position=&quot;identity&quot;) +
-  geom_density(alpha = 0.2) +
-  xlab(&quot;Library size&quot;) + 
-  ylab(&quot;Density&quot;) +
-  theme_bw() + 
-  theme(panel.grid = element_blank()) +
-  scale_colour_manual(values = region_palette[c(group1, group2)]) +
-  xlim(c(0,5000))</code></pre>
-<pre class="r"><code># gene count per cell by donor
-p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
-  geom_histogram(aes(y=..density..),fill=&quot;white&quot;, alpha=0.5, position=&quot;identity&quot;) + 
-  geom_density(alpha = 0.2) + 
-  xlab(&quot;Library size&quot;) + 
-  ylab(&quot;Density&quot;) +
-  theme_bw() + 
-  theme(panel.grid = element_blank()) + 
-  scale_color_manual(values = donors_palette) + 
-  xlim(c(0,5000))</code></pre>
-<pre class="r"><code># gene count per cell by slide
-p_countbyslide = ggplot(count_cell_df, aes(x = totalcount, color = Slide)) +
-  geom_histogram(aes(y=..density..),fill=&quot;white&quot;, alpha=0.5, position=&quot;identity&quot;) + 
-  geom_density(alpha = 0.2) + 
-  xlab(&quot;Library size&quot;) + 
-  ylab(&quot;Density&quot;) +
-  theme_bw() + 
-  theme(panel.grid = element_blank()) + 
-  xlim(c(0,5000))</code></pre>
-<pre class="r"><code># zero proportion per gene
-zeroprop_df = rbind(data.frame(zero_prop = rowMeans(assays(subgroupsce)$counts[, subgroupsce$region %in% group1]== 0), genemean = rowMeans(assays(subgroupsce)$counts[, subgroupsce$region %in% group1]), Region = group1),
-                data.frame(zero_prop = rowMeans(assays(subgroupsce)$counts[, subgroupsce$region %in% group2]== 0), genemean = rowMeans(assays(subgroupsce)$counts[, subgroupsce$region %in% group2]), Region = group2),
-                data.frame(zero_prop = rowMeans(assays(subgroupsce)$counts == 0), genemean = rowMeans(assays(subgroupsce)$counts), Region = &quot;Combined&quot;)
-                )
-zeroprop_df = zeroprop_df[which(zeroprop_df$genemean&gt;0),]
-zeroprop_df$Region =factor(zeroprop_df$Region, levels = c(group1, group2, &quot;Combined&quot;))
-
-p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop)) + 
-  geom_point(aes(shape = Region, color = Region), alpha=0.5, size = 1.2) + 
-  scale_color_manual(values = c(region_palette[c(group1, group2)],Combined = &quot;darkmagenta&quot;)) +
-  scale_shape_manual(values = c(16,16,3)) +
-  xlab(&quot;Gene mean&quot;) + 
-  ylab(&quot;Zero proportion&quot;) +
-  xlim(c(0,10)) + 
-  stat_function(fun = function(x) exp(-x), colour = &quot;black&quot;) +
-  theme_bw() + theme(panel.grid = element_blank())</code></pre>
-<pre class="r"><code>ggarrange(p_zeroprop, p_countbygroup, p_countbyslide, p_countbydonor, nrow = 2, ncol = 2)</code></pre>
-<pre><code>Warning: Removed 17 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
-ℹ Please use `after_stat(density)` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-<pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
-(`geom_bar()`).</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-<pre><code>Warning: Removed 32 rows containing missing values or values outside the scale range
-(`geom_bar()`).</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>Warning: Removed 44 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
-(`geom_bar()`).</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-8-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="difference-in-library-size" class="section level1">
 <h1>Difference in library size</h1>
-<pre class="r"><code>ks_result = ks.test(subset(count_cell_df, Region == group1, totalcount)$totalcount, subset(count_cell_df, Region == group2, totalcount)$totalcount)</code></pre>
-<pre><code>Warning in ks.test.default(subset(count_cell_df, Region == group1,
-totalcount)$totalcount, : p-value will be approximate in the presence of ties</code></pre>
-<pre class="r"><code>t_test = t.test(subset(count_cell_df, Region == group1, totalcount)$totalcount, subset(count_cell_df, Region == group2, totalcount)$totalcount)
-print(ks_result)</code></pre>
 <pre><code>
     Asymptotic two-sample Kolmogorov-Smirnov test
 
 data:  subset(count_cell_df, Region == group1, totalcount)$totalcount and subset(count_cell_df, Region == group2, totalcount)$totalcount
 D = 0.12804, p-value &lt; 2.2e-16
 alternative hypothesis: two-sided</code></pre>
-<pre class="r"><code>print(t_test)</code></pre>
 <pre><code>
     Welch Two Sample t-test
 
@@ -987,487 +763,664 @@ mean of x mean of y
 </div>
 <div id="number-of-degs-from-each-method" class="section level1">
 <h1>Number of DEGs from each method</h1>
-<pre class="r"><code>dflist = list(pois_glmm_df, 
-              binom_glmm_df, 
-              DESeq2.muscat,
-              edgeR.cpm,
-              MAST_donor_df, 
-              Wilcox_Seurat_df,
-              # MMdream,
-              MMvst
-              # MMpoisson
-              )
-titlelist = c(&quot;Poisson-glmm_UMI&quot;, 
-              &quot;Binomial-glmm_UMI&quot;,
-              &quot;pb-DESeq2_UMI&quot;, 
-              &quot;pb-edgeR_CPM&quot;,
-              &quot;MAST_CPM&quot;,
-              &quot;Wilcox_int&quot;,
-              # &quot;MMdream&quot;,
-              &quot;MMvst_VST&quot;
-              # &quot;MMpoisson_UMI&quot;
-              )
-
-
-number_input_hits = data.frame(DEGs = integer(0), Input = integer(0))
-pois_glmm_inputgene = pois_glmm_df$genes[!is.na(pois_glmm_df$hits)]
-for (df in dflist){
-  number_input_hits = rbind(number_input_hits, 
-                            c(sum(!is.na(df$hits)), 
-                              sum(df$hits, na.rm = T))) 
-}
-colnames(number_input_hits) = c(&quot;Inputs&quot;, &quot;DEGs&quot;)
-number_input_hits$method = titlelist
-
-number_input_hits = melt(number_input_hits, id = &quot;method&quot;)
-colnames(number_input_hits)[2:3] = c(&quot;Gene&quot;, &quot;Number_of_genes&quot;)</code></pre>
-<pre class="r"><code># pdf(&quot;../submission preparation/graph_panels/panel4/input_hits.pdf&quot;, width = 8, height = 8)
-ggplot(data=number_input_hits, aes(x=factor(method, 
-                                            levels = titlelist), y=Number_of_genes, fill = Gene)) +
-  geom_bar(stat=&quot;identity&quot;, position=position_dodge()) + 
-  geom_text(aes(label=Number_of_genes), vjust=-0.2, position=position_dodge(0.9), size = 2) +
-  theme_bw() + theme(panel.grid = element_blank()) +
-  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
-  scale_fill_manual(values = c(&quot;#BCAAA4&quot;, &quot;#5D4037&quot;)) +
-  xlab(&quot;&quot;) +
-  ylab(&quot;Number of genes&quot;) +
-  ggtitle(paste(&quot;DEGs summary&quot;))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># dev.off()</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-11-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="volcano-plot" class="section level1">
 <h1>Volcano plot</h1>
-<pre class="r"><code>pvalcutoff = 0.05
-v = 1.5
-log2FCcutoff = log2(v)
-
-p = list()
-for (i in 1:length(dflist)){
-  if(i %in% 6){
-    xvar = &#39;avg_log2FC&#39;
-    yvar = &#39;p_val_adj&#39;
-  }else{
-    xvar = &#39;log2FC&#39;
-    yvar = &#39;BH&#39;
-  }
-  if (nrow(dflist[[i]])==0){next}
-  p[[i]] = ggplot(na.omit(data.frame(dflist[[i]])), aes_string(x = xvar, y = sprintf(&quot;-log10(%s)&quot;, yvar), colour = &quot;hits&quot;)) +
-    geom_point(alpha = 0.5, size = 0.5) +
-    labs(color = &quot;hits&quot;) +
-    geom_hline(yintercept=-log10(pvalcutoff),linetype=2) +
-    geom_vline(xintercept=log2FCcutoff,linetype=2) + 
-    geom_vline(xintercept=-log2FCcutoff,linetype=2) +
-    ggtitle(titlelist[i]) + 
-    theme_bw() + 
-    theme(panel.grid = element_blank()) + 
-    scale_color_manual(values = c(&quot;gray&quot;, &quot;blue&quot;)) +
-    labs(color = &quot;DEGs&quot;) +
-    xlim(c(-3,3)) + 
-    ylim(c(0,50)) + 
-    xlab(&quot;Log2 Fold Change&quot;) + 
-    ylab(&quot;-Log10 (adj.pval)&quot;)
-}</code></pre>
-<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette(&quot;ggplot2-in-packages&quot;)` for more information.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
-<pre class="r"><code>figure = ggarrange(plotlist = p, common.legend = TRUE, legend=&quot;bottom&quot;, nrow = 2, ncol = 4)</code></pre>
-<pre><code>Warning: Removed 121 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 121 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 55 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 8 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 6 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 56 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 122 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre class="r"><code># Annotate the figure by adding a common labels
-annotate_figure(figure,
-                top = paste(&quot;Volcano plot&quot;),
-                bottom = text_grob(paste( &quot;log2FC cutoff &quot;, paste0(&quot;log2(&quot;,v,&quot;)&quot;),&quot;; adj.pval cutoff&quot;, pvalcutoff)
-                                   , x = 0.99, just = &quot;right&quot;)
-)</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-12-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="histogram-of-p-valueadj.p-value" class="section level1">
 <h1>Histogram of p-value/adj.p-value</h1>
-<pre class="r"><code>p = list()
-for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]])==0){next}
-  df = data.frame(genes = dflist[[i]]$genes)
-  
-  if(i %in% 6){
-    df = cbind(df, dflist[[i]][,c(&quot;p_val&quot;, &quot;p_val_adj&quot;)])
-  }else{
-    df = cbind(df, dflist[[i]][,c(&quot;pval&quot;, &quot;BH&quot;)])
-  }
-  
-  p[[i]] = ggplot(melt(df,id = &quot;genes&quot;), aes(x=value, color=variable)) +
-geom_histogram(fill=&quot;white&quot;, alpha=0.5, position=&quot;identity&quot;) + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab(&quot;Count&quot;) + 
-coord_cartesian(ylim = c(0, 3000)) +
-    ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c(&quot;p-value&quot;, &quot;adj.p-value&quot;))
-}
-figure = ggarrange(plotlist = p, common.legend = TRUE, legend=&quot;bottom&quot;, nrow = 2, ncol = 4)</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 5010 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 5010 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 4970 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre class="r"><code>annotate_figure(figure)</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-13-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="p-value-comparison-across-different-methods"
 class="section level1">
 <h1>P-Value comparison across different methods</h1>
-<pre class="r"><code>value = &quot;pval&quot;
-p = list()
-  for (i in 2:length(dflist)){
-    if (nrow(dflist[[i]])==0){next}
-    if (value == &quot;pval&quot;){
-      xlimit = c(0,1)
-      ylimit = c(0,1)
-      if (is.null(dflist[[i]]$pval)){
-        x = dflist[[i]]$p_val
-      }else
-        x = dflist[[i]]$pval
-    }
-    if (value == &quot;log2FC&quot;){
-      xlimit = c(-3,3)
-      ylimit = c(-3,3)
-      if (is.null(dflist[[i]]$log2FC)){
-        x = dflist[[i]]$avg_log2FC
-      }else
-        x = dflist[[i]]$log2FC
-    }
-    y = dflist[[1]][match(dflist[[i]]$genes, dflist[[1]]$genes),value]
-    p[[i-1]] = ggplot(na.omit(data.frame(x = x, y = y)), aes(x = x, y = y)) +
-      geom_point(alpha = 0.5, size = 0.5) + theme_minimal() + xlim(xlimit) + ylim(ylimit)+ 
-      xlab(titlelist[i]) + ylab(titlelist[1])
-  }
-  figure = ggarrange(plotlist = p,nrow = 2, ncol = 4)
-  
-  # Annotate the figure by adding a common labels
-  annotate_figure(figure,
-                  top = paste(value, &quot;comparison&quot;))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-14-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="log2-fold-change-comparison-across-different-methods"
 class="section level1">
 <h1>Log2 fold change comparison across different methods</h1>
-<pre class="r"><code>value = &quot;log2FC&quot;
-p = list()
-  for (i in 2:length(dflist)){
-    if (nrow(dflist[[i]])==0){next}
-    if (value == &quot;pval&quot;){
-      xlimit = c(0,1)
-      ylimit = c(0,1)
-      if (is.null(dflist[[i]]$pval)){
-        x = dflist[[i]]$p_val
-      }else
-        x = dflist[[i]]$pval
-    }
-    if (value == &quot;log2FC&quot;){
-      xlimit = c(-3,3)
-      ylimit = c(-3,3)
-      if (is.null(dflist[[i]]$log2FC)){
-        x = dflist[[i]]$avg_log2FC
-      }else
-        x = dflist[[i]]$log2FC
-    }
-    y = dflist[[1]][match(dflist[[i]]$genes, dflist[[1]]$genes),value]
-    p[[i-1]] = ggplot(na.omit(data.frame(x = x, y = y)), aes(x = x, y = y)) +
-      geom_point(alpha = 0.5, size = 0.5) + theme_minimal() + xlim(xlimit) + ylim(ylimit)+ 
-      xlab(titlelist[i]) + ylab(titlelist[1])
-  }
-  figure = ggarrange(plotlist = p,nrow = 2, ncol = 4)</code></pre>
-<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_point()`).
-Removed 2 rows containing missing values or values outside the scale range
-(`geom_point()`).
-Removed 2 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre class="r"><code>  # Annotate the figure by adding a common labels
-  annotate_figure(figure,
-                  top = paste(value, &quot;comparison&quot;))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-15-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="violin-plot-of-log2mean-of-degs" class="section level1">
 <h1>Violin plot of log2mean of DEGs</h1>
-<pre class="r"><code>p = list()
-df = data.frame()
-clustername = pair
-for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]])==0){next}
-  if (sum(dflist[[i]]$hits, na.rm = T)==0){next}
-  hits_gene = dflist[[i]]$genes[which(dflist[[i]]$hits)]
-  if(length(hits_gene)&gt;1){fun = rowMeans}else{fun = mean}
-  for (j in 1:2){
-    cellind = subgroupsce$region %in% clustername[j]
-    df = rbind(df, data.frame(Log2mean = log2(fun(assays(subgroupsce)$counts[hits_gene,cellind])), Group = clustername[j], method = titlelist[i]))
-  }
-}</code></pre>
-<pre class="r"><code>ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = factor(Group))) +
-  geom_violin() + 
-  theme_bw() + 
-  theme(panel.grid = element_blank()) + 
-  ylim(c(-3,4)) + 
-  xlab(&quot;&quot;) + 
-  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
-  labs(fill = &quot;Region&quot;) +
-  scale_fill_manual(values = region_palette[c(group1, group2)])</code></pre>
-<pre><code>Warning: Removed 2993 rows containing non-finite outside the scale range
-(`stat_ydensity()`).</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-17-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="violin-plot-of-gene-expression-frequency-of-degs"
 class="section level1">
 <h1>Violin plot of gene expression frequency of DEGs</h1>
-<pre class="r"><code>p = list()
-df = data.frame()
-clusterlist = list(unique(sce_human_spine_filtered$region), group1, group2)
-clustername = c(&quot;All region&quot;, group1, group2)
-for (i in 1:length(dflist)){
-  if (nrow(dflist[[i]])==0){next}
-  if (sum(dflist[[i]]$hits, na.rm = T)==0){next}
-  hits_gene = dflist[[i]]$genes[which(dflist[[i]]$hits)]
-
-  if(length(hits_gene)&gt;1){fun = rowMeans}else{fun = mean}
-  for (j in 1:3){
-    cellind = sce_human_spine_filtered$region %in% clusterlist[[j]]
-    df = rbind(df, data.frame(freq = fun(assays(sce_human_spine_filtered)$counts[hits_gene,cellind]&gt;0), cluster = clustername[j], method = titlelist[i]))
-  }
-}
-levels(df$cluster) = clustername</code></pre>
-<pre class="r"><code>ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(cluster, levels =  levels(cluster)))) + 
-  geom_violin() + 
-  theme_bw() + 
-  theme(panel.grid = element_blank()) + 
-  ylab(&quot;Gene expression frequency&quot;) + 
-  ylim(c(0,1)) + 
-  xlab(&quot;&quot;) + 
-  scale_fill_manual(values = c(&quot;All region&quot; = &quot;gray&quot;, region_palette[c(group1, group2)]), breaks = levels(df$cluster)) +
-  labs(fill = &quot;Region&quot;) +
-  theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) </code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-19-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="upset-plot" class="section level1">
 <h1>Upset plot</h1>
-<pre class="r"><code>library(UpSetR)
-all_genes = c()
-for(df in dflist){
-  all_genes = c(all_genes, df$genes[which(df$hits)])
-}
-
-all_genes = unique(all_genes)
-
-# Create a binary matrix where rows are genes and columns represent methods
-upset_data = data.frame(gene = all_genes)
-for (i in seq_along(dflist)){
-  title = titlelist[i]
-  upset_data[[title]] = as.numeric(all_genes %in% dflist[[i]]$genes[which(dflist[[i]]$hits)])
-}
-
-# Generate the upset plot
-upset(upset_data[,-1], 
-      sets = rev(titlelist), 
-      keep.order = TRUE, 
-      order.by = &quot;freq&quot;)</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-20-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-20-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="heatmap-of-top-degs" class="section level1">
 <h1>Heatmap of top DEGs</h1>
 <div id="poisson-glmm-degs" class="section level2">
 <h2>Poisson-glmm DEGs</h2>
-<pre class="r"><code>sort_log2FC = sort(abs(pois_glmm_df$log2FC[pois_glmm_df$hits]), index.return = T, decreasing = T)
-hitgenes = pois_glmm_df$genes[which(pois_glmm_df$hits)][sort_log2FC$ix]
-mat = subgroupsce@assays@data$counts[hitgenes,]
-#row annotation
-annotation_log2FC = data.frame(abs_log2FC = abs(pois_glmm_df$log2FC[match(hitgenes,pois_glmm_df$genes)]))
-rownames(annotation_log2FC) = rownames(mat)
-#col annotation
-annotation_df = data.frame(Donor = subgroupsce$patient_ID, Region = subgroupsce$region)
-rownames(annotation_df) = colnames(mat)
-annotation_df = annotation_df[with(annotation_df, order(Region, Donor)), ]
-# cell level
-pheatmap(mat[,rownames(annotation_df)],
-         main = paste0(&quot;Poisson-glmm DEGs\nin UMI counts (&quot;, nrow(mat),&quot; DEGs)&quot;),
-         annotation_col = annotation_df, 
-         annotation_row = annotation_log2FC,
-         annotation_colors = annotation_colors,
-         cluster_rows=F, cluster_cols=F, 
-         show_colnames = F, show_rownames = F,
-         annotation_names_row = F,
-         color=colorRampPalette(c(&quot;navy&quot;, &quot;white&quot;, &quot;red&quot;))(10), breaks = seq(0,3, length.out = 10))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-21-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="additional-degs-from-other-methods" class="section level2">
 <h2>Additional DEGs from other methods</h2>
 <div id="wilcox" class="section level3">
 <h3>Wilcox</h3>
-<pre class="r"><code>sort_log2FC = sort(abs(Wilcox_Seurat_df$avg_log2FC[Wilcox_Seurat_df$hits]), index.return = T, decreasing = T)
-hitgenes_wilcox = Wilcox_Seurat_df$genes[which(Wilcox_Seurat_df$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
-
-# cell level
-pheatmap(mat[,rownames(annotation_df)], 
-         main = paste0(&quot;Wilcox DEGs \nnot identified by Poisson-glmm (&quot;,nrow(mat),&quot; DEGs)&quot;),
-         annotation_col = annotation_df, 
-         annotation_colors = annotation_colors,
-         cluster_rows=F, cluster_cols=F, 
-         show_colnames = F, show_rownames = F,
-         annotation_names_row = F,
-         color=colorRampPalette(c(&quot;navy&quot;, &quot;white&quot;, &quot;red&quot;))(10), breaks = seq(0,3, length.out = 10))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-22-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="pb-deseq2" class="section level3">
 <h3>pb-DESeq2</h3>
-<pre class="r"><code>sort_log2FC = sort(abs(DESeq2.muscat$log2FC[DESeq2.muscat$hits]), index.return = T, decreasing = T)
-hitgenes_deseq2 = DESeq2.muscat$genes[which(DESeq2.muscat$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes][1:600])
-mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
-
-# cell level
-pheatmap(mat[,rownames(annotation_df)], 
-         main = paste0(&quot;pb-DESeq2 DEGs \nnot identified by Poisson-glmm (&quot;,nrow(mat),&quot; DEGs)&quot;),
-         annotation_col = annotation_df, 
-         annotation_colors = annotation_colors,
-         cluster_rows=F, cluster_cols=F, 
-         show_colnames = F, show_rownames = F,
-         annotation_names_row = F,
-         color=colorRampPalette(c(&quot;navy&quot;, &quot;white&quot;, &quot;red&quot;))(10), breaks = seq(0,3, length.out = 10))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>pdf(&quot;~/Google Drive/My Drive/spatial/10X/graph_panels/panel7/heatmap_deseq2.pdf&quot;, width = 5, height = 5)
-pheatmap(mat[,rownames(annotation_df)], 
-         main = paste0(&quot;pb-DESeq2 DEGs \nnot identified by Poisson-glmm (&quot;,nrow(mat),&quot; DEGs)&quot;),
-         annotation_col = annotation_df, 
-         annotation_row = annotation_log2FC,
-         annotation_colors = annotation_colors,
-         cluster_rows=F, cluster_cols=F, 
-         show_colnames = F, show_rownames = F,
-         annotation_names_row = F,
-         color=colorRampPalette(c(&quot;navy&quot;, &quot;white&quot;, &quot;red&quot;))(10), breaks = seq(0,3, length.out = 10))
-dev.off()</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-23-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="ma-plot" class="section level1">
 <h1>MA plot</h1>
-<pre class="r"><code>xvar = subgroupsce@metadata$log2mean
-xlimits = c(-6,6)
-xLabel = &quot;Log2 mean&quot;
-p = list()
-  for (i in 1:length(dflist)){
-    if(is.null(dflist[[i]]$genes)){
-      x = xvar[match(rownames(dflist[[i]]), names(xvar))]
-    }else{
-      x = xvar[match(dflist[[i]]$genes,names(xvar))]
-    }
-    if(is.null(dflist[[i]]$log2FC)){
-      y = dflist[[i]]$avg_log2FC
-    }else{
-      y = dflist[[i]]$log2FC
-    }
-    p[[i]] = ggplot(na.omit(data.frame(x = x, y = y, DEGs = dflist[[i]]$hits)), aes(x = x, y = y, colour = DEGs)) +
-      geom_point(alpha = 0.5, size = 0.5) +
-      geom_hline(yintercept=log2(1.5),linetype=2) +
-      geom_hline(yintercept=-log2(1.5),linetype=2) +
-      ggtitle(titlelist[i]) + theme_minimal() + xlim(xlimits) + ylim(c(-4,4)) + 
-      scale_color_manual(values = c(&quot;gray&quot;, &quot;blue&quot;)) +
-      xlab(xLabel) + ylab(&quot;Log2 Fold Change&quot;) + theme(legend.position = &quot;bottom&quot;)
-  }
-  fig_FC_mean = ggarrange(plotlist = p,common.legend = TRUE, legend = &quot;right&quot;, ncol = 4, nrow = 2)</code></pre>
-<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 176 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 134 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre><code>Warning: Removed 175 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-<pre class="r"><code>  annotate_figure(fig_FC_mean, top = paste(&quot;Log2FC vs. Log2 mean &quot;))</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-25-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
+Past versions of unnamed-chunk-25-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-25-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="enrichment-analysis" class="section level1">
 <h1>Enrichment analysis</h1>
 <div id="go-object" class="section level2">
 <h2>GO object</h2>
-<pre class="r"><code>original_gene_list = pois_glmm_df$log2FC
-names(original_gene_list) = pois_glmm_df$genes
-gene_list = na.omit(original_gene_list)
-# sort the list in decreasing order (required for clusterProfiler)
-gene_list = sort(gene_list, decreasing = TRUE)
-genes = pois_glmm_df$genes[which(pois_glmm_df$hits)]
-# create GO object
-go_enrich = enrichGO(gene = genes,
-                      universe = names(gene_list),
-                      OrgDb = &quot;org.Hs.eg.db&quot;, 
-                      keyType = &#39;SYMBOL&#39;,
-                      readable = T,
-                      ont = &quot;BP&quot;,
-                      pvalueCutoff = 0.05, 
-                      qvalueCutoff = 0.10)</code></pre>
-<pre class="r"><code>dotplot(go_enrich)</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-27-1.png" width="768" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>cnetplot(go_enrich, categorySize=&quot;pvalue&quot;, color.params = list(foldChange = gene_list))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-27-1">
+Past versions of unnamed-chunk-27-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-27-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-27-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-28-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-28-1">
+Past versions of unnamed-chunk-28-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-28-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-28-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="enrichkegg-object" class="section level2">
 <h2>enrichKEGG object</h2>
-<pre class="r"><code># Convert gene IDs for enrichKEGG function
-# We will lose some genes here because not all IDs will be converted
-ids = bitr(names(original_gene_list), fromType = &quot;SYMBOL&quot;, toType = &quot;ENTREZID&quot;, OrgDb=&quot;org.Hs.eg.db&quot;) </code></pre>
-<pre><code>&#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>Warning in bitr(names(original_gene_list), fromType = &quot;SYMBOL&quot;, toType =
-&quot;ENTREZID&quot;, : 5.09% of input gene IDs are fail to map...</code></pre>
-<pre class="r"><code>dedup_ids = ids[!duplicated(ids[c(&quot;SYMBOL&quot;)]),]
-
-# Create a vector of the gene universe
-match_logic = pois_glmm_df$genes %in% dedup_ids$SYMBOL
-kegg_gene_list &lt;- pois_glmm_df$log2FC[match_logic]
-names(kegg_gene_list) &lt;- dedup_ids$ENTREZID
-kegg_gene_list&lt;-na.omit(kegg_gene_list)
-kegg_gene_list = sort(kegg_gene_list, decreasing = TRUE)
-# hits
-kegg_genes = na.omit(dedup_ids$ENTREZID[pois_glmm_df$hits[match_logic]])
-# create enrichKEGG object
-kk = enrichKEGG(gene=kegg_genes,
-                universe=names(kegg_gene_list),
-                organism=&quot;hsa&quot;, pvalueCutoff = 0.05, keyType = &quot;ncbi-geneid&quot;)</code></pre>
-<pre><code>Reading KEGG annotation online: &quot;https://rest.kegg.jp/link/hsa/pathway&quot;...</code></pre>
-<pre><code>Reading KEGG annotation online: &quot;https://rest.kegg.jp/list/pathway/hsa&quot;...</code></pre>
-<pre><code>Reading KEGG annotation online: &quot;https://rest.kegg.jp/conv/ncbi-geneid/hsa&quot;...</code></pre>
-<pre class="r"><code>dotplot(kk, 
-        showCategory = 10, 
-        title = &quot;Enriched Pathways&quot;,
-        font.size = 8)</code></pre>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-30-1.png" width="768" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>cnetplot(kk, categorySize=&quot;pvalue&quot;, foldChange=kegg_gene_list)</code></pre>
-<pre><code>Warning in cnetplot.enrichResult(x, ...): Use &#39;color.params = list(foldChange = your_value)&#39; instead of &#39;foldChange&#39;.
- The foldChange parameter will be removed in the next version.</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-30-1">
+Past versions of unnamed-chunk-30-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-30-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-30-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-31-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
+Past versions of unnamed-chunk-31-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-31-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0d1ced43463c17c95629dcc102c8da1592f006cf/docs/figure/Dors_Horn_Vent_Lat_White.Rmd/unnamed-chunk-31-1.png" target="_blank">0d1ced4</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1476,7 +1429,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.1 (2024-06-14)
 Platform: x86_64-apple-darwin20
 Running under: macOS Monterey 12.6
