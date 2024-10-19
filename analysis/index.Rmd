@@ -24,7 +24,7 @@ Differential expression (DE) analysis in single-cell transcriptomics reveals cel
 
 We provided a generalized linear mixed model framework ([LEMUR](https://github.com/C-HW/LEMUR): Linear mixed model-based differential Expression analysis accounting for Multiple samples Using Random effects) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
 
-![](./docs/figure/panel3.png)
+![](./figure/panel3.png)
 
 # LEMUR framework
 
