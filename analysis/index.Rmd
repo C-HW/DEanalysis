@@ -86,7 +86,7 @@ In case study 2, the dataset contains scRNA-seq data from 9 patients and sequenc
 
 * Analyses
 
-  + [Dorsal Horn vs. entral Lateral White](Dors_Horn_Vent_Lat_White.html)
+  + [Dorsal Horn vs. Ventral Lateral White](Dors_Horn_Vent_Lat_White.html)
 
 ## Case study 3 (Lupus patients with treatment)
 
