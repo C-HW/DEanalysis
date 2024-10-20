@@ -12,7 +12,7 @@
 <meta name="author" content="Chih-Hsuan Wu" />
 
 
-<title>Data and Clusters</title>
+<title>Fallopian tubes data overview</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -358,7 +358,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data and Clusters</h1>
+<h1 class="title toc-ignore">Fallopian tubes data overview</h1>
 <h4 class="author">Chih-Hsuan Wu</h4>
 
 </div>
@@ -367,7 +367,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -378,8 +378,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -388,13 +388,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-10-14
+<strong>Last updated:</strong> 2024-10-19
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEanalysis/</code> <span
@@ -417,21 +417,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -522,15 +519,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree0c763c5066746aaca95ec760b39f17d03c156ad0targetblank0c763c5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreee6121612b4a4d24d1c7ec6d1d83e75a0cf6f0ec9targetblanke612161a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/c-hw/DEanalysis/tree/0c763c5066746aaca95ec760b39f17d03c156ad0" target="_blank">0c763c5</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/e6121612b4a4d24d1c7ec6d1d83e75a0cf6f0ec9" target="_blank">e612161</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomchwDEanalysistree0c763c5066746aaca95ec760b39f17d03c156ad0targetblank0c763c5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreee6121612b4a4d24d1c7ec6d1d83e75a0cf6f0ec9targetblanke612161a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +537,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/c-hw/DEanalysis/tree/0c763c5066746aaca95ec760b39f17d03c156ad0" target="_blank">0c763c5</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/e6121612b4a4d24d1c7ec6d1d83e75a0cf6f0ec9" target="_blank">e612161</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -554,19 +551,17 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/.Rhistory
+
 Untracked files:
     Untracked:  .DS_Store
-    Untracked:  .Rhistory
-    Untracked:  analysis/Kang_overview.Rmd
+    Untracked:  .gitignore
     Untracked:  analysis/analysis_humanspine.Rmd
-    Untracked:  analysis/fallopian_tubes_overview.Rmd
-    Untracked:  analysis/human_spine_overview.Rmd
-    Untracked:  analysis/preprocess_Kang.Rmd
-    Untracked:  analysis/preprocess_fallopian_tubes.Rmd
-    Untracked:  analysis/preprocess_human_spine.Rmd
-    Untracked:  analysis/simulation.Rmd
+    Untracked:  analysis/simulation_donor_effect.Rmd
     Untracked:  data/.DS_Store
-    Untracked:  data/.Rhistory
     Untracked:  data/10X_DEresult_update.RData
     Untracked:  data/10X_DEresult_update2.RData
     Untracked:  data/10X_Kang_DEresult.RData
@@ -589,26 +584,17 @@ Untracked files:
     Untracked:  data/permutation.RData
     Untracked:  data/permutation13.RData
     Untracked:  data/permutation2.RData
+    Untracked:  data/splatter_simulation.RData
+    Untracked:  data/splatter_simulation1.RData
+    Untracked:  data/splatter_simulation2.RData
+    Untracked:  data/splatter_simulation3.RData
     Untracked:  data/vstcounts.Rdata
     Untracked:  figure/
 
 Unstaged changes:
-    Modified:   analysis/Bcells.Rmd
-    Deleted:    analysis/CD14+ Monocytes.Rmd
+    Modified:   analysis/.Rhistory
     Modified:   analysis/CD14+-Monocytes.Rmd
-    Modified:   analysis/analysis on Kang.Rmd
-    Modified:   analysis/analysis on fallopian tubes.Rmd
-    Deleted:    analysis/data2.Rmd
-    Deleted:    analysis/data_clusters.Rmd
-    Deleted:    analysis/first-analysis.Rmd
-    Modified:   analysis/group12_13.Rmd
-    Modified:   analysis/group12_19.Rmd
-    Modified:   analysis/group2_19.Rmd
-    Modified:   analysis/group8_17-2_19.Rmd
-    Modified:   analysis/group8_17.Rmd
-    Modified:   analysis/index.Rmd
     Modified:   code/DE_methods.R
-    Modified:   code/functions_in_rmd.R
 
 </code></pre>
 <p>
@@ -624,9 +610,73 @@ have uncommitted changes.
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/fallopian_tubes_overview.Rmd</code>) and HTML
+(<code>docs/fallopian_tubes_overview.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/analysis/fallopian_tubes_overview.Rmd" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+<td>
+minor revise sce
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/e88621948f5d026921d5bf04739caa8b9c424512/docs/fallopian_tubes_overview.html" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+<td>
+minor revise sce
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -679,43 +729,413 @@ normalization procedures.</p>
 <div id="all-genes" class="section level2">
 <h2>All genes</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-4-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="genes-shown-in-integrated-dataset" class="section level2">
 <h2>Genes shown in integrated dataset</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-6-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-8-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-8-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="gene-expression-frequency" class="section level1">
 <h1>Gene expression frequency</h1>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-10-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-10-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="gene-expression-distribution" class="section level1">
 <h1>Gene expression distribution</h1>
 <div id="all-genes-1" class="section level2">
 <h2>All genes</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-11-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-11-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="genes-shown-in-integrated-dataset-1" class="section level2">
 <h2>Genes shown in integrated dataset</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-12-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-12-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>If we zoom in on the positive counts, we may observe different
 distributions for each dataset.</p>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-13-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-13-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="vst-distribution" class="section level2">
 <h2>VST distribution</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-14-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="integrated-data-distribution" class="section level2">
 <h2>Integrated data distribution</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-15-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-15-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="single-gene" class="section level2">
 <h2>Single gene</h2>
 <p>We randomly choose one moderately expressed gene <em>RUNX3</em>.
 After normalization, the distribution of the counts changes a lot.
 <img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-16-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-16-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-16-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="hippo-cluster-result" class="section level1">
@@ -728,19 +1148,167 @@ will be used to demonstrate our poisson glmm DE methods.</p>
 <div id="hippo-procedure" class="section level3">
 <h3>Hippo procedure</h3>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-21-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-21-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="interested-groups" class="section level3">
 <h3>Interested groups</h3>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-23-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-23-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="zero-proportion-plot" class="section level2">
 <h2>Zero proportion plot</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
+Past versions of unnamed-chunk-24-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-24-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-24-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="donor-distribution" class="section level2">
 <h2>Donor distribution</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
+Past versions of unnamed-chunk-25-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-25-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="donorcelltyperesidual-variation" class="section level1">
@@ -767,27 +1335,397 @@ further differential expression (DE) analysis.</p>
 <div id="group-2-19" class="section level2">
 <h2>Group 2, 19</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-28-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-28-1">
+Past versions of unnamed-chunk-28-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-28-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-28-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-29-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-29-1">
+Past versions of unnamed-chunk-29-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-29-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-29-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="group-18-19" class="section level2">
 <h2>Group 18, 19</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-31-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
+Past versions of unnamed-chunk-31-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-31-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-31-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-32-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-32-1">
+Past versions of unnamed-chunk-32-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-32-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-32-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="group-13-19" class="section level2">
 <h2>Group 13, 19</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-34-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-34-1">
+Past versions of unnamed-chunk-34-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-34-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-34-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-35-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-35-1">
+Past versions of unnamed-chunk-35-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-35-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-35-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="group-12-13" class="section level2">
 <h2>Group 12, 13</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-37-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-37-1">
+Past versions of unnamed-chunk-37-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-37-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-37-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-38-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-38-1">
+Past versions of unnamed-chunk-38-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-38-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-38-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="group-4-915" class="section level2">
 <h2>Group 4, 9&amp;15</h2>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-40-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-1">
+Past versions of unnamed-chunk-40-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-40-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-40-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/fallopian_tubes_overview.Rmd/unnamed-chunk-41-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-41-1">
+Past versions of unnamed-chunk-41-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-41-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/e88621948f5d026921d5bf04739caa8b9c424512/docs/figure/fallopian_tubes_overview.Rmd/unnamed-chunk-41-1.png" target="_blank">e886219</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -835,42 +1773,42 @@ loaded via a namespace (and not attached):
  [19] sctransform_0.4.1       sass_0.4.9              parallelly_1.38.0      
  [22] KernSmooth_2.23-24      bslib_0.8.0             htmlwidgets_1.6.4      
  [25] ica_1.0-3               plyr_1.8.9              plotly_4.10.4          
- [28] zoo_1.8-12              cachem_1.1.0            igraph_2.0.3           
- [31] mime_0.12               lifecycle_1.0.4         pkgconfig_2.0.3        
- [34] Matrix_1.7-0            R6_2.5.1                fastmap_1.2.0          
- [37] GenomeInfoDbData_1.2.12 fitdistrplus_1.2-1      future_1.34.0          
- [40] shiny_1.9.1             digest_0.6.37           colorspace_2.1-1       
- [43] patchwork_1.3.0         tensor_1.5              rprojroot_2.0.4        
- [46] RSpectra_0.16-2         irlba_2.3.5.1           labeling_0.4.3         
- [49] progressr_0.14.0        spatstat.sparse_3.1-0   fansi_1.0.6            
- [52] polyclip_1.10-7         httr_1.4.7              abind_1.4-8            
- [55] compiler_4.4.1          withr_3.0.1             backports_1.5.0        
- [58] carData_3.0-5           fastDummies_1.7.4       highr_0.11             
- [61] ggsignif_0.6.4          MASS_7.3-61             DelayedArray_0.30.1    
- [64] tools_4.4.1             lmtest_0.9-40           httpuv_1.6.15          
- [67] future.apply_1.11.2     goftest_1.2-3           glue_1.8.0             
- [70] nlme_3.1-166            promises_1.3.0          grid_4.4.1             
- [73] Rtsne_0.17              cluster_2.1.6           generics_0.1.3         
- [76] spatstat.data_3.1-2     gtable_0.3.5            tidyr_1.3.1            
- [79] data.table_1.16.2       car_3.1-3               utf8_1.2.4             
- [82] XVector_0.44.0          spatstat.geom_3.3-3     RcppAnnoy_0.0.22       
- [85] ggrepel_0.9.6           RANN_2.6.2              pillar_1.9.0           
- [88] stringr_1.5.1           spam_2.11-0             RcppHNSW_0.6.0         
- [91] later_1.3.2             splines_4.4.1           lattice_0.22-6         
- [94] deldir_2.0-4            survival_3.7-0          tidyselect_1.2.1       
- [97] pbapply_1.7-2           miniUI_0.1.1.1          knitr_1.48             
-[100] git2r_0.33.0            gridExtra_2.3           scattermore_1.2        
-[103] xfun_0.48               stringi_1.8.4           UCSC.utils_1.0.0       
-[106] lazyeval_0.2.2          workflowr_1.7.1         yaml_2.3.10            
-[109] evaluate_1.0.1          codetools_0.2-20        tibble_3.2.1           
-[112] cli_3.6.3               uwot_0.2.2              xtable_1.8-4           
-[115] reticulate_1.39.0       munsell_0.5.1           jquerylib_0.1.4        
-[118] Rcpp_1.0.13             spatstat.random_3.3-2   globals_0.16.3         
-[121] png_0.1-8               spatstat.univar_3.0-1   parallel_4.4.1         
-[124] dotCall64_1.2           listenv_0.9.1           viridisLite_0.4.2      
-[127] scales_1.3.0            ggridges_0.5.6          leiden_0.4.3.1         
-[130] purrr_1.0.2             crayon_1.5.3            rlang_1.1.4            
-[133] cowplot_1.1.3          </code></pre>
+ [28] zoo_1.8-12              cachem_1.1.0            whisker_0.4.1          
+ [31] igraph_2.0.3            mime_0.12               lifecycle_1.0.4        
+ [34] pkgconfig_2.0.3         Matrix_1.7-0            R6_2.5.1               
+ [37] fastmap_1.2.0           GenomeInfoDbData_1.2.12 fitdistrplus_1.2-1     
+ [40] future_1.34.0           shiny_1.9.1             digest_0.6.37          
+ [43] colorspace_2.1-1        patchwork_1.3.0         tensor_1.5             
+ [46] rprojroot_2.0.4         RSpectra_0.16-2         irlba_2.3.5.1          
+ [49] labeling_0.4.3          progressr_0.14.0        spatstat.sparse_3.1-0  
+ [52] fansi_1.0.6             polyclip_1.10-7         httr_1.4.7             
+ [55] abind_1.4-8             compiler_4.4.1          withr_3.0.1            
+ [58] backports_1.5.0         carData_3.0-5           fastDummies_1.7.4      
+ [61] highr_0.11              ggsignif_0.6.4          MASS_7.3-61            
+ [64] DelayedArray_0.30.1     tools_4.4.1             lmtest_0.9-40          
+ [67] httpuv_1.6.15           future.apply_1.11.2     goftest_1.2-3          
+ [70] glue_1.8.0              nlme_3.1-166            promises_1.3.0         
+ [73] grid_4.4.1              Rtsne_0.17              cluster_2.1.6          
+ [76] generics_0.1.3          spatstat.data_3.1-2     gtable_0.3.5           
+ [79] tidyr_1.3.1             data.table_1.16.2       car_3.1-3              
+ [82] utf8_1.2.4              XVector_0.44.0          spatstat.geom_3.3-3    
+ [85] RcppAnnoy_0.0.22        ggrepel_0.9.6           RANN_2.6.2             
+ [88] pillar_1.9.0            stringr_1.5.1           spam_2.11-0            
+ [91] RcppHNSW_0.6.0          later_1.3.2             splines_4.4.1          
+ [94] lattice_0.22-6          deldir_2.0-4            survival_3.7-0         
+ [97] tidyselect_1.2.1        pbapply_1.7-2           miniUI_0.1.1.1         
+[100] knitr_1.48              git2r_0.33.0            gridExtra_2.3          
+[103] scattermore_1.2         xfun_0.48               stringi_1.8.4          
+[106] UCSC.utils_1.0.0        lazyeval_0.2.2          workflowr_1.7.1        
+[109] yaml_2.3.10             evaluate_1.0.1          codetools_0.2-20       
+[112] tibble_3.2.1            cli_3.6.3               uwot_0.2.2             
+[115] xtable_1.8-4            reticulate_1.39.0       munsell_0.5.1          
+[118] jquerylib_0.1.4         Rcpp_1.0.13             spatstat.random_3.3-2  
+[121] globals_0.16.3          png_0.1-8               spatstat.univar_3.0-1  
+[124] parallel_4.4.1          dotCall64_1.2           listenv_0.9.1          
+[127] viridisLite_0.4.2       scales_1.3.0            ggridges_0.5.6         
+[130] leiden_0.4.3.1          purrr_1.0.2             crayon_1.5.3           
+[133] rlang_1.1.4             cowplot_1.1.3          </code></pre>
 </div>
 </div>
 </div>
