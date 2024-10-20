@@ -192,7 +192,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
 dev.off()
 ```
 
-```{r, eval = FALSE}
+```{r}
 ggplot(data=number_input_hits, aes(x=factor(method, 
                                             levels = titlelist), y=Number_of_genes, fill = Gene)) +
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -205,9 +205,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   ggtitle(paste("DEGs summary of ", cur_key))
 ```
 
-To compare the results, the genes displayed in all of the plots below are restricted to the inputs of pois_glmm. That is, the genes not containing in the inputs of pois_glmm are excluded.
-
-```{r}
+```{r eval=FALSE, include=FALSE}
 for (i in 1:length(dflist)){
   dflist[[i]][[cur_key]] = dflist[[i]][[cur_key]][dflist[[i]][[cur_key]]$genes%in%pois_glmm_inputgene,]
 }
@@ -230,7 +228,7 @@ number_input_hits = melt(number_input_hits, id = "method")
 colnames(number_input_hits)[2:3] = c("Gene", "Number_of_genes")
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 ggplot(data=number_input_hits, aes(x=factor(method, 
                                             levels = titlelist), y=Number_of_genes, fill = Gene)) +
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -340,7 +338,7 @@ for (i in 1:length(dflist)){
   }
   
   p[[i]] = ggplot(melt(df,id = "genes"), aes(x=value, color=variable)) +
-geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + coord_cartesian(c(0,1100)) + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
+geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + theme(panel.grid = element_blank()) + xlab(NULL) + ylab("Count") + ggtitle(titlelist[i]) + scale_colour_discrete(guide = guide_legend(title = NULL),labels = c("p-value", "adj.p-value"))
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
@@ -474,11 +472,11 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=freq, fill = factor(clus
 
 ## Poisson-glmm DEGs
 ```{r}
-sort_log2FC = sort(abs(Kang_pois_glmm_df[[cur_key]]$log2FC[Kang_pois_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(Kang_pois_glmm_df[[cur_key]]$log2FC[Kang_pois_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes = Kang_pois_glmm_df[[cur_key]]$genes[which(Kang_pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 mat = subgroupsce@assays@data$counts[hitgenes,]
 #row annotation
-annotation_log2FC = data.frame(abs_log2FC = abs(Kang_pois_glmm_df[[cur_key]]$log2FC[match(hitgenes,Kang_pois_glmm_df[[cur_key]]$genes)]))
+annotation_log2FC = data.frame(log2FC = Kang_pois_glmm_df[[cur_key]]$log2FC[match(hitgenes,Kang_pois_glmm_df[[cur_key]]$genes)])
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$ind, Group = subgroupsce$group_id)
@@ -515,7 +513,7 @@ dev.off()
 
 ### Wilcox
 ```{r}
-sort_log2FC = sort(abs(dflist[[6]][[cur_key]]$avg_log2FC[dflist[[6]][[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(dflist[[6]][[cur_key]]$avg_log2FC[dflist[[6]][[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_wilcox = dflist[[6]][[cur_key]]$genes[which(dflist[[6]][[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
@@ -533,7 +531,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### pb-DESeq2
 ```{r}
-sort_log2FC = sort(abs(Kang_DESeq2.muscat[[cur_key]]$log2FC[Kang_DESeq2.muscat[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(Kang_DESeq2.muscat[[cur_key]]$log2FC[Kang_DESeq2.muscat[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_deseq2 = Kang_DESeq2.muscat[[cur_key]]$genes[which(Kang_DESeq2.muscat[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes][1:600])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
@@ -564,9 +562,9 @@ dev.off()
 
 ### MMpoisson
 ```{r}
-sort_log2FC = sort(abs(dflist[[8]][[cur_key]]$log2FC[dflist[[8]][[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(dflist[[8]][[cur_key]]$log2FC[dflist[[8]][[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MMpoisson = dflist[[8]][[cur_key]]$genes[which(dflist[[8]][[cur_key]]$hits)][sort_log2FC$ix]
-hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes][1:600])
+hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes])
 mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
 
 
@@ -574,7 +572,6 @@ mat = subgroupsce@assays@data$counts[hits_notin_glmm,]
 pheatmap(mat[,rownames(annotation_df)], 
          main = paste0("MMpoisson DEGs \nnot identified by Poisson-glmm (",nrow(mat)," DEGs)"),
          annotation_col = annotation_df, 
-         annotation_row = annotation_log2FC,
          annotation_colors = annotation_colors,
          cluster_rows=F, cluster_cols=F, 
          show_colnames = F, show_rownames = F,
