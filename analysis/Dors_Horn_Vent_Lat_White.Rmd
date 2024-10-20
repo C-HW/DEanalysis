@@ -42,6 +42,15 @@ cellgroup = ifelse(subgroupsce$region%in% group1, 1, 2)
 
 Wilcox_Seurat_df$avg_log2FC = - Wilcox_Seurat_df$avg_log2FC
 ```
+
+```{r}
+# old criteria
+pois_glmm_df$hits = identifyDEGs(pois_glmm_df$BH, pois_glmm_df$log2FC, newcriteria = F)
+binom_glmm_df$hits = identifyDEGs(binom_glmm_df$BH, binom_glmm_df$log2FC, newcriteria = F)
+```
+
+
+
 ```{r}
 region_palette = c(
   "#A0522D", "#6A00FF", "#A4C400", "#F472D0",
@@ -205,7 +214,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
 # Volcano plot
 ```{r,fig.width = 10, fig.height=6}
 pvalcutoff = 0.05
-v = 1.5
+v = 2
 log2FCcutoff = log2(v)
 
 p = list()
