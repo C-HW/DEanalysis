@@ -14,7 +14,7 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 # load DE result generated from "analysis on fallopian tubes.Rmd"
-load("./data/10X_DEresult_update2.RData")
+load("./data/fallopian_DEresult.RData")
 load("./data/vstcounts.RData")
 load("./data/fallopian_tubes.RData")
 library(ggplot2)
@@ -273,7 +273,7 @@ ggplot(data=number_input_hits, aes(x=factor(method,
 # Volcano plot
 ```{r,fig.width = 10, fig.height=6}
 pvalcutoff = 0.05
-v = 1.5
+v = 2
 log2FCcutoff = log2(v)
 
 p = list()
@@ -382,7 +382,6 @@ ggplot(df, aes(x = factor(method,levels = titlelist), y=Log2mean, fill = factor(
   geom_violin() + 
   theme_bw() + 
   theme(panel.grid = element_blank()) + 
-  ylim(c(-3,4)) + 
   xlab("") + 
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   labs(fill = "Group") +
@@ -461,7 +460,7 @@ hits_in_int = hitgenes[hitgenes%in%rownames(subgroup_Seurat)]
 hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroup_Seurat)])
 mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
-annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
+annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Included", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
@@ -580,7 +579,7 @@ annotate_figure(fig_FC_mean, top = paste("Log2FC vs. Log2 mean ", cur_key))
 # Enrichment analysis
 
 ## GO object
-```{r, fig.width = 6, fig.height=8}
+```{r, fig.width = 6, fig.height=8, eval = FALSE}
 original_gene_list = pois_glmm_df[[cur_key]]$log2FC
 names(original_gene_list) = pois_glmm_df[[cur_key]]$genes
 gene_list = na.omit(original_gene_list)
@@ -588,7 +587,7 @@ gene_list = na.omit(original_gene_list)
 gene_list = sort(gene_list, decreasing = TRUE)
 genes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)]
 # create GO object
-go_enrich = enrichGO(gene = genes,
+ go_enrich = enrichGO(gene = genes,
                       universe = names(gene_list),
                       OrgDb = "org.Hs.eg.db", 
                       keyType = 'SYMBOL',
@@ -598,10 +597,10 @@ go_enrich = enrichGO(gene = genes,
                       qvalueCutoff = 0.10)
 
 ```
-```{r, fig.width = 8, fig.height=6}
+```{r, fig.width = 8, fig.height=6, eval = FALSE}
 dotplot(go_enrich)
 ```
-```{r, fig.width = 14, fig.height=7}
+```{r, fig.width = 14, fig.height=7, eval = FALSE}
 cnetplot(go_enrich, categorySize="pvalue", color.params = list(foldChange = gene_list))
 ```
 
@@ -614,7 +613,7 @@ dev.off()
 ```
 
 ## enrichKEGG object
-```{r, fig.width = 10, fig.height=5}
+```{r, fig.width = 10, fig.height=5, eval = FALSE}
 # Convert gene IDs for enrichKEGG function
 # We will lose some genes here because not all IDs will be converted
 ids = bitr(names(original_gene_list), fromType = "SYMBOL", toType = "ENTREZID", OrgDb="org.Hs.eg.db") 
@@ -633,13 +632,13 @@ kk = enrichKEGG(gene=kegg_genes,
                 universe=names(kegg_gene_list),
                 organism="hsa", pvalueCutoff = 0.05, keyType = "ncbi-geneid")
 ```
-```{r, fig.width = 8, fig.height=4}
+```{r, fig.width = 8, fig.height=4, eval = FALSE}
 dotplot(kk, 
         showCategory = 10, 
         title = "Enriched Pathways",
         font.size = 8)
 ```
 
-```{r, fig.width = 10, fig.height=5}
+```{r, fig.width = 10, fig.height=5, eval = FALSE}
 cnetplot(kk, categorySize="pvalue", foldChange=kegg_gene_list)
 ```
