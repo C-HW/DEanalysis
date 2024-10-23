@@ -388,7 +388,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-10-14
+<strong>Last updated:</strong> 2024-10-22
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -519,15 +519,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreec4961dc51e4ae1c5ca8dab93fb616b9008cfe6b9targetblankc4961dca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreec941237c2f53d8beaaa8696d20fb35c0c9f28a9ctargetblankc941237a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/c4961dc51e4ae1c5ca8dab93fb616b9008cfe6b9" target="_blank">c4961dc</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/c941237c2f53d8beaaa8696d20fb35c0c9f28a9c" target="_blank">c941237</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreec4961dc51e4ae1c5ca8dab93fb616b9008cfe6b9targetblankc4961dca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistreec941237c2f53d8beaaa8696d20fb35c0c9f28a9ctargetblankc941237a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -537,7 +537,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/c4961dc51e4ae1c5ca8dab93fb616b9008cfe6b9" target="_blank">c4961dc</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/c941237c2f53d8beaaa8696d20fb35c0c9f28a9c" target="_blank">c941237</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -559,17 +559,10 @@ Ignored files:
 Untracked files:
     Untracked:  .DS_Store
     Untracked:  .gitignore
-    Untracked:  analysis/Kang_overview.Rmd
     Untracked:  analysis/analysis_humanspine.Rmd
-    Untracked:  analysis/figure/
-    Untracked:  analysis/human_spine_overview.Rmd
-    Untracked:  analysis/simulation.Rmd
+    Untracked:  analysis/simulation_donor_effect.Rmd
     Untracked:  data/.DS_Store
-    Untracked:  data/10X_DEresult_update.RData
-    Untracked:  data/10X_DEresult_update2.RData
-    Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
-    Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
@@ -578,22 +571,28 @@ Untracked files:
     Untracked:  data/Bcellsce.rds
     Untracked:  data/Kang_DEresult.RData
     Untracked:  data/Kang_data.RData
+    Untracked:  data/fallopian_DEresult.RData
     Untracked:  data/fallopian_tubes.RData
     Untracked:  data/fallopian_tubes_all.RData
     Untracked:  data/human/
     Untracked:  data/human_spine.RData
     Untracked:  data/human_spine_DEresult.RData
+    Untracked:  data/ls_offset_Result.RData
     Untracked:  data/mouse/
     Untracked:  data/permutation.RData
     Untracked:  data/permutation13.RData
     Untracked:  data/permutation2.RData
+    Untracked:  data/splatter_simulation.RData
     Untracked:  data/vstcounts.Rdata
     Untracked:  figure/
 
 Unstaged changes:
-    Modified:   analysis/.Rhistory
-    Modified:   analysis/Bcells.Rmd
-    Modified:   analysis/group8_17-2_19.Rmd
+    Modified:   analysis/analysis on Kang.Rmd
+    Modified:   analysis/analysis on fallopian tubes.Rmd
+    Modified:   analysis/group8_17.Rmd
+    Modified:   analysis/preprocess_fallopian_tubes.Rmd
+    Modified:   code/DE_methods.R
+    Modified:   code/functions_in_rmd.R
 
 </code></pre>
 <p>
@@ -638,6 +637,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/c941237c2f53d8beaaa8696d20fb35c0c9f28a9c/analysis/group12_19.Rmd" target="_blank">c941237</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-22
+</td>
+<td>
+same criteria, FCcutoff 1.5
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/group12_19.html" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1029,6 +1062,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-8-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/e8b0519bf26212f499883ebf0b5fd46f8ffd28a3/docs/figure/group12_19.Rmd/unnamed-chunk-8-1.png" target="_blank">e8b0519</a>
 </td>
 <td>
@@ -1124,6 +1168,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-11-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-11-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -1196,6 +1251,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-13-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-13-1.png" target="_blank">5e86686</a>
@@ -1272,6 +1338,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-14-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-14-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -1344,6 +1421,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-15-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-15-1.png" target="_blank">5e86686</a>
@@ -1454,6 +1542,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-16-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-16-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -1516,6 +1615,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-17-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-17-1.png" target="_blank">5e86686</a>
@@ -1601,6 +1711,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-19-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-19-1.png" target="_blank">5e86686</a>
@@ -1689,6 +1810,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-21-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-21-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -1761,6 +1893,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-22-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-22-1.png" target="_blank">5e86686</a>
@@ -1841,6 +1984,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-23-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-23-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -1913,6 +2067,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-24-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-24-1.png" target="_blank">5e86686</a>
@@ -1989,6 +2154,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-25-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-25-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2063,6 +2239,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-26-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-26-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2116,6 +2303,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-27-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-27-1.png" target="_blank">5e86686</a>
@@ -2192,6 +2390,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-28-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-28-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2231,6 +2440,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-29-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-29-1.png" target="_blank">5e86686</a>
@@ -2318,6 +2538,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-30-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-30-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2390,6 +2621,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-31-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-31-1.png" target="_blank">5e86686</a>
@@ -2490,6 +2732,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-32-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-32-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2563,6 +2816,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-33-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-33-1.png" target="_blank">5e86686</a>
@@ -2674,6 +2938,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-35-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-35-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2756,6 +3031,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-36-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-36-1.png" target="_blank">5e86686</a>
 </td>
 <td>
@@ -2795,6 +3081,43 @@ C-HW
 <div id="enrichkegg-object" class="section level2">
 <h2>enrichKEGG object</h2>
 <p><img src="figure/group12_19.Rmd/unnamed-chunk-38-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-38-1">
+Past versions of unnamed-chunk-38-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-38-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-38-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/group12_19.Rmd/unnamed-chunk-39-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-39-1">
@@ -2818,6 +3141,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/28b9b7dff8b185c4eb789ed0f19efc187024a438/docs/figure/group12_19.Rmd/unnamed-chunk-39-1.png" target="_blank">28b9b7d</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/C-HW/DEanalysis/blob/5e86686e6b8caa76a4fc3cb0722c7529eb8bf3f6/docs/figure/group12_19.Rmd/unnamed-chunk-39-1.png" target="_blank">5e86686</a>
@@ -2930,7 +3264,7 @@ loaded via a namespace (and not attached):
  [28] abind_1.4-8             zlibbioc_1.50.0         purrr_1.0.2            
  [31] R.utils_2.12.3          ggraph_2.2.1            RCurl_1.98-1.16        
  [34] yulab.utils_0.1.7       tweenr_2.0.3            rappdirs_0.3.3         
- [37] git2r_0.33.0            GenomeInfoDbData_1.2.12 ggrepel_0.9.6          
+ [37] git2r_0.35.0            GenomeInfoDbData_1.2.12 ggrepel_0.9.6          
  [40] listenv_0.9.1           tidytree_0.4.6          parallelly_1.38.0      
  [43] codetools_0.2-20        DelayedArray_0.30.1     DOSE_3.30.5            
  [46] ggforce_0.4.2           tidyselect_1.2.1        aplot_0.2.3            
@@ -2950,7 +3284,7 @@ loaded via a namespace (and not attached):
  [88] shadowtext_0.1.4        htmltools_0.5.8.1       carData_3.0-5          
  [91] dotCall64_1.2           fgsea_1.30.0            scales_1.3.0           
  [94] png_0.1-8               ggfun_0.1.6             knitr_1.48             
- [97] rstudioapi_0.16.0       reshape2_1.4.4          nlme_3.1-166           
+ [97] rstudioapi_0.17.0       reshape2_1.4.4          nlme_3.1-166           
 [100] cachem_1.1.0            stringr_1.5.1           parallel_4.4.1         
 [103] pillar_1.9.0            grid_4.4.1              vctrs_0.6.5            
 [106] promises_1.3.0          car_3.1-3               Rgraphviz_2.48.0       
@@ -2960,9 +3294,9 @@ loaded via a namespace (and not attached):
 [118] plyr_1.8.9              fs_1.6.4                stringi_1.8.4          
 [121] viridisLite_0.4.2       BiocParallel_1.38.0     munsell_0.5.1          
 [124] Biostrings_2.72.1       lazyeval_0.2.2          GOSemSim_2.30.2        
-[127] Matrix_1.7-0            patchwork_1.3.0         bit64_4.5.2            
+[127] Matrix_1.7-1            patchwork_1.3.0         bit64_4.5.2            
 [130] future_1.34.0           KEGGREST_1.44.1         highr_0.11             
-[133] igraph_2.0.3            broom_1.0.7             memoise_2.0.1          
+[133] igraph_2.1.1            broom_1.0.7             memoise_2.0.1          
 [136] bslib_0.8.0             ggtree_3.12.0           fastmatch_1.1-4        
 [139] bit_4.5.0               ape_5.8                 gson_0.1.0             </code></pre>
 </div>
