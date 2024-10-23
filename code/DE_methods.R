@@ -1,6 +1,6 @@
 
 #' Two-sample t-test for gene expressions between two groups
-#' 
+#'
 #' @param counts gene expression matrix with gene rows and cell columns
 #' @param cellgroup1 the index of cells from group1
 #' @param cellgroup2 the index of cells from group2
@@ -33,42 +33,45 @@ simple_mean_DE = function(counts, cellgroup1, cellgroup2){
 }
 
 #' An implementation Poisson glmm DE method.
-#' 
+#'
 #' @param sce a SingleCellExperiment object with raw count matrix.
 #' @param comparison group comparison variable (e.g., conditions, celltype). The variable consists of exact two different groups.
 #' @param replicates donor variable.
 #' @param exp_batch experimental batches.
 #' @param other_fixed donor variable.
-#' @param freq_expressed a threshold for gene detection rate. 
+#' @param freq_expressed a threshold for gene detection rate.
 #' @return A dataframe of Poisson glmm DE results with each row for a gene.
 #' @examples
-#' poisson_glmm_DE(subgroupsce, comparison = "region", 
+#' poisson_glmm_DE(subgroupsce, comparison = "region",
 #' replicates = "patient_ID", exp_batch = "Slide", other_fixed = "sex")
 #' @export
-poisson_glmm_DE <- function(sce, 
+poisson_glmm_DE <- function(sce,
                             comparison,        # Mandatory: group comparison variable (e.g., conditions, celltype)
                             replicates,          # Mandatory: random effect for donors
                             exp_batch = NULL,     # Optional: random effect for experimental batches
                             other_fixed = NULL, # Optional: other fixed effects (e.g., sex, age)
-                            freq_expressed = 0.05) {
-  if (length(unique(sce[[comparison]])) != 2) {
-    stop("The comparison variable must have exactly two levels.")
-  }
+                            freq_expressed = 0.05,
+                            ls_offset = F) {
   # Prepare the data frame
-  countdf <- data.frame(comparison = as.factor(colData(sce)[, comparison]), 
+  countdf <- data.frame(comparison = as.factor(colData(sce)[, comparison]),
                         replicates = as.factor(colData(sce)[, replicates]))
-  
+
   # Build fixed effects formula
-  fixed_effects <- paste("comparison", 
-                         if (!is.null(other_fixed)) paste("+", paste(other_fixed, collapse = " + ")), 
+  fixed_effects <- paste("comparison",
+                         if (!is.null(other_fixed)) paste("+", paste(other_fixed, collapse = " + ")),
+                         if (ls_offset) "+ offset(log(sizeFactor))",
                          sep = " ")
-  
+
   # Build random effects formula
   random_effects_list <- list(replicates = ~1)  # First random effect for replicates
-  
+
   # Add other fixed effects if provided
   if (!is.null(other_fixed)) {
     countdf = cbind(countdf, data.frame(colData(sce)[, other_fixed, drop = FALSE]))
+  }
+  # Add library size factor offset if required
+  if (ls_offset) {
+    countdf = cbind(countdf, data.frame(colData(sce)[, "sizeFactor", drop = FALSE]))
   }
   # Add experimental batch if provided
   if (!is.null(exp_batch)) {
@@ -80,7 +83,7 @@ poisson_glmm_DE <- function(sce,
   df = data.frame(genes = rownames(sce), mu = NA, beta_comparison = NA,
                   log2FC = NA, sigma_square = NA, status = "done", pval = NA, BH = NA,
                   log2mean = NA, log2meandiff = NA)
-  
+
   start_time <- Sys.time()  # Start time for tracking progress
   # Loop through each gene
   for(i in 1:nrow(sce)){
@@ -90,34 +93,36 @@ poisson_glmm_DE <- function(sce,
       elapsed_time <- as.numeric(difftime(current_time, start_time, units = "secs"))
       avg_time_per_iter <- elapsed_time / i
       remaining_time <- (nrow(sce) - i) * avg_time_per_iter
-      cat(sprintf("Progress: %d/%d genes, Estimated remaining time: %.2f minutes\n", 
+      cat(sprintf("Progress: %d/%d genes, Estimated remaining time: %.2f minutes\n",
                   i, nrow(sce), remaining_time / 60))
     }
-      
+
     countdf$count = as.numeric(round(pmax(sce@assays@data$counts[i,],0)))
-    
+
     # Compute gene mean and mean difference for each comparison group
-    genemean1 = mean(countdf$count[countdf$comparison==levels(countdf$comparison)[1]])
-    genemean2 = mean(countdf$count[countdf$comparison==levels(countdf$comparison)[2]])
-    
+    genemean = aggregate(count ~ comparison, data = countdf, FUN = mean, na.rm = TRUE)
+    genemean = genemean[order(genemean$comparison), ]
+    genemean1 = genemean[1,2]
+    genemean2 = genemean[2,2]
+
     df$log2mean[i] = log2(genemean1*genemean2)/2
     df$log2meandiff[i] = log2(abs(genemean1-genemean2))
-    
+
     # Skip lowly expressed genes
     if (mean(countdf$count != 0, na.rm = TRUE) <= freq_expressed) {
       df$status[i] <- ifelse(mean(countdf$count != 0, na.rm = TRUE) == 0, "zero mean", "lowly expressed")
       next
     }
-    
+
     # Fit Poisson GLMM model using glmmPQL
     gm = tryCatch(
       summary(MASS::glmmPQL(as.formula(paste("count ~", fixed_effects)),
-                            random = random_effects_list, 
-                            family = stats::poisson, data = countdf, 
+                            random = random_effects_list,
+                            family = stats::poisson, data = countdf,
                             verbose = FALSE)),
       error = function(e){NULL}
     )
-    
+
     if (is.null(gm)){
       df$status[i] = "not converge"
       next
@@ -133,40 +138,36 @@ poisson_glmm_DE <- function(sce,
 }
 
 #' An implementation of Binomial glmm DE method.
-#' 
+#'
 #' @param sce a SingleCellExperiment object with raw count matrix.
 #' @param comparison group comparison variable (e.g., conditions, celltype). The variable consists of exact two different groups.
 #' @param replicates donor variable.
 #' @param exp_batch experimental batches.
 #' @param other_fixed donor variable.
-#' @param freq_expressed a threshold for gene detection rate. 
+#' @param freq_expressed a threshold for gene detection rate.
 #' @return A dataframe of Poisson glmm DE results with each row for a gene.
 #' @examples
-#' binomial_glmm_DE(subgroupsce, comparison = "region", 
+#' binomial_glmm_DE(subgroupsce, comparison = "region",
 #' replicates = "patient_ID", exp_batch = "Slide", other_fixed = "sex")
 #' @export
-binomial_glmm_DE = function(sce, 
+binomial_glmm_DE = function(sce,
                             comparison,        # Mandatory: group comparison variable (e.g., conditions, cell type)
                             replicates,        # Mandatory: random effect for donors (patients)
                             exp_batch = NULL,  # Optional: random effect for experimental batches
                             other_fixed = NULL, # Optional: other fixed effects (e.g., sex, age)
                             freq_expressed = 0.05) {
-  # Check that the comparison has exactly two levels
-  if (length(unique(sce[[comparison]])) != 2) {
-    stop("The comparison variable must have exactly two levels.")
-  }
-  
+
   # Prepare the data frame
-  countdf <- data.frame(comparison = as.factor(colData(sce)[, comparison]), 
+  countdf <- data.frame(comparison = as.factor(colData(sce)[, comparison]),
                         replicates = as.factor(colData(sce)[, replicates]))
   # Build fixed effects formula
-  fixed_effects <- paste("comparison", 
-                         if (!is.null(other_fixed)) paste("+", paste(other_fixed, collapse = " + ")), 
+  fixed_effects <- paste("comparison",
+                         if (!is.null(other_fixed)) paste("+", paste(other_fixed, collapse = " + ")),
                          sep = " ")
-  
+
   # Build random effects formula
   random_effects_list <- list(replicates = ~1)  # First random effect for replicates
-  
+
   # Add other fixed effects if provided
   if (!is.null(other_fixed)) {
     countdf = cbind(countdf, data.frame(colData(sce)[, other_fixed, drop = FALSE]))
@@ -180,7 +181,7 @@ binomial_glmm_DE = function(sce,
   df = data.frame(genes = rownames(sce), mu = NA, beta_comparison = NA,
                   log2FC = NA, sigma_square = NA, status = "done", pval = NA, BH = NA,
                   log2mean = NA, log2meandiff = NA)
-  
+
   start_time <- Sys.time()  # Start time for tracking progress
   # Loop through each gene
   for (i in 1:nrow(sce)) {
@@ -190,19 +191,19 @@ binomial_glmm_DE = function(sce,
       elapsed_time <- as.numeric(difftime(current_time, start_time, units = "secs"))
       avg_time_per_iter <- elapsed_time / i
       remaining_time <- (nrow(sce) - i) * avg_time_per_iter
-      cat(sprintf("Progress: %d/%d genes, Estimated remaining time: %.2f minutes\n", 
+      cat(sprintf("Progress: %d/%d genes, Estimated remaining time: %.2f minutes\n",
                   i, nrow(sce), remaining_time / 60))
     }
-    
+
     countdf$count = as.numeric(1*(sce@assays@data$counts[i,]>0))
-    
+
     # Compute gene mean and mean difference for each comparison group
     genemean1 = mean(countdf$count[countdf$comparison==levels(countdf$comparison)[1]])
     genemean2 = mean(countdf$count[countdf$comparison==levels(countdf$comparison)[2]])
-    
+
     df$log2mean[i] = log2(genemean1*genemean2)/2
     df$log2meandiff[i] = log2(abs(genemean1-genemean2))
-    
+
     # Skip lowly expressed genes
     if (mean(countdf$count) <= freq_expressed) {
       df$status[i] <- ifelse(mean(countdf$count != 0, na.rm = TRUE) == 0, "zero mean", "lowly expressed")
@@ -213,17 +214,17 @@ binomial_glmm_DE = function(sce,
    #    df$status[i] = "no difference between groups"
    #    next
    #  }
-    
+
     # Fit Binomial GLMM model using glmmPQL
     gm = tryCatch(
       summary(MASS::glmmPQL(as.formula(paste("count ~", fixed_effects)),
-                            random = random_effects_list, 
-                            family = stats::poisson, data = countdf, 
+                            random = random_effects_list,
+                            family = stats::poisson, data = countdf,
                             verbose = FALSE,
                             niter = 50)),
       error = function(e){NULL}
     )
-    
+
     if (is.null(gm)){
       df$status[i] = "not converge"
       next
@@ -259,19 +260,19 @@ binomial_glmm_DE = function(sce,
 # }
 
 #' An implementation of MAST DE method.
-#' 
+#'
 #' @param sce a SingleCellExperiment object with raw count matrix. The CPM counts are computed in the funciton.
 #' @param cellgroups a vector of group labels for cells. The cells consist of two different groups.
 #' @param repgroups a vector of donor labels for cells.
-#' @param freq_expressed a threshold for gene detection rate. 
+#' @param freq_expressed a threshold for gene detection rate.
 #' @return A dataframe of MAST DE results with each row for a gene.
 #' @examples
 #' n_cell = ncol(sce)
 #' MAST_DE(sce, sample(c(1,2),n_cell, replace = T), sample(1:5, ncell, replace = T))
 #' @export
 MAST_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.05){
-  sca = FromMatrix(log2(assays(sce)$cpm+1), 
-                      data.frame(cellgroups = as.factor(cellgroups), repgroups = as.factor(repgroups)), 
+  sca = FromMatrix(log2(assays(sce)$cpm+1),
+                      data.frame(cellgroups = as.factor(cellgroups), repgroups = as.factor(repgroups)),
                       data.frame(gene = rownames(sce@assays@data$counts)))
   expressed_genes = freq(sca) > freq_expressed
   sca = sca[expressed_genes,]
@@ -285,17 +286,17 @@ MAST_DE = function(sce, cellgroups, repgroups, freq_expressed = 0.05){
   df$BH = p.adjust(df$pval, method = "BH")
   return(df)
 }
-#' Identify DEGs for a list of genes after performing DE analysis. 
-#' An old framework select genes with adjusted p-values smaller than 
+#' Identify DEGs for a list of genes after performing DE analysis.
+#' An old framework select genes with adjusted p-values smaller than
 #' a threshold and absolute log2 fold change greater than a threshold.
 #' A new framework filters out genes with small average log2 gene means,
-#' but genes showing large difference in mean would be considered as a 
+#' but genes showing large difference in mean would be considered as a
 #' candidate for DEGs.
-#' 
+#'
 #' @param BH a vector of adjusted p-values obtained from a DE analysis
 #' @param log2FC a vector of log2 fold change obtained from a DE analysis
-#' @param log2mean a vector of log2(genemean1*genemean2)/2 with genemean1 and genemean2 representing the gene mean from raw counts 
-#' @param log2meandiff a vector of log2(abs(genemean1-genemean2)) with genemean1 and genemean2 representing the gene mean from raw counts 
+#' @param log2mean a vector of log2(genemean1*genemean2)/2 with genemean1 and genemean2 representing the gene mean from raw counts
+#' @param log2meandiff a vector of log2(abs(genemean1-genemean2)) with genemean1 and genemean2 representing the gene mean from raw counts
 #' @param pvalcutoff the p-value threshold to determine DEGs
 #' @param log2FCcutoff the log2 fold change threshold to determine DEGs
 #' @param log2meancutoff the log2 mean threshold to determine DEGs
