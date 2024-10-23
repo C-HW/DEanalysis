@@ -14,7 +14,7 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 # load DE result generated from "analysis on fallopian tubes.Rmd"
-load("./data/10X_DEresult_update2.RData")
+load("./data/fallopian_DEresult.RData")
 load("./data/vstcounts.RData")
 load("./data/fallopian_tubes.RData")
 library(ggplot2)
@@ -219,7 +219,6 @@ colnames(number_input_hits)[2:3] = c("Gene", "Number_of_genes")
 
 
 ```{r}
-# tiff(paste0("result/", cur_key,"/hits_summary.tiff"), width=600, height=600, res=120)
 ggplot(data=number_input_hits, aes(x=factor(method, 
                                             levels = titlelist), y=Number_of_genes, fill = Gene)) +
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -230,7 +229,6 @@ ggplot(data=number_input_hits, aes(x=factor(method,
   xlab("") +
   ylab("Number of genes") +
   ggtitle(paste("DEGs summary of ", cur_key))
-# dev.off()
 
 ```
 
@@ -296,10 +294,8 @@ geom_histogram(fill="white", alpha=0.5, position="identity") + theme_bw() + them
 }
 figure = ggarrange(plotlist = p, common.legend = TRUE, legend="bottom", nrow = 2, ncol = 4)
 
-# tiff(paste0("result/", cur_key,"/hist_pvalue.tiff"), width=900, height=900, res=120)
 annotate_figure(figure, top = as.character(cur_key))
-# dev.off()
-# rm(dflist)
+
 ```
 
 
@@ -377,11 +373,6 @@ ggplot(df, aes(x = factor(method,levels = rev(titlelist)), y=freq, fill = factor
   labs(fill = "Group") +
   theme(axis.text.x = element_text(angle = 20, margin = margin(t = 15))) +
   coord_flip()
-# tiff(paste0("result/", cur_key,"/hits_mean_histogram.tiff"), width=900, height=900, res=120)
-
-# dev.off()
-# rm(dflist)
-# gc()
 ```
 
 ```{r, fig.width = 7}
@@ -427,13 +418,13 @@ upset(upset_data[,-1],
 
 ### UMI counts
 ```{r}
-sort_log2FC = sort(abs(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_in_int = hitgenes[hitgenes%in%rownames(subgroup_Seurat)]
 hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroup_Seurat)])
 mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
-annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
+annotation_log2FC = data.frame(log2FC = pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)], `Integrated data` = c(rep("Included", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
@@ -510,7 +501,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### pb-DESeq2
 ```{r}
-sort_log2FC = sort(abs(DESeq2.muscat[[cur_key]]$log2FC[DESeq2.muscat[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(DESeq2.muscat[[cur_key]]$log2FC[DESeq2.muscat[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_deseq2 = DESeq2.muscat[[cur_key]]$genes[which(DESeq2.muscat[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -530,7 +521,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### Binomial-glmm
 ```{r}
-sort_log2FC = sort(abs(binom_glmm_df[[cur_key]]$log2FC[binom_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(binom_glmm_df[[cur_key]]$log2FC[binom_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_binom = binom_glmm_df[[cur_key]]$genes[which(binom_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_binom[!hitgenes_binom%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -549,7 +540,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### Wilcox
 ```{r}
-sort_log2FC = sort(abs(Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC[Wilcox_Seurat_integrated_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC[Wilcox_Seurat_integrated_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_wilcox = Wilcox_Seurat_integrated_df[[cur_key]]$genes[which(Wilcox_Seurat_integrated_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -568,7 +559,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### MAST
 ```{r}
-sort_log2FC = sort(abs(MAST_donor_df[[cur_key]]$log2FC[MAST_donor_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(MAST_donor_df[[cur_key]]$log2FC[MAST_donor_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MAST = MAST_donor_df[[cur_key]]$genes[which(MAST_donor_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MAST[!hitgenes_MAST%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -589,7 +580,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### MMpoisson
 ```{r}
-sort_log2FC = sort(abs(MMpoisson[[cur_key]]$log2FC[MMpoisson[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(MMpoisson[[cur_key]]$log2FC[MMpoisson[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MMpoisson = MMpoisson[[cur_key]]$genes[which(MMpoisson[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
