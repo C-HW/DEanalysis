@@ -8,18 +8,14 @@ knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-source("../code/hippo_all_proportion.R")
-source("../code/DE_methods.R")
-source("../code/functions_in_rmd.R")
-load("../data/fallopian_tubes.RData")
+source("./code/hippo_all_proportion.R")
+source("./code/DE_methods.R")
+source("./code/functions_in_rmd.R")
+load("./data/fallopian_tubes.RData")
 
-library(ggplot2)
-library(dplyr)
 library(MASS)
 library(DESeq2)
 library(MAST)
-library(MuMIn)
-library(Hmisc)
 library(Seurat)
 library(muscat)
 library(sctransform)
@@ -50,11 +46,11 @@ for(i in 1:length(pair)){
   assign_subgroup(unlist(pair[[i]][1]), unlist(pair[[i]][2]))
   # poisson_glmm
   pois_glmm_df[[cur_key]] = poisson_glmm_DE(subgroupsce, comparison = "hippo_cluster", replicates = "donor")
-  pois_glmm_df[[cur_key]]$hits = identifyDEGs(pois_glmm_df[[cur_key]]$BH, pois_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, log2FCcutoff = log2(1.5))
+  pois_glmm_df[[cur_key]]$hits = identifyDEGs(pois_glmm_df[[cur_key]]$BH, pois_glmm_df[[cur_key]]$log2FC, log2FCcutoff = log2(1.5), newcriteria = F)
 
   # binom_glmm
   binom_glmm_df[[cur_key]] = binomial_glmm_DE(subgroupsce, comparison = "hippo_cluster", replicates = "donor")
-  binom_glmm_df[[cur_key]]$hits = identifyDEGs(binom_glmm_df[[cur_key]]$BH, binom_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, log2FCcutoff = log2(1.5), newcriteria = T)
+  binom_glmm_df[[cur_key]]$hits = identifyDEGs(binom_glmm_df[[cur_key]]$BH, binom_glmm_df[[cur_key]]$log2FC, log2FCcutoff = log2(1.5), newcriteria = F)
 
   
   # MAST
@@ -124,5 +120,5 @@ for(i in 1:length(pair)){
 ```
 
 ```{r}
-save(pois_glmm_df, binom_glmm_df, MAST_donor_df, Wilcox_Seurat_integrated_df, Wilcox_Seurat_normlized_df, DESeq2.muscat, edgeR.cpm, MMvst, MMpoisson,file = "../data/10X_DEresult_update2.RData")
+save(pois_glmm_df, binom_glmm_df, MAST_donor_df, Wilcox_Seurat_integrated_df, Wilcox_Seurat_normlized_df, DESeq2.muscat, edgeR.cpm, MMvst, MMpoisson,file = "../data/fallopian_DEresult.RData")
 ```

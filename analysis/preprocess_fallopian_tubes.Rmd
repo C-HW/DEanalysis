@@ -52,6 +52,8 @@ Seurat_fallopian_tubes = subset(AllCelltypePrep, idents = "T/NK")
 ```{r}
 load("../data/10X_inputdata.RData")
 sce_fallopian_tubes = inputData
+
+sce_fallopian_tubes = computeLibraryFactors(sce_fallopian_tubes)
 Seurat_fallopian_tubes$hippo_cluster = sce_fallopian_tubes$hippo_cluster
 Idents(Seurat_fallopian_tubes) = "hippo_cluster"
 save(sce_fallopian_tubes, Seurat_fallopian_tubes, vstcounts, file = "../data/fallopian_tubes.RData") 

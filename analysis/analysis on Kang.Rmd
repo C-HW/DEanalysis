@@ -39,13 +39,13 @@ for(i in 1:length(celltype)){
   
   # poisson_glmm
   Kang_pois_glmm_df[[cur_key]] = poisson_glmm_DE(subgroupsce, comparison = "group_id", replicates = "ind", exp_batch = "sample_id")
-  Kang_pois_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_pois_glmm_df[[cur_key]]$BH, Kang_pois_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff)
+  Kang_pois_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_pois_glmm_df[[cur_key]]$BH, Kang_pois_glmm_df[[cur_key]]$log2FC, newcriteria = F)
   
   
   
   # binom_glmm
   Kang_binom_glmm_df[[cur_key]] = binomial_glmm_DE(subgroupsce, comparison = "group_id", replicates = "ind", exp_batch = "sample_id")
-  Kang_binom_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_binom_glmm_df[[cur_key]]$BH, Kang_binom_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff)
+  Kang_binom_glmm_df[[cur_key]]$hits = identifyDEGs(Kang_binom_glmm_df[[cur_key]]$BH, Kang_binom_glmm_df[[cur_key]]$log2FC, newcriteria = F)
 
   
   
