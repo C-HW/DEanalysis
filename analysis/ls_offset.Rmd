@@ -1,8 +1,6 @@
 ---
 title: "W/WO library size factor"
 author: "Chih-Hsuan Wu"
-output: html_document
----
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
