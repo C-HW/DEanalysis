@@ -39,9 +39,9 @@ FC_mean_plot = function(xvar, xlimits, xLabel){
     }
     p[[i]] = ggplot(na.omit(data.frame(x = x, y = y, DEGs = dflist[[i]][[cur_key]]$hits)), aes(x = x, y = y, colour = DEGs)) +
       geom_point(alpha = 0.5, size = 0.5) +
-      geom_hline(yintercept=log2(1.5),linetype=2) +
-      geom_hline(yintercept=-log2(1.5),linetype=2) +
-      ggtitle(titlelist[i]) + theme_minimal() + xlim(xlimits) + ylim(c(-4,4)) + 
+      geom_hline(yintercept=log2FCcutoff,linetype=2) +
+      geom_hline(yintercept=-log2FCcutoff,linetype=2) +
+      ggtitle(titlelist[i]) + theme_minimal() + xlim(xlimits) + ylim(c(-4,4)) +
       scale_color_manual(values = c("gray", "blue")) +
       xlab(xLabel) + ylab("Log2 Fold Change") + theme(legend.position = "bottom")
   }
@@ -60,15 +60,15 @@ mean_meandiff_plot = function(){
     }
     p[[i]] = ggplot(na.omit(data.frame(x = x, y = y, DEGs = dflist[[i]][[cur_key]]$hits)), aes(x = x, y = y, colour = DEGs)) +
       geom_point(alpha = 0.5, size = 0.5) +
-      ggtitle(titlelist[i]) + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6))+ 
-      scale_color_manual(values = c("gray", "blue")) + 
+      ggtitle(titlelist[i]) + theme_minimal() + xlim(c(-6,6)) + ylim(c(-15,6))+
+      scale_color_manual(values = c("gray", "blue")) +
       xlab("Log2 mean") + ylab("Log2 mean difference") + theme(legend.position = "bottom")
   }
   return(ggarrange(plotlist = p,common.legend = TRUE, legend = "right", ncol = 3, nrow = 4))
 }
 
 variation_analysis = function(){
-    
+
   subset_ind = sce_fallopian_tubes$hippo_cluster%in%c(group1,group2)
   variation_raw = data.frame()
   variation_vst = data.frame()
@@ -76,43 +76,43 @@ variation_analysis = function(){
   variation_integrated = data.frame()
   donor = subgroupsce$donor
 
-  for(gene in intersect(rownames(subgroup_Seurat@assays$integrated$data), 
+  for(gene in intersect(rownames(subgroup_Seurat@assays$integrated$data),
                         rownames(vstcounts))){
     y = log2(assays(subgroupsce)$counts[gene,] + 1)
     y_vst = vstcounts[gene,subset_ind]
     y_cpm = log2(assays(subgroupsce)$cpm[gene,] + 1)
     y_int = as.numeric(subgroup_Seurat@assays$integrated$data[gene,])
     meta_data = as.data.frame(colData(subgroupsce))
-    
+
     a_raw = anova(lm(y ~ donor + cellgroup))
     a_vst = anova(lm(y_vst ~ donor + cellgroup))
     a_cpm = anova(lm(y_cpm ~ donor + cellgroup))
     a_int = anova(lm(y_int ~ donor + cellgroup))
-    
-    variation_raw = rbind(variation_raw, 
-                          data.frame(gene = gene, 
+
+    variation_raw = rbind(variation_raw,
+                          data.frame(gene = gene,
                                      donor = a_raw$`Sum Sq`[1]/sum(a_raw$`Sum Sq`),
                                      celltype = a_raw$`Sum Sq`[2]/sum(a_raw$`Sum Sq`),
                                      res = a_raw$`Sum Sq`[3]/sum(a_raw$`Sum Sq`)))
-    variation_vst = rbind(variation_vst, 
-                          data.frame(gene = gene, 
+    variation_vst = rbind(variation_vst,
+                          data.frame(gene = gene,
                                      donor = a_vst$`Sum Sq`[1]/sum(a_vst$`Sum Sq`),
                                      celltype = a_vst$`Sum Sq`[2]/sum(a_vst$`Sum Sq`),
                                      res = a_vst$`Sum Sq`[3]/sum(a_vst$`Sum Sq`)))
-    variation_cpm = rbind(variation_cpm, 
-                          data.frame(gene = gene, 
+    variation_cpm = rbind(variation_cpm,
+                          data.frame(gene = gene,
                                      donor = a_cpm$`Sum Sq`[1]/sum(a_cpm$`Sum Sq`),
                                      celltype = a_cpm$`Sum Sq`[2]/sum(a_cpm$`Sum Sq`),
                                      res = a_cpm$`Sum Sq`[3]/sum(a_cpm$`Sum Sq`)))
-    variation_integrated = rbind(variation_integrated, 
-                                 data.frame(gene = gene, 
+    variation_integrated = rbind(variation_integrated,
+                                 data.frame(gene = gene,
                                             donor = a_int$`Sum Sq`[1]/sum(a_int$`Sum Sq`),
                                             celltype = a_int$`Sum Sq`[2]/sum(a_int$`Sum Sq`),
                                             res = a_int$`Sum Sq`[3]/sum(a_int$`Sum Sq`)))
   }
 
   top500 = order(variation_raw$res)[1:500]
-  v_list = list(variation_raw[top500,], 
+  v_list = list(variation_raw[top500,],
                 variation_vst[top500,],
                 variation_cpm[top500,],
                 variation_integrated[top500,])
@@ -154,11 +154,11 @@ value_comparison = function(value = c("pval", "log2FC")){
     }
     y = dflist[[1]][[cur_key]][match(dflist[[i]][[cur_key]]$genes, dflist[[1]][[cur_key]]$genes),value]
     p[[i-1]] = ggplot(na.omit(data.frame(x = x, y = y)), aes(x = x, y = y)) +
-      geom_point(alpha = 0.5, size = 0.5) + theme_minimal() + xlim(xlimit) + ylim(ylimit)+ 
+      geom_point(alpha = 0.5, size = 0.5) + theme_minimal() + xlim(xlimit) + ylim(ylimit)+
       xlab(titlelist[i]) + ylab(titlelist[1])
   }
   figure = ggarrange(plotlist = p,nrow = 2, ncol = 4)
-  
+
   # Annotate the figure by adding a common labels
   return(annotate_figure(figure,
                   top = paste(value, "comparison",cur_key)))
