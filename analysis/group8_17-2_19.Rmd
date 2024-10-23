@@ -14,7 +14,7 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 # load DE result generated from "analysis on fallopian tubes.Rmd"
-load("./data/10X_DEresult_update2.RData")
+load("./data/fallopian_DEresult.RData")
 load("./data/vstcounts.RData")
 load("./data/fallopian_tubes.RData")
 library(ggplot2)
@@ -426,13 +426,13 @@ upset(upset_data[,-1],
 
 ### UMI counts
 ```{r}
-sort_log2FC = sort(abs(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_in_int = hitgenes[hitgenes%in%rownames(subgroup_Seurat)]
 hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroup_Seurat)])
 mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
-annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
+annotation_log2FC = data.frame(log2FC = pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)], `Integrated data` = c(rep("Included", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
@@ -534,7 +534,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### pb-DESeq2
 ```{r}
-sort_log2FC = sort(abs(DESeq2.muscat[[cur_key]]$log2FC[DESeq2.muscat[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(DESeq2.muscat[[cur_key]]$log2FC[DESeq2.muscat[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_deseq2 = DESeq2.muscat[[cur_key]]$genes[which(DESeq2.muscat[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_deseq2[!hitgenes_deseq2%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -566,7 +566,7 @@ dev.off()
 
 ### pb-edgeR
 ```{r}
-sort_log2FC = sort(abs(edgeR.cpm[[cur_key]]$log2FC[edgeR.cpm[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(edgeR.cpm[[cur_key]]$log2FC[edgeR.cpm[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_edgeR = edgeR.cpm[[cur_key]]$genes[which(edgeR.cpm[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_edgeR[!hitgenes_edgeR%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -599,7 +599,7 @@ dev.off()
 
 ### Binomial-glmm
 ```{r}
-sort_log2FC = sort(abs(binom_glmm_df[[cur_key]]$log2FC[binom_glmm_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(binom_glmm_df[[cur_key]]$log2FC[binom_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_binom = binom_glmm_df[[cur_key]]$genes[which(binom_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_binom[!hitgenes_binom%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -630,7 +630,7 @@ dev.off()
 
 ### Wilcox
 ```{r}
-sort_log2FC = sort(abs(Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC[Wilcox_Seurat_integrated_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(Wilcox_Seurat_integrated_df[[cur_key]]$avg_log2FC[Wilcox_Seurat_integrated_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_wilcox = Wilcox_Seurat_integrated_df[[cur_key]]$genes[which(Wilcox_Seurat_integrated_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_wilcox[!hitgenes_wilcox%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -649,7 +649,7 @@ pheatmap(mat[,rownames(annotation_df)],
 
 ### MAST
 ```{r}
-sort_log2FC = sort(abs(MAST_donor_df[[cur_key]]$log2FC[MAST_donor_df[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(MAST_donor_df[[cur_key]]$log2FC[MAST_donor_df[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MAST = MAST_donor_df[[cur_key]]$genes[which(MAST_donor_df[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MAST[!hitgenes_MAST%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -681,7 +681,7 @@ dev.off()
 
 ### MMvst
 ```{r}
-sort_log2FC = sort(abs(MMvst[[cur_key]]$log2FC[MMvst[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(MMvst[[cur_key]]$log2FC[MMvst[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MMvst = MMvst[[cur_key]]$genes[which(MMvst[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MMvst[!hitgenes_MMvst%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]
@@ -712,7 +712,7 @@ dev.off()
 
 ### MMpoisson
 ```{r}
-sort_log2FC = sort(abs(MMpoisson[[cur_key]]$log2FC[MMpoisson[[cur_key]]$hits]), index.return = T, decreasing = T)
+sort_log2FC = sort(MMpoisson[[cur_key]]$log2FC[MMpoisson[[cur_key]]$hits], index.return = T, decreasing = T)
 hitgenes_MMpoisson = MMpoisson[[cur_key]]$genes[which(MMpoisson[[cur_key]]$hits)][sort_log2FC$ix]
 hits_notin_glmm = na.omit(hitgenes_MMpoisson[!hitgenes_MMpoisson%in%hitgenes])
 mat = assays(subgroupsce)$counts[hits_notin_glmm,]

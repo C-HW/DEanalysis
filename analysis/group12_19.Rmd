@@ -14,7 +14,7 @@ source("./code/hippo_all_proportion.R")
 source("./code/DE_methods.R")
 source("./code/functions_in_rmd.R")
 # load DE result generated from "analysis on fallopian tubes.Rmd"
-load("./data/10X_DEresult_update2.RData")
+load("./data/fallopian_DEresult.RData")
 load("./data/vstcounts.RData")
 load("./data/fallopian_tubes.RData")
 library(ggplot2)
@@ -411,7 +411,7 @@ hits_in_int = hitgenes[hitgenes%in%rownames(subgroup_Seurat)]
 hits_notin_int = na.omit(hitgenes[!hitgenes%in%rownames(subgroup_Seurat)])
 mat = assays(subgroupsce)$counts[c(hits_in_int, hits_notin_int),]
 #row annotation
-annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Incluede", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
+annotation_log2FC = data.frame(log2FC = abs(pois_glmm_df[[cur_key]]$log2FC[match(c(hits_in_int, hits_notin_int) ,pois_glmm_df[[cur_key]]$genes)]), `Integrated data` = c(rep("Included", length(hits_in_int)), rep("Not included", length(hits_notin_int))))
 rownames(annotation_log2FC) = rownames(mat)
 #col annotation
 annotation_df = data.frame(Donor = subgroupsce$donor, Group = factor(subgroupsce$hippo_cluster, levels = c(group1, group2)))
