@@ -139,12 +139,13 @@ ggplot(na.omit(data.frame(x = subgroupsce@metadata$log2mean, y = subgroupsce@met
 ```
 
 # Heatmaps of DEGs for the comparison
-```{r}
+```{r, include=FALSE}
 pair = list(c(2,19), c(8,17), c(12,13), list(c(8,17), c(2,19)), c(12,19))
-for(i in 1:1){
+p = list()
+k = 1
+for(i in 1:length(pair)){
   assign_subgroup(unlist(pair[[i]][1]), unlist(pair[[i]][2]))
   annotation_colors = list(Group = c(setNames(hippo_palette[c(group1, group2)], c(group1, group2))), Donor = setNames(donors_palette, paste0("D", 3:7)))
-  p = list()
   for (j in 1:2){
     sort_log2FC = sort(pois_glmm_df[[cur_key]]$log2FC[pois_glmm_df[[cur_key]]$hits], index.return = T, decreasing = T)
     hitgenes = pois_glmm_df[[cur_key]]$genes[which(pois_glmm_df[[cur_key]]$hits)][sort_log2FC$ix]
@@ -157,7 +158,7 @@ for(i in 1:1){
     rownames(annotation_df) = colnames(mat)
     annotation_df = annotation_df[with(annotation_df, order(Group, Donor)), ]
     # cell level
-    p[[j]] = pheatmap(mat[,rownames(annotation_df)], 
+    p[[k]] = pheatmap(mat[,rownames(annotation_df)], 
              main = paste0("Poisson-glmm DEGs\nin UMI counts (", nrow(mat)," DEGs)"),
              annotation_col = annotation_df,
              annotation_row = annotation_log2FC,
@@ -168,7 +169,10 @@ for(i in 1:1){
              color=colorRampPalette(c("navy", "white", "red"))(10), breaks = seq(0,3, length.out = 10))$gtable
     
     pois_glmm_df[[cur_key]]$hits = identifyDEGs(pois_glmm_df[[cur_key]]$BH, pois_glmm_df[[cur_key]]$log2FC, subgroupsce@metadata$log2mean, subgroupsce@metadata$log2meandiff, log2FCcutoff = log2FCcutoff, newcriteria = T)
+    k = k + 1 
   }
-  grid.arrange(grobs = p, ncol=2)
 }
+```
+```{r fig.width=14, fig.height=35}
+grid.arrange(grobs = p, ncol=2)
 ```
