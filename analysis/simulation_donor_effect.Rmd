@@ -386,7 +386,6 @@ ggplot(result_long, aes(x = Method, y = value, fill = metric)) +
 ```
 ```{r}
 ggplot(combined_results, aes(x = Configuration, y = Runtime, group = Method, color = Method)) +
-  geom_line() +
   geom_point() +
   theme_minimal() +
   labs(y = "Runtime(s)", x = "Configuration", title = "Memory Usage Across Configurations")
