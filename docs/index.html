@@ -387,7 +387,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-10-19
+<strong>Last updated:</strong> 2024-11-09
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -434,15 +434,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree595d9609e23c84a7ae4b6fb426e60d391de93fe5targetblank595d960a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree0778925995589daf0b6fc1f0ecb6029c522114c3targetblank0778925a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/C-HW/DEanalysis/tree/595d9609e23c84a7ae4b6fb426e60d391de93fe5" target="_blank">595d960</a>
+<a href="https://github.com/C-HW/DEanalysis/tree/0778925995589daf0b6fc1f0ecb6029c522114c3" target="_blank">0778925</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree595d9609e23c84a7ae4b6fb426e60d391de93fe5targetblank595d960a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomCHWDEanalysistree0778925995589daf0b6fc1f0ecb6029c522114c3targetblank0778925a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -452,7 +452,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/C-HW/DEanalysis/tree/595d9609e23c84a7ae4b6fb426e60d391de93fe5" target="_blank">595d960</a>.
+<a href="https://github.com/C-HW/DEanalysis/tree/0778925995589daf0b6fc1f0ecb6029c522114c3" target="_blank">0778925</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -475,13 +475,8 @@ Untracked files:
     Untracked:  .DS_Store
     Untracked:  .gitignore
     Untracked:  analysis/analysis_humanspine.Rmd
-    Untracked:  analysis/simulation_donor_effect.Rmd
     Untracked:  data/.DS_Store
-    Untracked:  data/10X_DEresult_update.RData
-    Untracked:  data/10X_DEresult_update2.RData
-    Untracked:  data/10X_Kang_DEresult.RData
     Untracked:  data/10X_inputdata.RData
-    Untracked:  data/10X_inputdata_DEresult.RData
     Untracked:  data/10X_inputdata_cpm.RData
     Untracked:  data/10X_inputdata_integrated.RData
     Untracked:  data/10X_inputdata_lognorm.RData
@@ -490,26 +485,23 @@ Untracked files:
     Untracked:  data/Bcellsce.rds
     Untracked:  data/Kang_DEresult.RData
     Untracked:  data/Kang_data.RData
+    Untracked:  data/fallopian_DEresult.RData
     Untracked:  data/fallopian_tubes.RData
     Untracked:  data/fallopian_tubes_all.RData
     Untracked:  data/human/
     Untracked:  data/human_spine.RData
     Untracked:  data/human_spine_DEresult.RData
+    Untracked:  data/ls_offset_Result.RData
     Untracked:  data/mouse/
     Untracked:  data/permutation.RData
     Untracked:  data/permutation13.RData
     Untracked:  data/permutation2.RData
     Untracked:  data/splatter_simulation.RData
-    Untracked:  data/splatter_simulation1.RData
-    Untracked:  data/splatter_simulation2.RData
-    Untracked:  data/splatter_simulation3.RData
     Untracked:  data/vstcounts.Rdata
     Untracked:  figure/
 
 Unstaged changes:
-    Modified:   analysis/.Rhistory
-    Modified:   analysis/CD14+-Monocytes.Rmd
-    Modified:   code/DE_methods.R
+    Modified:   analysis/group8_17-2_19.Rmd
 
 </code></pre>
 <p>
@@ -553,6 +545,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/C-HW/DEanalysis/blob/0778925995589daf0b6fc1f0ecb6029c522114c3/analysis/index.Rmd" target="_blank">0778925</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-11-09
+</td>
+<td>
+add splatter results, ls analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/C-HW/DEanalysis/e6121612b4a4d24d1c7ec6d1d83e75a0cf6f0ec9/docs/index.html" target="_blank">e612161</a>
+</td>
+<td>
+C-HW
+</td>
+<td>
+2024-10-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1448,7 +1474,8 @@ Random effects) to detect differentially expressed genes (DEGs) between
 two given cell types. The model takes donor-specific variations as
 random effects, and uses raw UMI counts to prevent biases in DE
 analysis.</p>
-<p><img src="./figure/panel3.png" /></p>
+<p><img src="./figure/panel3.png" /> <img
+src="./figure/panel3-1.png" /></p>
 </div>
 <div id="lemur-framework" class="section level1">
 <h1>LEMUR framework</h1>
@@ -1514,20 +1541,6 @@ tools including MAST, Wilcox in Seurat, and linear mixed models in
 Muscat. More details can be found <a
 href="methods_details.html">here</a>.</p>
 </div>
-<div id="new-criteria-on-determining-degs" class="section level1">
-<h1>New criteria on determining DEGs</h1>
-<p>We proposed new criteria that based on the convention and also the
-gene mean and the difference in mean. If the log2 gene mean in two
-groups is lower than a certain value (-2.25 in case study 1) and the
-log2 mean difference is smaller than a threshold (-1 in case study 1),
-the genes would not be considered as a DEGs. These can also be used as a
-filter before any DE analysis to speed up the computation. Both of these
-criteria are adjustable, depending on the dataset’s performance and
-characteristics. An examination in heatmaps and mean difference against
-mean plot in advanced can be helpful to determine the thresholds when
-analyzing a new dataset. More details can be found <a
-href="new_criteria.html">here</a>.</p>
-</div>
 <div id="application" class="section level1">
 <h1>Application</h1>
 <div id="case-study-1-fallopian-tubes-immune-cells"
@@ -1588,12 +1601,43 @@ computeLibrarayFactors and logNormCounts functions in Muscat.</p>
 </ul></li>
 </ul>
 </div>
+</div>
+<div id="simulation-studies" class="section level1">
+<h1>Simulation studies</h1>
 <div id="permutation-analysis" class="section level2">
 <h2>Permutation analysis</h2>
 <p>To examine the p-value calibration in real data, we did a permutation
 analysis on group-of-interest within a null dataset. The results can be
 found <a href="FD_analysis.html">here</a>.</p>
 </div>
+<div id="simulated-scrna-data-generated-by-splatter"
+class="section level2">
+<h2>Simulated scRNA data generated by Splatter</h2>
+<p>We provided FDR, power and runtime on different configuration on
+Splatter simulator <a
+href="simulation_donor_effect.html">results</a>.</p>
+</div>
+</div>
+<div id="new-criteria-on-determining-degs" class="section level1">
+<h1>New criteria on determining DEGs</h1>
+<p>We proposed new criteria that based on the convention and also the
+gene mean and the difference in mean. If the log2 gene mean in two
+groups is lower than a certain value (-2.25 in case study 1) and the
+log2 mean difference is smaller than a threshold (-1 in case study 1),
+the genes would not be considered as a DEGs. These can also be used as a
+filter before any DE analysis to speed up the computation. Both of these
+criteria are adjustable, depending on the dataset’s performance and
+characteristics. An examination in heatmaps and mean difference against
+mean plot in advanced can be helpful to determine the thresholds when
+analyzing a new dataset. More details can be found <a
+href="new_criteria.html">here</a>.</p>
+</div>
+<div
+id="compare-poisson-glmm-with-and-without-library-size-factor-as-offset"
+class="section level1">
+<h1>Compare Poisson GLMM with and without library size factor as
+offset</h1>
+<p><a href="ls_offset.html">result</a></p>
 </div>
 </div>
 </div>
