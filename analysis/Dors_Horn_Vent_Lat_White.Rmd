@@ -88,7 +88,7 @@ p_donor = ggplot(df, aes(x = Region, y = Count, fill = Donor)) +
 
 ```{r}
 # gene count per cell by region
-count_cell_df = data.frame(totalcount = apply(assays(subgroupsce)$counts, 2, sum), Region = as.factor(subgroupsce$region), Donor = as.factor(subgroupsce$patient_ID), Slide = as.factor(subgroupsce$Slide))
+count_cell_df = data.frame(totalcount = apply(assays(subgroupsce)$counts, 2, sum), Region = as.factor(subgroupsce$region), Patient = as.factor(subgroupsce$patient_ID), Slide = as.factor(subgroupsce$Slide))
 
 p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Region)) +
   geom_histogram(aes(y=..density..), fill= "white", alpha=0.5, position="identity") +
@@ -102,7 +102,7 @@ p_countbygroup = ggplot(count_cell_df, aes(x = totalcount, color = Region)) +
 ```
 ```{r}
 # gene count per cell by donor
-p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Donor)) +
+p_countbydonor = ggplot(count_cell_df, aes(x = totalcount, color = Patient)) +
   geom_histogram(aes(y=..density..),fill="white", alpha=0.5, position="identity") + 
   geom_density(alpha = 0.2) + 
   xlab("Library size") + 
