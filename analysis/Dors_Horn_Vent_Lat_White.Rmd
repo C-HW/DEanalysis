@@ -72,7 +72,7 @@ remove_y = theme(
 ```{r}
 df = data.frame(Region = subgroupsce$region, Donor = subgroupsce$patient_ID, Count = 1)
 df = aggregate(df$Count, list(df$Donor, df$Region), FUN = sum)
-colnames(df) = c("Donor", "Region", "Count")
+colnames(df) = c("Patient", "Region", "Count")
 df = df[nrow(df):1,]
 df$cumcount= c(t(aggregate(df$Count, list(rev(df$Region)), FUN = cumsum)[,-1]))
 p_donor = ggplot(df, aes(x = Region, y = Count, fill = Donor)) + 
@@ -144,7 +144,7 @@ p_zeroprop = ggplot(zeroprop_df, aes(x = genemean, y = zero_prop)) +
 
 ```
 
-```{r, fig.width=8}
+```{r, fig.width=12, fig.height=8}
 ggarrange(p_zeroprop, p_countbygroup, p_countbyslide, p_countbydonor, nrow = 2, ncol = 2)
 ```
 
@@ -173,7 +173,7 @@ titlelist = c("Poisson-glmm_UMI",
               "pb-DESeq2_UMI", 
               "pb-edgeR_CPM",
               "MAST_CPM",
-              "Wilcox_int",
+              "Wilcox_Norm",
               # "MMdream",
               "MMvst_VST"
               # "MMpoisson_UMI"
