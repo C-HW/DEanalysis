@@ -22,7 +22,7 @@ Differential expression (DE) analysis in single-cell transcriptomics reveals cel
 - Excessive zeros are usually considered as "drop-outs", while they are actually informative in cell-type heterogeneity. Ignoring zeros in single-cell gene expression data discards valuable information for any analysis.
 
 
-We provided a generalized linear mixed model framework ([GLIMES](https://github.com/C-HW/GLIMES): Linear mixed model-based differential Expression analysis accounting for Multiple samples Using Random effects) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
+We provided a generalized linear mixed model framework ([GLIMES](https://github.com/C-HW/GLIMES): Generalized LInear Mixed-Effects model for Single cell expression studies) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
 
 ![](./figure/panel3.png)
 ![](./figure/panel3-1.png)
