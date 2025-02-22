@@ -1,5 +1,5 @@
 ---
-title: "The curses of performing differential expression analysis using single-cell data"
+title: "Exploring and mitigating shortcomings in single-cell differential expression analysis with a new statistical paradigm"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html
@@ -22,12 +22,12 @@ Differential expression (DE) analysis in single-cell transcriptomics reveals cel
 - Excessive zeros are usually considered as "drop-outs", while they are actually informative in cell-type heterogeneity. Ignoring zeros in single-cell gene expression data discards valuable information for any analysis.
 
 
-We provided a generalized linear mixed model framework ([LEMUR](https://github.com/C-HW/LEMUR): Linear mixed model-based differential Expression analysis accounting for Multiple samples Using Random effects) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
+We provided a generalized linear mixed model framework ([GLIMES](https://github.com/C-HW/GLIMES): Linear mixed model-based differential Expression analysis accounting for Multiple samples Using Random effects) to detect differentially expressed genes (DEGs) between two given cell types. The model takes donor-specific variations as random effects, and uses raw UMI counts to prevent biases in DE analysis.
 
 ![](./figure/panel3.png)
 ![](./figure/panel3-1.png)
 
-# LEMUR framework
+# GLIMES framework
 
 By default, we excluded any genes detected in fewer than 5% cells in the compared groups from differential testing. The GLMMs were implemented with glmmPQL function of the MASS package. We calculated adjusted p-values by using Benjamini-Hochberg correction. Each model fitting was applied on one gene and the two compared groups.
 
